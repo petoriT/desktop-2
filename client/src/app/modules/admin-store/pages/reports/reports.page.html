@@ -1,0 +1,46 @@
+
+<ion-content >
+<ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button [routerLink]="['/admin-store/store/dashboard']"  size="small">
+     <ion-icon size="small" name="close-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button  (click)="presentActionSheet()" size="small">
+   <ion-icon name="newspaper-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+<div *ngIf="!landScape" class="center" style="height: 100vh;width: 100vw">
+<ion-grid>
+	<ion-row>
+		<ion-col size=12>
+			 <img style="max-width: 100%; display: block;" src="./assets/undraw_landscape_mode_53ej.svg" alt="">
+
+		</ion-col>
+		<ion-col size=12>
+
+ 			 <h1 style="color:#018786">Rotate Your Phone</h1>
+		</ion-col>
+	</ion-row>
+</ion-grid>
+
+
+</div>
+
+<app-units-sold></app-units-sold>
+
+<div  class="center" style="height: 100vh;width: 100vw"  *ngIf="landScape">
+	<div [ngSwitch]="segment">
+		<app-bar-chart  *ngSwitchCase="'bar-chart'" style="width: 100%;" ></app-bar-chart>
+		<app-line-chart  *ngSwitchCase="'line-graph'"></app-line-chart>
+		<app-dynamic-chart  *ngSwitchCase="'dynamic'" ></app-dynamic-chart>
+		<app-pie-chart  *ngSwitchCase="'pie-chart'" ></app-pie-chart>
+		<app-polar-chart  *ngSwitchCase="'polar-chart'" ></app-polar-chart>
+		<app-rader-chart  *ngSwitchCase="'rader-chart'"></app-rader-chart>
+	</div>
+</div>
+
+
+
+</ion-content>

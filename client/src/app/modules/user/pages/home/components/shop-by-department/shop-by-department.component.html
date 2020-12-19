@@ -1,0 +1,49 @@
+<div
+  style="display: inline; float: left"
+  *ngFor="let category of categories$ | async; let i = index"
+>
+  <ion-card
+    [class]="count(i)"
+    class="depart center"
+    (click)="loadCategory(category.name)"
+  >
+    <img style="max-width: 50%; display: block" src="{{ category.icon }}" />
+  </ion-card>
+  <ion-label style="display: block; text-align: center">
+    <sub>
+      {{ category.name }}
+    </sub>
+  </ion-label>
+</div>
+
+<div
+  style="min-width: max-content"
+  *ngIf="data"
+  class="ion-padding custom-skeleton"
+>
+  <div class="ion-padding-horizontal" style="display: inline; float: left">
+    <ion-skeleton-text class="depart" animated></ion-skeleton-text>
+    <ion-label>
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-label>
+  </div>
+
+  <div class="ion-padding-horizontal" style="display: inline; float: left">
+    <ion-skeleton-text class="depart" animated></ion-skeleton-text>
+    <ion-label>
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-label>
+  </div>
+  <div class="ion-padding-horizontal" style="display: inline; float: left">
+    <ion-skeleton-text class="depart" animated></ion-skeleton-text>
+    <ion-label>
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-label>
+  </div>
+  <div class="ion-padding-horizontal" style="display: inline; float: left">
+    <ion-skeleton-text class="depart" animated></ion-skeleton-text>
+    <ion-label>
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-label>
+  </div>
+</div>

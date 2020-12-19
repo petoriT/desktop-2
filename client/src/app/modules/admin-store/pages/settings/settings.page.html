@@ -1,0 +1,84 @@
+<ion-header style="padding-bottom: 5px">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        size="small"
+        defaultHref="/admin-store/store/dashboard"
+        slot="icon-only"
+        name="arrow-back"
+      >
+      </ion-back-button>
+    </ion-buttons>
+
+    <ion-searchbar
+      (ionInput)="searchItems($event)"
+      [debounce]="1000"
+      placeholder="search Settings..."
+      style="display: block"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-segment value="orders" fill="solid">
+  <ion-segment-button size="small" value="orders">
+    <ion-label>Settings</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content class="center">
+  <div
+    style="margin-left: 30%; color: #03dac6"
+    *ngFor="let p of profile.lisence | async"
+  >
+    <ion-item>
+      <h6>{{p.base_package.name</h6>
+    </ion-item>
+  </div>
+  <ion-card>
+    <ion-item routerLink="/admin-store/store/pricing">
+      <ion-icon name="newspaper-outline" slot="start"></ion-icon>
+
+      <ion-label>Licenses</ion-label>
+    </ion-item>
+
+    <ion-item routerLink="/store/return-policy">
+      <ion-icon name="newspaper-outline" slot="start"></ion-icon>
+
+      <ion-label>Return policy</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="people-circle-outline" slot="start"></ion-icon>
+
+      <ion-label>Payment and account</ion-label>
+    </ion-item>
+
+    <ion-item (click)="activateFreeTrial()">
+      <ion-icon name="alarm" slot="start"></ion-icon>
+
+      <ion-label>Free Trial</ion-label>
+    </ion-item>
+
+
+ 
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col class="center" size="4"> </ion-col>
+      <ion-col class="center" size="4">
+        <ion-fab>
+          <ion-fab-button
+            [routerLink]="['/admin-store/store/dashboard']"
+            size="small"
+            color="white"
+          >
+            <ion-icon color="primary" name="home"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </ion-col>
+      <ion-col class="center" size="4"> </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

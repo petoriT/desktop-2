@@ -1,0 +1,52 @@
+<!--<ion-item style="margin-top: auto;">
+  <ion-toolbar>
+
+    
+      <ion-button fill="solid" expand="full">
+        <ion-label size="small" (click)="user()">Users</ion-label>
+      </ion-button>
+
+      <ion-button fill="solid" expand="full">
+        <ion-label size="small" (click)="sales()">Sales</ion-label>
+      </ion-button>
+
+      <ion-button fill="solid" expand="full">
+        <ion-label size="small">Traffic</ion-label>
+      </ion-button>
+
+      <ion-button fill="solid" expand="full">
+        <ion-label size="small">Ads</ion-label>
+      </ion-button>
+
+   
+  </ion-toolbar>
+<ion-item>-->
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="showExp()"color="tertiary" size="small"style=" --box-shadow:none">
+      <ion-icon color="primary"name="pulse"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list  side="bottom">
+      <ion-button (click)="showExpAgain()"color="tertiary"size="small"fill="solid" expand="full">
+        <ion-label color="primary" size="small" (click)="user()">Users</ion-label>
+      </ion-button>
+
+      <ion-button (click)="showExpAgain()" color="tertiary" size="small" fill="solid" expand="full">
+        <ion-label color="primary" size="small" (click)="sales()">Sales</ion-label>
+      </ion-button>
+
+      <ion-button (click)="showExpAgain()" color="tertiary" size="small" fill="solid" expand="full">
+        <ion-label color="primary" size="small">Traffic</ion-label>
+      </ion-button>
+
+      <ion-button (click)="showExpAgain()" color="tertiary" size="small" fill="solid" expand="full">
+        <ion-label color="primary" size="small">Ads</ion-label>
+      </ion-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab *ngIf="showExpB" color="tertiary"vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="tertiary" size="small"style=" --box-shadow:none">
+      <ion-icon color="primary"name="expand"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>

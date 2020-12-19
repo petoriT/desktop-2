@@ -1,0 +1,22 @@
+.mat-expansion-panel-header {
+  padding: 0 0px;
+}
+.property_badge {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.odd_position {
+  left: 38vw;
+  top: -1vh;
+  position: fixed;
+}
+::ng-deep div.mat-expansion-panel-body {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.datetime-text {
+  font-size: 12px;
+}

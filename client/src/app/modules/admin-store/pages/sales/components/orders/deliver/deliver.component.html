@@ -1,0 +1,475 @@
+<ion-slides
+
+  style="height: 90vh;"
+  pager="true"
+  [options]="slideOpts"
+  #deliverSlider
+  *ngIf="device_screen =='Handset' "
+>
+  <ion-slide>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-text>
+            <ion-row>
+              <ion-col size="12">
+                <!-- use [src] angular method to manage assets -->
+                <ion-img src="assets/AdminSalesdeliverSlideOne.svg"></ion-img>
+              </ion-col>
+              <ion-col size="12">
+                <h3>
+                  <b>H</b>ow will You <br />
+                  <b>D</b>eliver
+                </h3>
+              </ion-col>
+            </ion-row>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <ion-segment
+            value="Self_delivery"
+            (ionChange)="segmentChanged($event)"
+          >
+            <!-- The SwipeNext function swipes the slide on select and shows promo type badge on top -->
+            <ion-segment-button (click)="swipeNextSelf()" value="Self_delivery">
+              <ion-label>Self Delivery</ion-label>
+            </ion-segment-button>
+            <ion-segment-button (click)="swipeNextCour()" value="third_party">
+              <ion-label>Using Courier</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-slide>
+
+  <!-- slide one ends here -->
+  <!-- slide two starts from below-->
+
+  <ion-slide>
+    <div *ngIf="self_delivery">
+      <form>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-img src="assets/AdminSalesdeliverSlideOne.svg"></ion-img>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="stacked">Add delivery Date</ion-label>
+
+                <ion-datetime
+                  style="font-size: 12px;"
+                  displayFormat="DD/MM/YYYY"
+                  value="{{ today | date: 'DDDD MMM D,YYYY' }}"
+                  (ionChange)="deliveryDate($event)"
+                ></ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-button (click)="updateDelivery('self_delivery')"
+                >Complete</ion-button
+              >
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </div>
+
+    <div *ngIf="!self_delivery">
+      <form [formGroup]="courier_delivery_form">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-img
+                style="height: 15vh;"
+                src="assets/adminSalesDeliverSlideTwo.svg"
+              ></ion-img>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating"> Courier Name</ion-label>
+                <ion-input
+                  formControlName="courier_name"
+                  clearOnEdit="true"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating"
+                  >Tracking Key/reference
+                </ion-label>
+                <ion-input
+                  formControlName="courier_ref"
+                  clearOnEdit="true"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Delivery date </ion-label>
+                <ion-datetime
+                  style="font-size: 12px;"
+                  displayFormat="DD/MM/YYYY"
+                  value="{{ today | date: 'DDDD MMM D,YYYY' }}"
+                  (ionChange)="deliveryDate($event)"
+                ></ion-datetime>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-button (click)="updateDelivery('courier_delivery')"
+                >Complete</ion-button
+              >
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </div>
+  </ion-slide>
+
+  <!--slide three starts  here
+
+      <ion-slide>
+
+
+
+        <form [formGroup]="slideThree">
+          <ion-grid>
+              <ion-row>
+                  <ion-col size=12>
+
+                      <ion-img style="height: 7em;" src="..\..\..\..\..\assets\adminSalesRunPromoAddPromoSlide3.svg"></ion-img>
+                  </ion-col>
+                  <ion-col size=12>
+                      <ion-item>
+                          <ion-label position="floating">Promo Type</ion-label>
+                          <ion-select (ionChange)="promo_typeOnChange($event)" formControlName="type" [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+                            <ion-select-option value="buy1get1free">Buy One Get One Free</ion-select-option> <!--  this make available secondary Product field and auto add the primary product to the secondary -->
+  <!--on selecting the below show %discoun
+                            <ion-select-option value="combo">Combo Discount</ion-select-option> <!-- on selecting Combo make available secondary Product fie                            <ion-select-option value="itemDiscount">Item Discount</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                  </ion-col>
+              </ion-row>
+
+                <ion-row>
+                  <ion-col size=12>
+                      <ion-item>
+                          <ion-label>Active Platform</ion-label>
+                          <ion-select formControlName="platform" multiple="true" cancelText="Nah" okText="Okay!">
+
+                            <ion-select-option value="Facebook">Facebook</ion-select-option>
+                            <ion-select-option value="twitter">Twitter</ion-select-option>
+                            <ion-select-option value="insta">instagram</ion-select-option>
+
+                          </ion-select>
+                        </ion-item>
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+        </form>
+      </ion-slide>
+      4th slide start here -->
+
+  <!--
+      <ion-slide>
+
+        <ion-fab  vertical="top" horizontal="start" slot="fixed">
+          <ion-chip>
+            <ion-label>{{promo_type}}</ion-label>
+          </ion-chip>
+        </ion-fab>
+
+
+
+        <ion-grid>
+          <form [formGroup]="slideFour">
+          <ion-row>
+            <ion-col size=12>
+              <ion-img style="height: 7em;" src="..\..\..\..\..\assets\adminSalesRunPromoAddPromoSlide4.svg"></ion-img>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+
+                <ion-button size="small" expand="block" (click)="addProduct()"> <ion-icon name="add-circle"></ion-icon></ion-button>
+
+            </ion-col>
+          </ion-row>
+
+          <div  formArrayName="products">
+            <div  *ngFor="let product of productFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" >
+                    <ion-row>
+                      <ion-item class="primary_Product">
+                        <ion-col size=8>
+                          <ion-item>
+                            <ion-label position="floating">Products</ion-label>
+                            <ion-select formControlName="p_id"  (ionChange)="changeSecProduct($event)" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One">
+                              <ion-item no-padding  *ngFor="let product of products" >
+                                <ion-select-option value="{{ product._id }}">{{product.productName}}</ion-select-option>
+                              </ion-item>
+                            </ion-select>
+                          </ion-item>
+                        </ion-col>
+
+
+
+                        <ion-col size=4>
+                          <ion-item>
+                            <ion-label position="floating">Quota</ion-label>
+                            <ion-input formControlName="p_quota" type="number"></ion-input>
+                        </ion-item>
+                        </ion-col>
+                      </ion-item>
+
+                    </ion-row>
+
+                    <ion-row *ngIf="buy1get1free">
+                        <ion-col size=6>
+                            <ion-item *ngIf="discount" >
+                                <ion-label   position="floating">Discount</ion-label>
+                                <ion-input formControlName="discount" clearOnEdit="true" type="number"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size=6>
+                            <ion-item  *ngIf="item_limit" >
+                                <ion-label position="floating">Item limit</ion-label>
+                                <ion-input formControlName="items_exceeding" clearOnEdit="true" type="number"><ion-button>More</ion-button></ion-input>
+                            </ion-item>
+                        </ion-col>
+                      </ion-row>
+
+                    <ion-row>
+                      <ion-item class="secondary_Product" *ngIf="secondary_Product">
+                        <ion-col size=12>
+                          <ion-item>
+                            <ion-label position="floating">Products</ion-label>
+                            <ion-select formControlName="s_id" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One">
+                              <ion-item no-padding  *ngFor="let product of products" >
+                                <ion-select-option  value="{{ product._id }}">{{product.productName}}</ion-select-option>
+                              </ion-item>
+                            </ion-select>
+                          </ion-item>
+                        </ion-col>
+
+                      </ion-item>
+                    </ion-row>
+                    <div>
+                        <ion-button size="small" color="danger" type="button" (click)="removeProduct(i)"><ion-icon name="trash"></ion-icon></ion-button>
+                    </div>
+        </div>
+      </div>
+    </div>
+  </form>
+          <ion-row>
+            <ion-col>
+                <ion-button expand="block" (click)="createPromo()">submit</ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+
+      </ion-slide>
+</ion-slides>-->
+</ion-slides>
+<ion-grid *ngIf="device_screen =='Web'">
+  <ion-row>
+    <ion-col size=12>
+      <ion-title style="    margin-top: 32px;
+    ">
+        <h1 style="text-align: center;font-size: xx-large;">Add A New Product</h1>
+      </ion-title>
+      <ion-text style="text-align: center;display: block;">
+     
+          add product details to 
+     
+      </ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size=6>
+      <ion-img src="assets/AdminSalesdeliverSlideOne.svg"></ion-img>
+    </ion-col>
+    <ion-col size=6>
+      <ion-card style=" height: 73vh;margin-top: 32px">
+        <ion-slides style=" height: 73vh"  class="desktop_slides" (ionSlideDidChange)="slideChange($event)" *ngIf="!import " pager="true"  #deliverSlider >
+          
+          <ion-slide>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-text>
+                    <ion-row>
+                      <ion-col size="12" style="padding-bottom: 48px;">
+                        <ion-title>
+                          <h1 style="text-align: center">Delivery Method</h1>
+                        </ion-title>
+                        <ion-text style="text-align: center">
+                          <sub>
+                            the delivery method  used to get products to customer
+                          </sub>
+                        </ion-text>
+                      </ion-col>
+                      <ion-col size="12">
+                        <h3>
+                          <b>H</b>ow will You <br />
+                          <b>D</b>eliver
+                        </h3>
+                      </ion-col>
+                    </ion-row>
+                  </ion-text>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-segment
+                    value="Self_delivery"
+                    (ionChange)="segmentChanged($event)"
+                  >
+                    <!-- The SwipeNext function swipes the slide on select and shows promo type badge on top -->
+                    <ion-segment-button (click)="swipeNextSelf()" value="Self_delivery">
+                      <ion-label>Self Delivery</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button (click)="swipeNextCour()" value="third_party">
+                      <ion-label>Using Courier</ion-label>
+                    </ion-segment-button>
+                  </ion-segment>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        
+          <!-- slide one ends here -->
+          <!-- slide two starts from below-->
+        
+          <ion-slide>
+            <div *ngIf="self_delivery">
+              <form>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="12" style="padding-bottom: 48px;">
+                      <ion-title>
+                        <h1 style="text-align: center">Delivery Details</h1>
+                      </ion-title>
+                      <ion-text style="text-align: center">
+                        <sub>
+                          Delivery information
+                        </sub>
+                      </ion-text>
+                    </ion-col>
+        
+                    <ion-col size="12">
+                      <ion-item>
+                        <ion-label position="stacked">Add delivery Date</ion-label>
+        
+                        <ion-datetime
+                          style="font-size: 12px;"
+                          displayFormat="DD/MM/YYYY"
+                          value="{{ today | date: 'DDDD MMM D,YYYY' }}"
+                          (ionChange)="deliveryDate($event)"
+                        ></ion-datetime>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-button (click)="updateDelivery('self_delivery')"
+                        >Complete</ion-button
+                      >
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </form>
+            </div>
+        
+            <div *ngIf="!self_delivery">
+              <form [formGroup]="courier_delivery_form">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="12" style="padding-bottom: 48px;">
+                      <ion-title>
+                        <h1 style="text-align: center">Delivery Details</h1>
+                      </ion-title>
+                      <ion-text style="text-align: center">
+                        <sub>
+                          Delivery information
+                        </sub>
+                      </ion-text>
+                    </ion-col>
+        
+                    <ion-col size="12">
+                      <ion-item>
+                        <ion-label position="floating"> Courier Name</ion-label>
+                        <ion-input
+                          formControlName="courier_name"
+                          clearOnEdit="true"
+                        ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-item>
+                        <ion-label position="floating"
+                          >Tracking Key/reference
+                        </ion-label>
+                        <ion-input
+                          formControlName="courier_ref"
+                          clearOnEdit="true"
+                        ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-item>
+                        <ion-label position="floating">Delivery date </ion-label>
+                        <ion-datetime
+                          style="font-size: 12px;"
+                          displayFormat="DD/MM/YYYY"
+                          value="{{ today | date: 'DDDD MMM D,YYYY' }}"
+                          (ionChange)="deliveryDate($event)"
+                        ></ion-datetime>
+                      </ion-item>
+                    </ion-col>
+        
+                    <ion-col size="12">
+                      <ion-button (click)="updateDelivery('courier_delivery')"
+                        >Complete</ion-button
+                      >
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </form>
+            </div>
+          </ion-slide>
+        
+        </ion-slides>
+        
+        <ion-fab *ngIf="showNext  " vertical="bottom" horizontal="end">
+          <ion-button
+            shape="round"
+            class="ion-padding-end"
+            style="color: #000000"
+            size="small"
+            color="white"
+            (click)="next()"
+          >
+            next
+          </ion-button>
+        </ion-fab>
+        
+        <ion-fab *ngIf="showBack  " horizontal="start" vertical="bottom">
+          <ion-button
+            shape="round"
+            class="ion-padding-start"
+            style="color: #000000"
+            size="small"
+            color="white"
+            (click)=" slidesBack()"
+          >
+            back
+          </ion-button>
+        </ion-fab>
+      </ion-card>
+    </ion-col>
+    
+  </ion-row>
+</ion-grid>

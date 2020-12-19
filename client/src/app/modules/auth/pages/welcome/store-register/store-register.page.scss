@@ -1,0 +1,35 @@
+.slide1 {
+
+  height: 100vh;
+}
+.slide2 {
+
+  height: 100vh;
+}
+.slideImg {
+  height: 100vh;
+}
+
+
+ion-slide {
+  --bullet-background: #a8a8a8;
+}
+.heading {
+  font-family: porkyFont;
+  font-size: 30px;
+}
+.one {
+  color: #ffd700;
+}
+.two {
+  color: #018786;
+}
+ion-toggle {
+  height: 22px;
+  --background: #f4f5f8;
+  --background-checked: #ffd700;
+
+  --handle-background: #ffff url(/assets/No.svg) no-repeat center / contain;
+  --handle-background-checked: #018786 url(/assets/Yes.svg) no-repeat center /
+    contain;
+}

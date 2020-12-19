@@ -1,0 +1,36 @@
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col class="center" size="4">
+        <ion-button
+          size="small"
+          shape="round"
+          [routerLink]="['/user/stores']"
+          fill="clear"
+        >
+          <ion-icon style="color: grey" name="file-tray-stacked"></ion-icon>
+
+          <sub style="color: grey; left: 5px">My Stores</sub>
+        </ion-button>
+      </ion-col>
+      <ion-col class="center" size="4">
+        <ion-fab (click)="goMarketPlace()">
+          <ion-fab-button size="small" color="white">
+            <ion-icon color="primary" name="basket"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </ion-col>
+      <ion-col class="center" size="4">
+        <ion-button
+          size="small"
+          fill="clear"
+          shape="round"
+          (click)="gotoSettings()"
+        >
+          <ion-icon style="color: grey" name="settings-outline"></ion-icon>
+          <sub style="color: grey; left: 5px">Settings</sub>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

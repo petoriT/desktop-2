@@ -1,0 +1,197 @@
+
+  <div color="tertiary" class="circle_top">
+ 
+  </div>
+  <ion-fab vertical="top" horizontal="start">
+    <ion-fab-button  [routerLink]="['']" size="small">
+      <ion-icon color="tertiary" name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <div class="upper_part center">
+    <ion-img style="height:400px" src="../assets/undraw_Gift_box_re_vau4 1.svg"></ion-img>
+  </div>
+
+
+  <ion-card  color="primary" class="lower_part">
+    <ion-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <ion-grid >
+          <ion-row>
+            <ion-col class="center" size= 12>
+
+             <ion-grid class="ion-no-padding" >
+               <ion-row>
+                <ion-col size=12 class="ion-no-padding">
+                    <ion-item  color="primary center">
+                      <ion-input  autocomplete="off" placeholder="Email" id="email" [(ngModel)]="emailVaule"  formControlName="email" type="email" ></ion-input>
+                    </ion-item>
+                  
+                   </ion-col>
+                <ion-col size=12 class="ion-no-padding">
+                    <div *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched ">
+                      <ion-text *ngIf="loginForm.get('email').errors?.required" color="danger">email is required</ion-text>
+                    </div>
+                    <div *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched ">
+
+                      <ion-text *ngIf="loginForm.get('email').errors?.maxlength" color="danger">email must be at most 20 Characters</ion-text>
+                      <ion-text *ngIf="loginForm.get('email').errors?.pattern&&!loginForm.get('email').errors?.maxlength" color="danger">email e.g user@host.com</ion-text>
+                    </div>
+                </ion-col>
+               </ion-row>
+             </ion-grid>
+
+            </ion-col>
+
+            <ion-col class="center  " size= 12>
+              <ion-grid class="ion-no-padding">
+                <ion-row >
+                  
+                  <ion-col size=12 class="ion-no-padding">
+                    <ion-item color="primary center">
+                      <ion-input  placeholder="Password"  [(ngModel)]="passwordValue" formControlName="password" [type]="passwordType" >
+                      
+                      </ion-input>
+                      <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+                   
+                    </ion-item>
+                    </ion-col>
+
+                  <ion-col size=12 class="ion-no-padding">
+                        <div  *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+                          <ion-text *ngIf="loginForm.get('password').errors?.required" color="danger">Password is required</ion-text>
+                        </div>
+
+
+                      <div  *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+                        <ion-text *ngIf="loginForm.get('password').errors?.minlength" color="danger">Password must be at least 6 Characters</ion-text>
+                      </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-col>
+
+            <ion-col  size=12>
+              <ion-button (click)="activateLoad()" size="small" style="width: 80%;margin: auto;"  expand="full" shape="round" type="submit" color="secondary" >
+
+                <div style="color:#018786" class="center"  *ngIf="Submit_load">
+                  SignIn
+                 </div>
+                <div class="center" style="color:#018786" *ngIf="!Submit_load">
+                  SigningIn
+                  <ion-spinner style="padding-left: 5px;" name="crescent"></ion-spinner>
+                </div>
+
+              </ion-button>
+            </ion-col>
+
+            <ion-col size=12  >
+              <ion-button [routerLink]="['/user/forgot-password']" expand="full" shape="round"  color="primary" ><sub style="color: #90DED7;">Forgot Password</sub></ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+      </form>
+
+    </ion-card-content>
+
+
+  </ion-card>
+  <div  [routerLink]="['/auth/user/register']" class="bottom_link" >
+   <sub style="color: #018786;">SignUp</sub>
+
+  </div>
+
+
+ <!--
+  <ion-item *ngIf="message" >
+    <ion-text color="success"><sub>{{message | json}}</sub></ion-text>
+  </ion-item>
+
+   The Log in Form starts here
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+
+      <ion-item class="roundBorder" >
+
+        <ion-label position="floating" >Email</ion-label>
+
+          <ion-input id="email" [(ngModel)]="emailVaule"  formControlName="email" type="email" ></ion-input>
+          <div *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched ">
+             <ion-text *ngIf="loginForm.get('email').errors?.required" color="danger"><sub>email is required</sub></ion-text>
+          </div>
+      </ion-item>
+
+      <div *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched ">
+
+        <ion-text *ngIf="loginForm.get('email').errors?.maxlength" color="danger"><sub>email must be at most 20 Characters</sub></ion-text>
+        <ion-text *ngIf="loginForm.get('email').errors?.pattern&&!loginForm.get('email').errors?.maxlength" color="danger"><sub>email e.g user@host.com</sub></ion-text>
+      </div>
+
+
+
+
+      <div class="space"></div>
+
+      <ion-item class="roundBorder" >
+        <ion-label position="floating">Password</ion-label>
+        <ion-input  [(ngModel)]="passwordVelue" formControlName="password" type="password" ></ion-input>
+        <div  *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+          <ion-text *ngIf="loginForm.get('password').errors?.required" color="danger"><sub>Password is required</sub></ion-text>
+        </div>
+      </ion-item>
+
+      <div  *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+        <ion-text *ngIf="loginForm.get('password').errors?.minlength" color="danger"><sub>Password must be at least 6 Characters</sub></ion-text>
+      </div>
+
+      <div class="space"></div>
+     <ion-button  [disabled]="!loginForm.valid" expand="full" shape="round" type="submit" color="warning" >Submit</ion-button>
+
+
+
+     <ion-grid>
+      <ion-row>
+        <ion-col col-2>
+          <ion-fab>
+            <ion-fab-button color="orange">
+              <ion-icon size="large"color="danger" name="logo-google"><a href="{{goGoogle}}">Google</a></ion-icon>
+             </ion-fab-button>
+           </ion-fab>
+
+        </ion-col>
+
+        <ion-col col-10>
+          <ion-fab style="left:-90px">
+            <ion-fab-button>
+              <ion-icon size="large" (click)="facebookSignIn()" name="logo-facebook"></ion-icon>
+            </ion-fab-button>
+           </ion-fab>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>-->
+
+
+
+
+
+
+
+      <!--
+    </form>
+    Log in form ends here-
+
+
+
+
+
+
+  <ion-item >
+
+    <hr>
+    <a color="medium" [routerLink]="['/user/forgot-password']">forgotPassword</a>
+  </ion-item>
+
+-->

@@ -1,0 +1,42 @@
+<ion-list overflow-scroll="true">
+  <div class="" *ngFor="let category of categories$ | async; let i = index">
+    <ion-grid no-padding>
+      <ion-row no-padding>
+        <ion-col no-padding size="1">
+          <ion-avatar style="position: relative; z-index: 1;">
+            <img
+              src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+            />
+          </ion-avatar>
+        </ion-col>
+        <ion-col no-padding size="11">
+          <ion-item>
+            <ion-text value="category.categoryName"
+              ><sub>{{ category.name }}</sub></ion-text
+            >
+          </ion-item>
+          <ion-label color="danger" *ngIf="isUpdating$ | async"
+            >Is updating</ion-label
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-buttons *ngIf="false" slot="end">
+      <ion-button
+        (click)="updateCategory(category)"
+        size="small"
+        color="primary"
+      >
+        <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+      </ion-button>
+      <ion-button
+        (click)="onDeleteCategory(category)"
+        size="small"
+        color="danger"
+      >
+        <ion-icon size="small" slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+</ion-list>

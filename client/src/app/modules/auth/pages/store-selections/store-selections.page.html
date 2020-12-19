@@ -1,0 +1,43 @@
+<ion-header>
+
+
+<ion-toolbar  > 
+  <ion-buttons slot="start">
+    <ion-back-button   defaultHref="/admin-store/store/dashboard" ></ion-back-button>
+  </ion-buttons>
+    
+  <ion-searchbar
+  (ionInput)="searchItems($event)"
+  [debounce]="1000"
+  placeholder="search {{searchPlaceholder}}..."
+></ion-searchbar>
+<ion-button
+size="small"
+slot="end"
+shape="round"
+color="secondary"
+(click)="setRoute()"
+
+>
+<ion-icon color="primary" slot="icon-only" name="add"></ion-icon>
+</ion-button>
+
+</ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+ 
+  <ion-title >
+    <h1 style="text-align: center;">
+   Your Stores
+    </h1>
+ 
+  </ion-title>
+  <ion-text style="text-align: center;display: block;">
+    <sub> Manage your stores </sub>
+  </ion-text>
+    
+<app-stores-list></app-stores-list>
+</ion-content>

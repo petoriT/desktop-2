@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form
+  #form
+  action="https://sandbox.payfast.co.za/eng/process"
+  method="POST"
+  >
+  <!-- Merchant details -->
+  <input
+    type="hidden"
+    name="merchant_id"
+    value="{{payfastForm.merchant_id}}"
+  />
+  <input
+    type="hidden"
+    name="merchant_key"
+    value="{{payfastForm.merchant_key}}"
+  />
+  <input
+    type="hidden"
+    name="return_url"
+    value="{{payfastForm.return_url}}"
+  />
+  <input
+    type="hidden"
+    name="cancel_url"
+    value="{{payfastForm.cancel_url}}"
+  />
+  <input
+    type="hidden"
+    name="notify_url"
+    value="{{payfastForm.notify_url}}"
+  />
+  
+  <!-- Buyer Details -->
+  <input
+    type="hidden"
+    name="email_address"
+    value="{{payfastForm.buyer_email}}"
+  />
+  
+  <!-- Transaction Details -->
+  <input
+    type="hidden"
+    name="m_payment_id"
+    value="{{payfastForm.m_payment_id}}"
+  />
+  <input type="hidden" name="amount" value="{{payfastForm.amount}}" />
+  <input
+    type="hidden"
+    name="item_name"
+    value="{{payfastForm.item_name}}"
+  />
+  <input
+    type="hidden"
+    name="item_description"
+    value="{{payfastForm.item_description}}"
+  />
+  
+  <input
+    type="hidden"
+    name="email_confirmation"
+    value="{{payfastForm.email_confirmation}}"
+  />
+  <input
+    type="hidden"
+    name="confirmation_address"
+    value="{{payfastForm.confirmation_address}}"
+  />
+  
+  <!-- Set Payment Method -->
+  <input
+    type="hidden"
+    name="payment_method"
+    value="{{payfastForm.payment_method}}"
+  />
+  <input
+    type="hidden"
+    name="signature"
+    value="{{payfastForm.signature}}"
+  />
+  
+  <ion-button   (click)=" onSub(payfastForm); form.submit()"   *ngIf="billing_cycle_selected == 'yearly'" expand="block" shape="round">
+    {{selected_license.annual_price | currency: 'R' }} PayFast <ion-icon name="card-outline"></ion-icon>
+  </ion-button>
+  <ion-button   (click)=" onSub(payfastForm); form.submit()"  *ngIf="billing_cycle_selected == 'mon'" expand="block" shape="round">
+    {{selected_license.monthly_price | currency: 'R' }} PayFast <ion-icon name="card-outline"></ion-icon>
+  </ion-button>
+  
+  </form>
+  
+</ion-content>

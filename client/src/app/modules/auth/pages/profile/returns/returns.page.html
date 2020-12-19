@@ -1,0 +1,86 @@
+<ion-fab vertical="top" horizontal="start" slot="fixed">
+  <ion-fab-button size="small" (click)="backClicked()">
+    <ion-icon name="close-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-content>
+  <ion-slides
+    #check_slides
+    style="min-height: 100%"
+    [options]="{pagination:true}"
+  >
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src="../assets/authReturns.svg"> </ion-img>
+          </ion-col>
+          <ion-col size="12">
+            <ion-title>
+              <h1 style="text-align: center">Return Products</h1>
+            </ion-title>
+            <ion-text style="text-align: center">
+              <sub> Whats the reason for returns? </sub>
+            </ion-text>
+          </ion-col>
+          <ion-col size="12">
+            <ion-chip
+              [ngClass]="isSelected(reason) "
+              (click)="setReturnReason(reason)"
+              *ngFor="let reason  of return_reason"
+            >
+              {{reason }}
+            </ion-chip>
+          </ion-col>
+          <ion-col
+            style="padding-top: 20%"
+            *ngIf="selectedReturnReasons.length"
+            size="12"
+          >
+            <ion-button
+              color="secondary"
+              shape="round"
+              (click)="next(check_slides)"
+            >
+              next
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-img src="../assets/userReturns.svg"> </ion-img>
+          </ion-col>
+          <ion-col size="12">
+            <ion-title>
+              <h1 style="text-align: center">Return Policy</h1>
+            </ion-title>
+            <ion-text style="text-align: center">
+              <sub>Vendor return form</sub>
+            </ion-text>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating">Comment</ion-label>
+              <ion-textarea [(ngModel)]="policy_comment"></ion-textarea>
+            </ion-item>
+          </ion-col>
+          <ion-col style="padding-bottom: 65px" size="12">
+            <ion-button
+              color="secondary"
+              shape="round"
+              (click)="submit();backClicked()"
+            >
+              Submit
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

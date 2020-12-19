@@ -1,0 +1,50 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="home"></ion-back-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-slides
+  style="height: 90vh; width: 100vw;"
+  pager="true"
+  [options]="slideOpts"
+>
+  <ion-slide>
+    <form [formGroup]="verifyReviewForm" (ngSubmit)="verifyDelivery()">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="">
+            <ion-img src="./assets/sharedVerify.svg"></ion-img>
+          </ion-col>
+          <ion-col size="12">
+            <h1>Verify Order</h1>
+          </ion-col>
+          <ion-col size="">
+            <ion-item>
+              <ion-label position="floating">Courier reference</ion-label>
+              <ion-input formControlName="courier_ref"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Client OTP</ion-label>
+              <ion-input formControlName="courier_OTP"></ion-input>
+            </ion-item>
+            <ion-button
+              (click)="verifyDelivery()"
+              type="submit"
+              color="secondary"
+              shape="round"
+              expand="block"
+            >
+              Verify
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-slide>
+  <ion-slide>
+    <h1>Slide 2</h1>
+  </ion-slide>
+  <ion-slide>
+    <h1>Slide 3</h1>
+  </ion-slide>
+</ion-slides>

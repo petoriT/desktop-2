@@ -1,0 +1,141 @@
+<ion-app  *ngIf="(menuStatus$ | async) === 'user'  && device_screen == 'Web' " >
+  
+    <ion-menu contentId="main-content"  side="start">
+      <ion-content>
+        <app-user-menu
+          [childListener]="logging_out"
+          *ngIf=" isOnline"
+          [storeOwner]="ownStore"
+        ></app-user-menu>
+
+  
+        <ion-menu-toggle>
+          <ion-item *ngIf="(loggedIn | async) == false">
+            <ion-icon name="person" slot="start"></ion-icon>
+            <ion-label color="primary" [routerLink]="['/user/login']"
+              >LogIn</ion-label
+            >
+          </ion-item>
+  
+          <ion-item *ngIf="loggedIn | async">
+            <ion-icon name="exit" slot="start"></ion-icon>
+            <ion-label color="danger" (click)="logout()">Logout</ion-label>
+          </ion-item>
+          <ion-toolbar>
+            <ion-item [routerLink]="['/about']">
+              <ion-label> About Us </ion-label>
+            </ion-item>
+          </ion-toolbar>
+          
+        </ion-menu-toggle>
+        <ion-toolbar *ngIf="token">
+          <ion-item (click)="show_Confirm()" *ngIf="!show">
+            Driver's portal
+          </ion-item>
+          <ion-menu-toggle>
+            <ion-item *ngIf="show" [routerLink]="['delivery-verification']">
+              <ion-button expand="block" color="light" fill="solid" shape="round">
+                Confirm delivery
+                <ion-icon size="large" src="assets/delivery.svg"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-toolbar>
+      </ion-content>
+    </ion-menu>
+  
+    <ion-router-outlet id="main-content" ></ion-router-outlet>
+</ion-app>
+
+<ion-app  *ngIf="(menuStatus$ | async) === 'admin' && device_screen == 'Web'" >
+  <ion-split-pane   >
+    <ion-menu contentId="main-content" style="--side-max-width: 20vw;" side="start">
+      <ion-content class="admin_side_pane">
+        <app-admin-menu
+          [childListener]="logging_out"
+          *ngIf="(menuStatus$ | async) === 'admin' && isOnline"
+        ></app-admin-menu>
+  
+        <ion-menu-toggle>
+          <ion-item *ngIf="(loggedIn | async) == false">
+            <ion-icon name="person" slot="start"></ion-icon>
+            <ion-label color="primary" [routerLink]="['/user/login']"
+              >LogIn</ion-label
+            >
+          </ion-item>
+  
+          <ion-item *ngIf="loggedIn | async">
+            <ion-icon name="exit" slot="start"></ion-icon>
+            <ion-label color="danger" (click)="logout()">Logout</ion-label>
+          </ion-item>
+          <ion-toolbar>
+            <ion-item [routerLink]="['/about']">
+              <ion-label> About Us </ion-label>
+            </ion-item>
+          </ion-toolbar>
+          
+        </ion-menu-toggle>
+     
+      </ion-content>
+    </ion-menu>
+  
+    <ion-router-outlet id="main-content" style="--side-min-width: 80vw;"  id="main" ></ion-router-outlet>
+  </ion-split-pane>
+  
+  
+</ion-app>
+<ion-app  *ngIf="device_screen == 'Handset'" >
+
+    <ion-menu contentId="main-content"  side="start">
+      <ion-content>
+        <app-admin-menu
+          [childListener]="logging_out"
+          *ngIf="(menuStatus$ | async) === 'admin' && isOnline"
+        ></app-admin-menu>
+        <app-user-menu
+        [childListener]="logging_out"
+   
+        [storeOwner]="ownStore"
+        *ngIf="(menuStatus$ | async) === 'user' && isOnline"
+      ></app-user-menu>
+  
+        <ion-menu-toggle>
+          <ion-item *ngIf="(loggedIn | async) == false">
+            <ion-icon name="person" slot="start"></ion-icon>
+            <ion-label color="primary" [routerLink]="['/user/login']"
+              >LogIn</ion-label
+            >
+          </ion-item>
+  
+          <ion-item *ngIf="loggedIn | async">
+            <ion-icon name="exit" slot="start"></ion-icon>
+            <ion-label color="danger" (click)="logout()">Logout</ion-label>
+          </ion-item>
+          <ion-toolbar>
+            <ion-item [routerLink]="['/about']">
+              <ion-label> About Us </ion-label>
+            </ion-item>
+          </ion-toolbar>
+          
+        </ion-menu-toggle>
+        <ion-toolbar *ngIf="token">
+          <ion-item (click)="show_Confirm()" *ngIf="!show">
+            Driver's portal
+          </ion-item>
+          <ion-menu-toggle>
+            <ion-item *ngIf="show" [routerLink]="['delivery-verification']">
+              <ion-button expand="block" color="light" fill="solid" shape="round">
+                Confirm delivery
+                <ion-icon size="large" src="assets/delivery.svg"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-toolbar>
+      </ion-content>
+    </ion-menu>
+  
+    <ion-router-outlet    id="main-content"  ></ion-router-outlet>
+
+  
+  
+</ion-app>

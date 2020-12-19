@@ -1,0 +1,51 @@
+<app-user-header></app-user-header>
+
+<ion-content>
+  <app-profile [id]="id"></app-profile>
+</ion-content>
+<ion-footer>
+  <ion-toolbar
+    color="primary"
+    style="
+      margin: auto;
+      width: 95%;
+      height: 40px;
+      bottom: 5px;
+      border-radius: 20px;
+      box-shadow: 0px -8px 10px -10px rgba(0, 0, 0, 0.8);
+    "
+  >
+    <ion-grid>
+      <ion-row style="margin-top: -12px;">
+        <ion-col size="4">
+          <!--<ion-button color="secondary"expand="block" fill="clear "size="small">
+           <ion-icon  slot="icon-only"name="notifications"></ion-icon>
+          </ion-button>-->
+        </ion-col>
+        <ion-col class="center" size="4">
+          <ion-fab>
+            <ion-fab-button (click)="goHome()" size="small">
+              <ion-icon
+                *ngIf="bottom_component !=='default'"
+                name="home-outline"
+              ></ion-icon>
+              <ion-icon
+                *ngIf="bottom_component =='default'"
+                name="basket-outline"
+              ></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+          <!--<ion-button expand="block" fill="clear"size="small">
+            <ion-icon  size="large" slot="icon-only" name="document"></ion-icon>
+          </ion-button>-->
+        </ion-col>
+        <ion-col size="4">
+          <!--<ion-button expand="block"fill="clear"size="small">
+            <ion-icon  color="secondary" slot="icon-only" name="chatbubbles" ></ion-icon>
+            
+          </ion-button>-->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

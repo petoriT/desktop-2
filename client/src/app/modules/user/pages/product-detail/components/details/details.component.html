@@ -1,0 +1,331 @@
+<div *ngFor="let product of product$ | async">
+  <!---
+  <div class="properties_container" *ngIf="show_properties && has_BOM ">
+    <mat-accordion multi="false">
+      <ion-fab style="left: 13vw;">
+        <ion-fab-button
+          (click)="disProperties(false)"
+          color="light"
+          style="height: 20px; width: 20px;"
+          size="small"
+        >
+          <ion-icon color="medium" name="close-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <mat-expansion-panel
+        [expanded]="step === 0"
+        (opened)="setStep(0)"
+        hideToggle
+        class="innerProperty"
+      >
+        <mat-expansion-panel-header>
+          <h6 [ngClass]="classZero" class="heading_six_position">
+            <sub>colors</sub>
+          </h6>
+        </mat-expansion-panel-header>
+
+        <ng-template matExpansionPanelContent class="center">
+          <div class="expansion_inner">
+           <chip *ngFor="let chip of components">
+              <sub> {{chip.name}} {{chip.price | currency:'R'}} </sub>
+           </chip>
+          </div>
+        </ng-template>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 1"
+        (opened)="setStep(1)"
+        hideToggle
+        class="innerProperty"
+      >
+        <mat-expansion-panel-header>
+          <h6 [ngClass]="classOne" class="heading_six_position">
+            <sub>colors</sub>
+          </h6>
+        </mat-expansion-panel-header>
+
+        <ng-template matExpansionPanelContent>
+          <div class="expansion_inner">
+            <ion-badge>
+              color
+            </ion-badge>
+          </div>
+        </ng-template>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 2"
+        (opened)="setStep(2)"
+        hideToggle
+        class="innerProperty"
+      >
+        <mat-expansion-panel-header>
+          <h6 [ngClass]="classTwo" class="heading_six_position">
+            <sub>colors</sub>
+          </h6>
+        </mat-expansion-panel-header>
+        <ng-template style="height: 20vh;" matExpansionPanelContent>
+          <div class="expansion_inner">
+            Some deferred content
+          </div>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div> -->
+  <!--<ion-button
+    [@inOutAnimation]
+    (click)="disProperties(true)"
+    *ngIf="!show_properties"
+    style="z-index: 3; height: 3%; position: fixed; bottom: 42vh;"
+  >
+    <sub>Options</sub>
+  </ion-button>
+
+
+  <ion-fab *ngIf="product.sale_type" style="position: fixed; bottom: 42vh; left:43vw">
+    <ion-badge  *ngIf="product.sale_type" color="danger">
+      SALE!
+    </ion-badge>
+  </ion-fabyle>-->
+
+  <ion-slides
+    style="height: 65vh"
+    class="slides"
+    pager="true"
+    [options]="slideOpts"
+  >
+    <!--  <ion-fab class="expandButton" horizontal="end" >
+    <ion-fab-button shape="round" expand="block" size="small" fill="solid">
+
+    </ion-fab-button>
+  </ion-fab>-->
+    <ion-slide *ngFor="let img of product.productImage" class="first_slides">
+      <ion-img src="{{ img.url }}"></ion-img>
+    </ion-slide>
+   
+  </ion-slides>
+
+  <ion-fab
+    *ngIf="!seeBOM"
+    style="top: 62vh"
+    class="center"
+    vertical="center"
+    horizontal="end"
+  >
+   <ion-fab-button
+      class="center"
+      size="small"
+      fill="clear"
+      (click)="likeA(product)"
+    >
+      <div class="center">
+        <ion-icon
+          *ngIf="!product.likes.includes(profile.email)"
+          size="large"
+          name="heart"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="product.likes.includes(profile.email)"
+          color="danger"
+          size="large"
+          name="heart"
+        ></ion-icon>
+      </div>
+ 
+    </ion-fab-button> 
+         <!--<ion-badge class="like_badge"> {{ product.likes.length }}</ion-badge>-->
+  </ion-fab>
+  <ion-fab
+    *ngIf="seeBOM"
+    style="top: 62vh"
+    class="center"
+    vertical="center"
+    horizontal="end"
+  >
+    <ion-fab-button size="small" color="light" (click)="showBOM(false)">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-card style="padding-bottom: 7vh" class="bottom_content">
+    <ion-card-content *ngIf="!seeBOM">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="product_title" size="12">
+            <ion-toolbar>
+              <h3 style="font-size: 20px; color: #018786">
+                {{ product.amount }} {{ product.productName }}
+              </h3>
+
+              <ion-buttons slot="end">
+                <ion-button
+                  fill="solid"
+                  (click)="showBOM(true)"
+                  color="secondary"
+                  shape="round"
+                  size="small"
+                >
+                  <ion-label> <sub>see Options</sub> </ion-label>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+            <rating
+              [rate]="rating(product.ratings)"
+              class="rating"
+              readonly="true"
+              size="small"
+              (rateChange)="onRateChange($event)"
+              style="display: inline-block"
+            >
+            </rating>
+            <ion-badge color="light">
+              <sub color="tertiary">{{ product.ratings.length }} Reviews </sub>
+            </ion-badge>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="3" class="ion-no-padding">
+            <ion-text>
+              <sub> In-Stock: {{ product.in_stock }} </sub>
+            </ion-text>
+          </ion-col>
+          <ion-col class="ion-no-padding" style="text-align: left" size="9">
+            <ion-row>
+              <ion-col class="ion-no-padding" size="12">
+                <ion-badge>
+                  <sub>JHB</sub>
+                </ion-badge>
+                <ion-badge style="margin-left: 5px; text-align: center">
+                  <sub>CPT</sub>
+                </ion-badge>
+                <ion-badge style="margin-left: 5px; text-align: center">
+                  <sub>KZN</sub>
+                </ion-badge>
+
+                <ion-badge
+                  style="margin-left: 5px; text-align: center"
+                  color="tertiary"
+                >
+                  <sub> Free Delivery </sub>
+                </ion-badge>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-text>
+              <sub>
+                {{
+                  product.productDescription.length > 200
+                    ? (product.productDescription | slice: 0:150) + "...."
+                    : product.productDescription
+                }}
+                <a
+                  *ngIf="product.productDescription.length > 200"
+                  style="color: #018786"
+                  (click)="showFull()"
+                  >more</a
+                >
+              </sub>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-toolbar>
+              <h6>Product Features:</h6>
+              <ion-buttons slot="end">
+                <ion-button
+                  (click)="vendorPage()"
+                  class="center"
+                  color="light"
+                  size="small"
+                  fill="solid"
+                  shape="round"
+                >
+                  <ion-label> <sub>vendor</sub> </ion-label>
+                  <ion-icon name="business-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+            <div *ngFor="let tag of product.features">
+              <ion-chip style="float: left">
+                {{ tag.featurename }}
+              </ion-chip>
+            </div>
+          </ion-col>
+          <ion-col size="12">
+            <app-similar-products></app-similar-products>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-card-content *ngIf="seeBOM">
+      <h3 style="color: #018786">Product Variations</h3>
+      <ion-text *ngIf="components_incuded.length == 0">
+        Select or add different materials colors and componets.
+      </ion-text>
+      <ion-card>
+        <div
+          style="height: fit-content"
+          *ngFor="let BOM of components_incuded; let i = index"
+        >
+          <ion-chip
+            class="ion-float-left"
+            style="background: #018786; color: white"
+          >
+            {{ BOM.componentname }} {{ BOM.price | currency: "R" }}
+            <ion-icon
+              color="danger"
+              (click)="removeBOM(BOM, BOM._id)"
+              name="close-circle"
+            ></ion-icon>
+          </ion-chip>
+        </div>
+      </ion-card>
+
+      <div *ngFor="let chip of components; let i = index">
+        <ion-chip class="ion-float-left">
+          <sub> {{ chip.componentname }} {{ chip.price | currency: "R" }} </sub>
+          <ion-icon
+            (click)="addBOM(chip, chip._id)"
+            color="primary"
+            name="add-circle"
+          ></ion-icon>
+        </ion-chip>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="price_container">
+    <div class="inner_content">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="center" size="6">
+            <ion-label color="tertiary">
+              {{ product.productPrice | currency: "R" }}
+            </ion-label>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button
+              (click)="addToCart(product)"
+              class="center"
+              color="secondary"
+              size="small"
+              fill="solid"
+              shape="round"
+              expand="full"
+            >
+              <ion-label> <sub>Add to Cart</sub> </ion-label>
+              <ion-icon size="large" name="cart-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</div>

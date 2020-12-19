@@ -1,0 +1,41 @@
+<ion-fab vertical="bottom" horizontal="start" >
+  <ion-fab-button   (click)="exportCSV()">
+    Export 
+    
+  </ion-fab-button>
+</ion-fab>
+<ion-img src="../assets/undraw_filing_system_b5d2.svg">
+
+</ion-img>
+<ion-title style="padding-bottom: 30px;">
+  <h1 style="text-align: center;">
+    Import products 
+  </h1>
+  <ion-text style="text-align: center;">
+    import products from CSV file
+  </ion-text>
+</ion-title>
+<ion-toolbar>
+
+<ion-item>
+  <input type="file" id="file" (change)="handleFileInput($event)">
+</ion-item>
+  <button *ngIf="uploaded" color="success" (click)="saveProducts()">save</button>
+
+</ion-toolbar>
+
+
+
+<!--<button *ngIf="!ProductReady" (click)="loadProducts()">Export products</button>-->
+<table *ngIf="uploaded" border="1" class="data-table">
+  <tr>
+    <td *ngFor="let header of headerRow" text-center>
+      <b>{{ header }}</b>
+    </td>
+  </tr>
+  <tr *ngFor="let row of csvData; let i =index">
+    <td *ngFor="let data of row; let j =index">
+      <ion-label>{{data}}</ion-label>
+    </td>
+  </tr>
+</table>

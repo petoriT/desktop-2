@@ -1,0 +1,47 @@
+<ion-card style="border-radius: 5vw; height:78vh">
+
+  <ion-card-content  class="center" style="height:100%;--background: #F5FAFA;overflow:visible">
+ 
+  <ion-grid>
+      <ion-row>
+        <ion-col size=12>
+          <ion-button (click)="gotTo('/user/forgot-password')"  color="white" class="ion-no-padding" fill="solid" expand="block" shape="round" size="default">
+            <ion-icon slot="icon-only" style="color: #018786" class="ion-padding-end" name="key-outline"></ion-icon>
+            <sub style="color: #018786">Change Password</sub>
+          </ion-button>
+        </ion-col>
+        <!--
+        <ion-col size=12>
+          <ion-button  color="white" class="ion-no-padding" fill="solid" expand="block" shape="round" size="default">
+            <ion-icon  slot="icon-only" style="color: #018786" class="ion-padding-end" name="card-outline"></ion-icon>
+            <sub style="color: #018786">Change Payment Details</sub>
+          </ion-button>
+        </ion-col>
+        -->
+       
+        <ion-col size=12>
+          <ion-button  (click)="setRoute()"  color="white" class="ion-no-padding" fill="solid" expand="block" shape="round" size="default">
+           
+            <ion-icon slot="icon-only" style=" color: #018786" class="ion-padding-end" name="clipboard-outline" ></ion-icon>
+            <sub style="color: #018786">Register A store</sub>
+          </ion-button>
+        </ion-col>
+        <!--
+  <ion-col size=12>
+          <ion-button  color="white" class="ion-no-padding" fill="solid" expand="block" shape="round" size="default">
+            <ion-icon slot="icon-only" style=" color: #018786" class="ion-padding-end"  name="trash-outline"></ion-icon>
+            <sub style="color: #018786">Delete Profile</sub>
+          </ion-button>
+        </ion-col>
+        -->
+       
+   
+       
+      </ion-row>
+    </ion-grid>
+
+
+  </ion-card-content>
+
+
+</ion-card>

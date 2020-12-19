@@ -1,0 +1,21 @@
+<!--<ion-card">
+
+</ion-card>-->
+<ion-card
+  style="--ion-background-color: #ffffff; height: 30vh"
+  *ngFor="let store of stores$"
+>
+  <div (click)="SwitchStore(store)">
+    <div *ngFor="let logo of store.logo">
+      <ion-img
+        style="object-fit: cover; height: 15vh"
+        src="{{ logo.url }}"
+      ></ion-img>
+    </div>
+
+    <ion-card-header>
+      <ion-card-subtitle>{{ store.name }}</ion-card-subtitle>
+      <ion-card-title>{{ store.tag_line }}</ion-card-title>
+    </ion-card-header>
+  </div>
+</ion-card>

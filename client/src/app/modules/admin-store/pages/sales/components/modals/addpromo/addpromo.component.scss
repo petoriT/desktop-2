@@ -1,0 +1,22 @@
+ion-card{
+   display: flex;
+   flex-direction: column;
+   width: 100% !important;
+   margin: 0 !important;
+   height: 90%
+ }
+ ion-item{
+  border: 1px solid #018786;
+  border-radius: 4px;
+ --ion-background-color: white;
+}
+.boxv{
+  border: 1px solid #018786;
+  border-radius: 4px;
+ --ion-background-color: white;
+}
+
+.custom-modal-css .modal-wrapper {
+    height: 95% !important;
+    top: 5% !important;
+  }

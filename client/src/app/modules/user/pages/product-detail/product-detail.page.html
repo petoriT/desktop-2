@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar
+    style="
+      --background: transparent;
+      --ion-color-base: transparent !important;
+      position: absolute;
+      --border-width: 0 !important;
+    "
+    class="justify-content: center"
+    no-padding
+  >
+    <ion-buttons slot="start">
+      <ion-back-button  color="primary"></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button *ngIf="(cartItemCount | async) > 0" (click)="openCart()">
+        <div>{{ cartItemCount | async }}</div>
+        <ion-icon color="primary" slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+      <ion-button [routerLink]="['/user/user_profile']">
+        <ion-icon color="primary" slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="product">
+  <app-details [product_id]="id" [detail_product]="product"></app-details>
+</ion-content>

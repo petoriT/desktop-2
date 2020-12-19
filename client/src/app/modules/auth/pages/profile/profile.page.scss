@@ -1,0 +1,52 @@
+.clear_navbar{
+    --background: transparent;
+    --ion-color-base: transparent !important;
+    position: absolute;
+    --border-width: 0 !important;
+}
+
+
+.profile_pic{
+    height: 15vh;
+    width: 15vh;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+.top_grid{
+	top: 10vh;
+    position: fixed;
+}
+.location{
+	 right:2vw
+}
+.toolbar{
+	right:4vw
+}
+.main_panel{
+	position:fixed;
+	top:40vh
+}
+app-liked-products{
+	position: fixed;
+    top: 65vh;
+    width: 100%;
+
+}
+.component{
+width: 100%;
+	top:10vh;
+  position: fixed;
+  height:20vh;
+}
+.grey{
+    color: grey;
+}
+.option{
+    height: 28vw;
+      width: 28vw;
+      border-radius: 28vw;
+      margin-right: 8px;
+      margin-left: 8px;
+  margin-bottom:12px;
+  margin-top:12px
+      
+  }

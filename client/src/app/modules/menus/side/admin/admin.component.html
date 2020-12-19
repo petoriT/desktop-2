@@ -1,0 +1,228 @@
+<ion-menu-toggle *ngIf=" device_screen == 'Handset'" auto-hide="false">
+  <ion-toolbar>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="center" size="12">
+            <div *ngFor="let image of profile$.profileImage">
+              <ion-avatar     [routerLink]="['/user/user_profile']"  *ngIf="image" class="profile_pic">
+                <ion-img src="{{ image.url }}"></ion-img>
+              </ion-avatar>
+            </div>
+
+            <ion-avatar
+              style="background: #eaeaea"
+              *ngIf="avatar"
+              class="profile_pic"
+              [routerLink]="['/user/user_profile']"
+            >
+              <ion-img src="../assets/carbon_user-filled.svg"></ion-img>
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="12">
+            <ion-label style="text-align: center">
+              {{ profile$.first_name }} {{ profile$.first_name }}
+            </ion-label>
+          </ion-col>
+          <ion-col size="12">
+            <ion-card
+              class="center"
+              style="
+                height: 30px;
+                width: 100%;
+                margin-left: 2px;
+                border-radius: 20px;
+                text-align: center;
+                margin-bottom: 0px;
+                margin-top: 0px;
+                vertical-align: middle;
+              "
+            >
+              ADMIN
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-toolbar>
+  <ion-item>
+    <ion-icon name="cart" slot="start"></ion-icon>
+    <ion-label [routerLink]="['/user/landing']" (click)="userShow('user')"
+      >Market Place</ion-label
+    >
+  </ion-item>
+  <ion-item>
+    <ion-icon name="analytics" slot="start"></ion-icon>
+    <ion-label [routerLink]="['/admin-store/store']">Dashboard</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-icon name="basket" slot="start"></ion-icon>
+    <ion-label [routerLink]="['/admin-store/store/products']"
+      >Products</ion-label
+    >
+  </ion-item>
+  <ion-item>
+    <ion-icon slot="start" name="pricetag"></ion-icon>
+    <ion-label [routerLink]="['/admin-store/store/sales']">Sales</ion-label>
+  </ion-item>
+  <ion-item [routerLink]="['/admin-store/store/users']">
+    <ion-icon slot="start" name="person"></ion-icon>
+    <ion-label >Users</ion-label>
+  </ion-item>
+  <ion-item  (click)="gotoSettings()" >
+    <ion-icon name="build" slot="start"></ion-icon>
+    <ion-label
+      >Settings</ion-label
+    >
+  </ion-item>
+
+ 
+</ion-menu-toggle>
+<ion-menu-toggle *ngIf=" device_screen == 'Web'" auto-hide="false">
+  
+  <ion-item style="margin-top: 16px;z-index:2;" lines="none" class="ion_item_side">
+    <ion-img (click) = "goMarketPlace()" style="height: 96px;" src="./assets/cartAlistLogoIlustration.svg">
+
+    </ion-img>
+  </ion-item >
+  <ion-item style="top:-16px" class="ion_item_side" lines="full">
+
+  </ion-item>
+  <ion-item class="ion_item_side" lines="none"  [routerLink]="['/admin-store/store/dashboard']" (click)="actvated_tab ='dashboard';setDesktopSideMenuStateValue('dashboard')" [ngClass]="{'active_tab': actvated_tab == 'dashboard'}">
+   
+    <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'dashboard'}"   class="normal_das_menu" name="bar-chart" slot="start"></ion-icon>
+    <ion-label [ngClass]="{'dash_menu': actvated_tab == 'dashboard'}"   class="normal_das_menu"  >Dashboard</ion-label
+    >
+  </ion-item>
+  <ion-item lines="none" (click)="actvated_tab ='orders';setDesktopSideMenuStateValue('orders')" [routerLink]="['/admin-store/store/sales']" [ngClass]="{'active_tab': actvated_tab == 'orders'}"  class="ion_item_side">
+
+    <ion-icon  [ngClass]="{'dash_menu': actvated_tab == 'orders'}"   class="normal_das_menu"  slot="start" name="receipt"></ion-icon>
+    <ion-label  [ngClass]="{'dash_menu': actvated_tab == 'orders'}"   class="normal_das_menu" >Orders</ion-label
+    >
+  </ion-item>
+  <ion-item lines="none" (click)=" actvated_tab ='products';setDesktopSideMenuStateValue('products')" [routerLink]="['/admin-store/store/products']"  [ngClass]="{'active_tab': actvated_tab == 'products'}"   class="ion_item_side">
+    
+    <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'products'}"   class="normal_das_menu" slot="start"  name="gift"></ion-icon>
+
+    <ion-label [ngClass]="{'dash_menu': actvated_tab == 'products'}"   class="normal_das_menu"  color="tertiary" >Products </ion-label
+    >
+  </ion-item>
+  <ion-item lines="none" (click)="actvated_tab ='inventory';setDesktopSideMenuStateValue('inventory')" [routerLink]="['/admin-store/store/products']" [ngClass]="{'active_tab': actvated_tab == 'inventory'}" class="ion_item_side">
+    
+    <ion-icon  [ngClass]="{'dash_menu': actvated_tab == 'inventory'}" class="normal_das_menu" slot="start"  name="file-tray-stacked"></ion-icon>
+
+    <ion-label  [ngClass]="{'dash_menu': actvated_tab == 'inventory'}"  class="normal_das_menu" >Inventory </ion-label
+    >
+  </ion-item>
+  <ion-item lines="none" (click)="actvated_tab ='promotions';setDesktopSideMenuStateValue('promotions')" [routerLink]="[ '/admin-store/store/sales']" [ngClass]="{'active_tab': actvated_tab == 'promotions'}" class="ion_item_side">
+    
+    <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'promotions'}"   class="normal_das_menu" slot="start"  name="easel"></ion-icon>
+ 
+    <ion-label [ngClass]="{'dash_menu': actvated_tab == 'promotions'}"   class="normal_das_menu" >Promotions </ion-label
+    >
+  </ion-item>
+  <ion-item lines="none" (click)="actvated_tab ='users';setDesktopSideMenuStateValue('users') " [routerLink]="[ '/admin-store/store/users']" [ngClass]="{'active_tab': actvated_tab == 'users'}"  class="ion_item_side">
+    
+    <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'users'}"   class="normal_das_menu" slot="start"  name="people"></ion-icon>
+ 
+    <ion-label [ngClass]="{'dash_menu': actvated_tab == 'users'}"   class="normal_das_menu">Users </ion-label
+    >
+  </ion-item>
+  <ion-item lines="none"  (click)="setDesktopSideMenuStateValue('settings')" [routerLink]="[ '/admin-store/store/settings']" [ngClass]="{'active_tab': actvated_tab == 'settings'}" class="ion_item_side">
+
+    <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'Return_policy'}"   class="normal_das_menu" slot="start" name="settings"></ion-icon>
+
+    <ion-label [ngClass]="{'dash_menu': actvated_tab == 'Return_policy'}"     class="normal_das_menu"  >Settings</ion-label
+    >
+  </ion-item>
+  <ion-item  lines="full" (click)="actvated_tab ='reports';setDesktopSideMenuStateValue('reports')"  [routerLink]="['/admin-store/store/report']" [ngClass]="{'active_tab': actvated_tab == 'reports'}" class="ion_item_side">
+    
+    <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'reports'}"     class="normal_das_menu"  slot="start"  name="stats-chart"></ion-icon>
+
+    <ion-label [ngClass]="{'dash_menu': actvated_tab == 'reports'}"     class="normal_das_menu"  color="tertiary" >Reports</ion-label
+    >
+  </ion-item>
+
+
+    <ion-button (click) = "goMarketPlace()" style=" margin-top: 16px;" color="secondary" shape="round" expand="full">
+      Market Place
+    </ion-button>
+
+ 
+</ion-menu-toggle>
+
+<!--
+      <ion-col size =1.5>
+        <ion-item lines="none" class="ion_item_side">
+          <ion-img src="./assets/cartAlistLogoIlustration.svg">
+
+          </ion-img>
+        </ion-item >
+        <ion-item class="ion_item_side" lines="full">
+
+        </ion-item>
+        <ion-item class="ion_item_side" (click)="actvated_tab ='dashboard'" [ngClass]="{'active_tab': actvated_tab == 'dashboard'}">
+         
+          <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'dashboard'}"   class="normal_das_menu" name="bar-chart" slot="start"></ion-icon>
+          <ion-label [ngClass]="{'dash_menu': actvated_tab == 'dashboard'}"   class="normal_das_menu"  >Dashboard</ion-label
+          >
+        </ion-item>
+        <ion-item (click)="actvated_tab ='orders' ;navigateTo('/admin-store/store/sales','order')" [ngClass]="{'active_tab': actvated_tab == 'orders'}"  class="ion_item_side">
+
+          <ion-icon  [ngClass]="{'dash_menu': actvated_tab == 'orders'}"   class="normal_das_menu"  slot="start" name="receipt"></ion-icon>
+          <ion-label  [ngClass]="{'dash_menu': actvated_tab == 'orders'}"   class="normal_das_menu" >Orders</ion-label
+          >
+        </ion-item>
+        <ion-item (click)=" actvated_tab ='products' ; navigateTo( '/admin-store/store/products' ,'products')" [ngClass]="{'active_tab': actvated_tab == 'products'}"   class="ion_item_side">
+          
+          <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'products'}"   class="normal_das_menu" slot="start"  name="gift"></ion-icon>
+    
+          <ion-label [ngClass]="{'dash_menu': actvated_tab == 'products'}"   class="normal_das_menu"  color="tertiary" >Products </ion-label
+          >
+        </ion-item>
+        <ion-item (click)="actvated_tab ='inventory'; navigateTo( '/admin-store/store/products' ,'inventory')" [ngClass]="{'active_tab': actvated_tab == 'inventory'}" class="ion_item_side">
+          
+          <ion-icon  [ngClass]="{'dash_menu': actvated_tab == 'inventory'}" class="normal_das_menu" slot="start"  name="file-tray-stacked"></ion-icon>
+      
+          <ion-label  [ngClass]="{'dash_menu': actvated_tab == 'inventory'}"  class="normal_das_menu" >Inventory </ion-label
+          >
+        </ion-item>
+        <ion-item (click)="actvated_tab ='promotions';navigateTo( '/admin-store/store/sales' ,'promotions')" [ngClass]="{'active_tab': actvated_tab == 'promotions'}" class="ion_item_side">
+          
+          <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'promotions'}"   class="normal_das_menu" slot="start"  name="easel"></ion-icon>
+       
+          <ion-label [ngClass]="{'dash_menu': actvated_tab == 'promotions'}"   class="normal_das_menu" >Promotions </ion-label
+          >
+        </ion-item>
+        <ion-item (click)="actvated_tab ='users'; navigateTo( '/admin-store/store/users' ,'users') " [ngClass]="{'active_tab': actvated_tab == 'users'}"  class="ion_item_side">
+          
+          <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'users'}"   class="normal_das_menu" slot="start"  name="people"></ion-icon>
+       
+          <ion-label [ngClass]="{'dash_menu': actvated_tab == 'users'}"   class="normal_das_menu">Users </ion-label
+          >
+        </ion-item>
+        <ion-item  (click)="actvated_tab ='Return_policy';navigateTo( '/admin-store/store/users' ,'Return_policy')" [ngClass]="{'active_tab': actvated_tab == 'Return_policy'}" class="ion_item_side">
+          
+          <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'Return_policy'}"   class="normal_das_menu" slot="start" name="trail-sign"></ion-icon>
+
+          <ion-label [ngClass]="{'dash_menu': actvated_tab == 'Return_policy'}"     class="normal_das_menu"  >Return Policy</ion-label
+          >
+        </ion-item>
+        <ion-item (click)="actvated_tab ='reports'; navigateTo( '/admin-store/store/users' ,'reports') " [ngClass]="{'active_tab': actvated_tab == 'reports'}" class="ion_item_side">
+          
+          <ion-icon [ngClass]="{'dash_menu': actvated_tab == 'reports'}"     class="normal_das_menu"  slot="start"  name="stats-chart"></ion-icon>
+
+          <ion-label [ngClass]="{'dash_menu': actvated_tab == 'reports'}"     class="normal_das_menu"  color="tertiary" >Reports</ion-label
+          >
+        </ion-item>
+        <ion-item class="ion_item_side" lines="full">
+
+        </ion-item>
+      
+          <ion-button style=" margin-top: 16px;" color="secondary" shape="round" expand="full">
+            Market Place
+          </ion-button>
+    
+      </ion-col>
+-->

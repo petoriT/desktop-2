@@ -1,0 +1,13 @@
+ion-slide{
+  height: 73vh
+}
+.outlined{
+  border: 1px solid #018786 ;
+}
+.normal{
+  border:none ;
+}
+:host ::ng-deep .cropper {
+  height: 124.8vw;
+  width: 80vw
+}

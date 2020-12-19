@@ -1,0 +1,63 @@
+.upper_part {
+  height: 52%;
+  right: 0;
+  top: 0;
+}
+.lower_part {
+  min-height: 44%;
+  border-radius: 75px 5px 150px 5px;
+  margin: 5px;
+  overflow: visible;
+  position: fixed;
+  bottom: 0px;
+}
+
+
+.topPadding {
+  padding-top: 10px;
+}
+.circle_top {
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 35%;
+  height: 20%;
+  border-radius: 50%;
+  background: #90ded7;
+}
+.bottom_link {
+  position: absolute;
+  left: 86%;
+  top: 94%;
+}
+ion-toggle {
+  height: 22px;
+  --background: #5ba59e;
+  --background-checked: #90ded7;
+
+  --handle-background: #90ded7 url(/assets/No.svg) no-repeat center / contain;
+  --handle-background-checked: #018786 url(/assets/Yes.svg) no-repeat center /
+    contain;
+}
+.profile_pic {
+  position: absolute;
+  left: 37%;
+  top: -25%;
+  min-width: 100px;
+  min-height: 100px;
+}
+.ion_badge {
+  position: absolute;
+  top: 28%;
+  right: -15%;
+}
+.upload {
+  height: 11vh;
+  position: absolute;
+  left: 20vw;
+  width: 10vw;
+  opacity: 0;
+}
+ion-item{
+  background-color: none;
+}

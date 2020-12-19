@@ -1,0 +1,71 @@
+<ion-header style="padding-top: 5px" *ngIf="segmentChanged !== 'ad_user'" >
+  <ion-toolbar class="center">
+    <ion-buttons slot="start">
+      <ion-back-button size="small" defaultHref="/admin-store/store/dashboard" slot="icon-only" name="arrow-back">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-searchbar  placeholder="search" ></ion-searchbar>
+    <ion-button size="small" slot="end" shape="round" (click)="changeSegment('ad_user')" >
+      <ion-icon color="secondary"slot="icon-only" name="add"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-fab  *ngIf="segmentChanged == 'ad_user'" >
+  <ion-fab-button (click)="changeSegment('users')" size="small">
+    <ion-icon name="close-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-segment *ngIf="segmentChanged !== 'ad_user'" value="promo" fill="solid" [(ngModel)]="segmentChanged">
+  <ion-segment-button size="small" value="users">
+    <ion-label >Users</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="activity">
+    <ion-label >Activity</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content>
+  <div [ngSwitch]="segmentChanged" >
+    <app-activity  *ngSwitchCase="'activity'"  ></app-activity>
+    <app-admin-users [users$]="users" (segment)="changeSegment($event)" *ngSwitchCase="'users'"></app-admin-users>
+    <app-ad-user *ngSwitchCase="'ad_user'" ></app-ad-user>
+  </div>
+</ion-content>
+
+<ion-footer >
+  <ion-toolbar >
+    
+    <ion-row>
+      <ion-col class=" center " size=4>
+
+         
+            <ion-button size="small" shape="round"  fill="clear" [routerLink]="['/admin-store/store/products']">
+               
+                      <img style="max-width: 30%; display: block;" src="./assets/greyUserIcon.svg" alt="">
+                <sub style="color: grey; left:5px">Products</sub>
+            </ion-button> 
+          
+      </ion-col>
+        <ion-col class=" center  " size=4>
+            <ion-fab>
+              <ion-fab-button [routerLink]="['/admin-store/store/dashboard']" size="small" color="white">
+              <ion-icon color="primary" name="home"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+
+        </ion-col>
+      <ion-col class=" center" size=4>
+            <ion-button size="small"  fill="clear" shape="round" [routerLink]="['/admin-store/store/sales']">
+                <img style="max-width: 30%; display: block;" src="./assets/grey divIcons made by a href=httpswww.flaticon.comauthorssrip title=sripsripa from a href=httpswww.flaticon.com title=Flaticonwww.flaticon.comadiv  1.svg" alt="">
+         
+                   
+                <sub style="color: grey; left:5px">SALES</sub>
+             </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-toolbar>
+</ion-footer>

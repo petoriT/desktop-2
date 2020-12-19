@@ -1,0 +1,59 @@
+<div class="container">
+  <ion-chip
+    style="
+      background-position: center;
+      background-size: cover;
+      background-image: url(../../../../../../../assets/adSpace.jpg);
+    "
+    color="medium"
+    class="product2"
+    *ngIf="data"
+  >
+    <ion-text style="height: 90%;" class="center">
+      <h2 style="color: #ffffff;">
+        Recommended Products
+        <ion-icon name="caret-forward-outline"></ion-icon>
+      </h2>
+      <br />
+    </ion-text>
+  </ion-chip>
+
+  <div *ngFor="let product of products$; let i = index">
+    <ion-card class="product">
+      <div
+        (click)="viewDetailPage(product)"
+        style="background-image: url({{
+          image.url
+        }});background-position: center;background-size: cover; height: 70%;width: 100%;"
+        *ngFor="let image of product.productImage"
+      ></div>
+      <ion-card-header
+        style="height: 100%; padding: 5px; background-color: #018786;"
+      >
+        <ion-toolbar color="primary">
+          <ion-label>
+            {{ product.productPrice | currency: "R" }}
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button
+              fill="solid"
+              color="tertiary"
+              size="small"
+              (click)="addToCart(product)"
+              class="add_cart"
+            >
+              <ion-icon color="primary" name="cart-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-card-header>
+    </ion-card>
+    
+   
+  </div>
+  <div *ngIf="!data">
+    <ion-skeleton-text  class="product" animated></ion-skeleton-text>
+   
+  </div>
+
+</div>

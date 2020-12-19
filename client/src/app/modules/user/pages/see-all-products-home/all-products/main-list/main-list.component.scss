@@ -1,0 +1,58 @@
+.product{
+	
+    margin-bottom: 5px;
+ 
+    margin: 12px;
+    border-radius: 15px;
+
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+
+.product2{
+	height: 25vh;
+    width: 43vw;
+    display: inline;
+    margin:12px;
+     border-radius: 25px;
+     float:right
+}
+.productTwo{
+	height: 25vh;
+    width: 43vw;
+    display: inline;
+    margin:12px;
+     border-radius: 25px;
+     float:left
+}
+.productTwo2{
+	height: 25vh;
+    width: 43vw;
+    display: inline;
+    margin:12px;
+     border-radius: 25px;
+     float:right
+}
+.productTwos{
+	height: 25vh;
+    width: 100vw;
+    display: inline;
+    margin:12px;
+     border-radius: 25px;
+     float:right
+}
+.masonry {
+    -moz-column-width: auto;
+    -webkit-column-width: auto;
+    -moz-column-gap: 0.3125em;
+    -webkit-column-gap: 0.3125em;
+    column-count: 2;
+   }
+    
+   .masonry .item {
+    display: inline-block;
+    width:  100%;
+    padding-left: 5px;
+    padding-right: 5px;
+   }

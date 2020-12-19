@@ -1,0 +1,54 @@
+<ion-text class="center">
+  <h4 >UNIT SOLD</h4>
+</ion-text>
+         
+<ion-toolbar>
+ <ion-segment (ionChange)="segmentChanged($event)" value="total">
+  <ion-segment-button value="total">
+    <ion-label>Total </ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="products">
+    <ion-label>As Products</ion-label>
+  </ion-segment-button>
+   <ion-segment-button value="categories">
+    <ion-label>categories</ion-label>
+  </ion-segment-button>
+    <ion-segment-button value="Regions">
+    <ion-label>Regions</ion-label>
+  </ion-segment-button>
+</ion-segment>  
+</ion-toolbar>
+
+<ion-toolbar>
+
+  <ion-chip>
+      Filter Report : <ion-button fill="clear" (click)="presentActionSheet() "> {{currentFilter}} </ion-button>
+  </ion-chip>
+
+  <ion-chip>
+    {{range}} {{currentFilter}}
+  </ion-chip>
+
+</ion-toolbar>
+
+
+ <ion-item  class="ion-align-items-center">
+     <ion-chip  style="margin-right: 0px;"class="center" slot="start"> {{startDateO }}</ion-chip>
+    <ion-range style="    padding-top: 21px;padding-bottom: 21px;"(ionChange)="rangeChange($event)" min="6" max="30" step="1"  pin >
+    </ion-range>
+ 
+       <ion-chip  outline color ="primary"  style="margin-left: 0px;" slot="end" >
+
+        <ion-datetime *ngIf="currentFilter == 'Days'" value="{{today}}"  (ionChange)="startDateChange($event)"  display-timezone="utc"></ion-datetime>
+
+          <ion-datetime  *ngIf="currentFilter == 'Months'"  value="{{today}}"  display-format="MMM YY" (ionChange)="startDateChange($event)"  display-timezone="utc"></ion-datetime>
+           <ion-datetime  *ngIf="currentFilter == 'Years'"  value="{{today}}"  display-format="YYYY" (ionChange)="startDateChange($event)"  display-timezone="utc"></ion-datetime>
+
+         <ion-icon name="today-outline"></ion-icon>
+      </ion-chip>
+    
+  </ion-item>
+
+<app-line-chart [lineChartDataInput]="lineChartDataInput"  [lineChartLabelInput]="lineChartLabelInput" ></app-line-chart>
+<app-pie-chart> </app-pie-chart>
+

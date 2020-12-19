@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar *ngIf="  !showSearchB "  class="justify-content: center" no-padding >
+    <ion-buttons
+     
+      slot="start"
+    >
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+ 
+    <ion-img   *ngIf="  !showSearchB "  class="logo"  src="./assets/logo.svg"></ion-img>
+   
+    <ion-buttons   slot="end">
+      <ion-button  (click)="showSearch()">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-button
+        *ngIf="(cartItemCount | async) > 0"
+     
+        (click)="openCart()"
+      >
+      
+        <ion-icon  name="cart"></ion-icon>
+        <ion-label style="font-size: 16px;">
+          {{ cartItemCount | async }}
+        </ion-label>
+      </ion-button>
+
+      <ion-button
+        [routerLink]="['/user/user_profile']"
+        *ngIf="!token "
+      >
+        <ion-icon slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  
+  </ion-toolbar>
+  <ion-toolbar *ngIf="  showSearchB ">
+    <ion-searchbar (ionCancel)="cancelSearch()" showCancelButton="always"  ></ion-searchbar>
+  </ion-toolbar>
+
+  
+</ion-header>
+
+<!-- header for product details page
+
+<ion-header>
+  <ion-toolbar [class]="transparent_toolbar">
+    <ion-buttons
+      *ngIf="(headerStatus$ | async) !== 'product_detail'"
+      slot="start"
+    >
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons
+      *ngIf="(headerStatus$ | async) == 'product_detail'"
+      (click)="goBack()"
+      slot="start"
+    >
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button
+        *ngIf="(cartItemCount | async) > 0"
+        size="small"
+        (click)="openCart()"
+      >
+        <div>
+          {{ cartItemCount | async }}
+        </div>
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+      <ion-button
+        *ngIf="(headerStatus$ | async) !== 'product_detail'"
+        size="small"
+        [routerLink]="['/user/user_profile']"
+      >
+        <ion-icon slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
+
+
+-->

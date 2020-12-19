@@ -1,0 +1,60 @@
+
+<div *ngIf="no_Activity" >
+
+
+    <ion-grid>
+      <ion-row style="height: 70vh;" class="center">
+        <ion-col size="12">
+          <ion-label>
+            No user activity
+          </ion-label>
+        </ion-col>
+      
+      </ion-row>
+    </ion-grid>
+
+</div>
+<div *ngIf="!no_Activity">
+  
+    <ion-card (click)="setRead()" [ngClass]="read" *ngFor="let activity of  activities$ | async  ; let i = index"  class="ion-margin-top"  style="display:block;margin:5px;" color="light">
+      <ion-grid>
+        <ion-row>
+              <ion-col class="center" size=2>
+                <ion-chip>
+                  {{activity.user_ini}}
+                </ion-chip>
+              </ion-col>
+              <ion-col  class="center"   size=6>
+                <h5>
+                  <sub>{{activity.user_name}}</sub>
+                </h5>
+              </ion-col>
+              <ion-col  class="center"  size=4>
+                <ion-label style="width: 100%;  text-align: end;">
+                  <sub>{{activity.date | date:'MMM d, y'}}</sub>
+                </ion-label>
+              </ion-col>
+        </ion-row>
+           
+        <ion-row>
+              <ion-col size=2>
+
+              </ion-col>
+              <ion-col size=10>
+                
+                <ion-text>
+                
+                    {{activity.msg}}
+                
+                 
+                </ion-text>
+              
+              </ion-col>
+       
+       </ion-row>
+     
+      
+      </ion-grid>
+  </ion-card>
+
+</div>

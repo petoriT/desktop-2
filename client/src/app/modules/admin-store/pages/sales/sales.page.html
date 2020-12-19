@@ -1,0 +1,226 @@
+<ion-header
+  *ngIf="device_screen =='Handset' && segmentChanged !== 'ad_promo' && segmentChanged !=='deliver' "
+  style="padding-top: 5px"
+>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        size="small"
+        defaultHref="/admin-store/store/dashboard"
+        slot="icon-only"
+        name="arrow-back"
+      >
+      </ion-back-button>
+    </ion-buttons>
+    <ion-searchbar
+      (ionInput)="searchItems($event)"
+      [debounce]="1000"
+      placeholder="search {{searchPlaceholder}}..."
+    ></ion-searchbar>
+    <ion-button
+      size="small"
+      slot="end"
+      shape="round"
+      (click)="changeSegment('ad_promo')"
+    >
+      <ion-icon color="secondary" slot="icon-only" name="add"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-fab
+  *ngIf=" segmentChanged == 'ad_promo' || segmentChanged =='deliver' "
+  vertical="top"
+  horizontal="start"
+  slot="fixed"
+>
+  <ion-fab-button
+    *ngIf="segmentChanged == 'ad_promo'"
+    size="small"
+    (click)="changeSegment('promo')"
+  >
+    <ion-icon size="small" name="close-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-button
+    *ngIf="segmentChanged == 'deliver'"
+    size="small"
+    (click)="changeSegment('orders')"
+  >
+    <ion-icon size="small" name="close-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-segment
+  *ngIf="device_screen =='Handset' && segmentChanged !== 'ad_promo' && segmentChanged !=='deliver' "
+  value="promo"
+  fill="solid"
+  [(ngModel)]="segmentChanged"
+>
+  <ion-segment-button size="small" value="orders">
+    <ion-label>Orders</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="payments">
+    <ion-label> Processed </ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="promo">
+    <ion-label>Promotions</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content *ngIf="device_screen =='Handset'" >
+  <div [ngSwitch]="segmentChanged">
+    <app-promo
+      [vouchers]="vouchers$"
+      (notifyParent)="getNotification($event)"
+      *ngSwitchCase="'promo'"
+    ></app-promo>
+    <app-runsale *ngSwitchCase="'ad_promo'"></app-runsale>
+    <app-payments [orders]="orders$" *ngSwitchCase="'payments'">
+      payments</app-payments
+    >
+    <app-orders
+      [orders]="orders$"
+      (notifyParent)="getNotification($event)"
+      *ngSwitchCase="'orders'"
+    ></app-orders>
+    <app-deliver *ngSwitchCase="'deliver'"></app-deliver>
+  </div>
+</ion-content>
+
+
+<ion-footer *ngIf="device_screen =='Handset' && segmentChanged !== 'ad_promo' ">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col class="center" size="4">
+        <ion-button
+          color="light"
+          size="small"
+          shape="round"
+          fill="clear"
+          [routerLink]="['/admin-store/store/products']"
+        >
+          <img
+            style="max-width: 30%; display: block"
+            src="./assets/greyUserIcon.svg"
+            alt=""
+          />
+          <sub style="color: grey; left: 5px">Products</sub>
+        </ion-button>
+      </ion-col>
+      <ion-col class="center" size="4">
+        <ion-fab>
+          <ion-fab-button
+            [routerLink]="['/admin-store/store/dashboard']"
+            size="small"
+            color="white"
+          >
+            <ion-icon color="primary" name="home"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </ion-col>
+      <ion-col class="center" size="4">
+        <ion-button
+          color="light"
+          size="small"
+          fill="clear"
+          shape="round"
+          [routerLink]="['/admin-store/store/users']"
+        >
+          <img
+            style="max-width: 30%; display: block"
+            src="./assets/grey users divIcons made by a href=httpswww.flaticon.comauthorssrip title=sripsripa from a href=httpswww.flaticon.com title=Flaticonwww.flaticon.comadiv 1 (1).svg"
+          />
+          <sub style="color: grey; left: 5px">Users</sub>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+
+
+<div *ngIf="device_screen == 'Web'" style="background:#9e9e9e17;height: 100%;" >
+
+<ion-item  *ngIf=" segmentChanged !== 'ad_promo' && segmentChanged !=='deliver' " style="width: 100%;">
+    <ion-toolbar class="ion-no-margin" style="margin-top: 0px;"  class="ion-margin-top">
+      <ion-label style="    padding: 16px;font-size:x-large;" slot="start"> 
+        <h1> Welcome, <b>admin</b> </h1>
+      </ion-label>
+      <ion-searchbar
+      (ionInput)="searchItems($event)"
+      [debounce]="1000"
+      placeholder="search {{searchPlaceholder}}..."
+style="--border-radius: 50px;    padding-left: 16px; padding-right: 16px; --border-radius: 50px; "
+  ></ion-searchbar>
+  <ion-button
+  size="small"
+  slot="end"
+  shape="round"
+  (click)="changeSegment('ad_promo')"
+>
+  <ion-icon color="secondary" slot="icon-only" name="add"></ion-icon>
+</ion-button>
+    </ion-toolbar>    
+</ion-item>  
+<ion-item  *ngIf=" segmentChanged !== 'ad_promo' && segmentChanged !=='deliver' "style="width: 100%;">
+    <ion-chip>
+      Add a Promotions
+    </ion-chip>
+    <ion-chip>
+      order orders by most recent
+    </ion-chip>
+    <ion-chip>
+      order promos by most recent
+    </ion-chip>
+</ion-item>
+<ion-item *ngIf=" segmentChanged !== 'ad_promo' && segmentChanged !=='deliver' " style="--background:#9e9e9e00;"  >
+  <ion-grid style="    padding-bottom: 0px;">
+    <ion-row>
+      <ion-col style="padding-bottom: 0px;" size=8>
+          <ion-segment
+          *ngIf=" segmentChanged !== 'ad_promo' && segmentChanged !=='deliver' "
+          value="promo"
+          fill="solid"
+          [(ngModel)]="segmentChanged"
+        >
+          <ion-segment-button size="small" value="orders">
+            <ion-label>Orders</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="payments">
+            <ion-label> Processed </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="promo">
+            <ion-label>Promotions</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col size=4>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-item>
+<ion-contant >
+  <div [ngSwitch]="segmentChanged">
+    <app-promo
+      [vouchers]="vouchers$"
+      (notifyParent)="getNotification($event)"
+      *ngSwitchCase="'promo'"
+    ></app-promo>
+    <app-runsale *ngSwitchCase="'ad_promo'"></app-runsale>
+    <app-payments [orders]="orders$" *ngSwitchCase="'payments'">
+     </app-payments
+    >
+    <app-orders
+      [orders]="orders$"
+      (notifyParent)="getNotification($event)"
+      *ngSwitchCase="'orders'"
+    ></app-orders>
+    <app-deliver *ngSwitchCase="'deliver'"></app-deliver>
+  </div>
+</ion-contant>
+</div>
+
+
+
+

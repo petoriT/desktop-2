@@ -1,0 +1,131 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$app-primary: mat-palette($mat-indigo);
+$app-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$app-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($app-theme);
+
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+@font-face {
+  //cred <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>
+  font-family:porkyFont;
+  src: url(/assets/@font-face/6f1ceea75ad34758ad097dc977c7deb3.woff);
+}
+
+
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+    --ion-color-primary: #018786;
+    --ion-color-primary-rgb: 1,135,134;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255,255,255;
+    --ion-color-primary-shade: #017776;
+    --ion-color-primary-tint: #1a9392;
+
+    --ion-color-secondary: #FFD700;
+    --ion-color-secondary-rgb: 255,215,0;
+    --ion-color-secondary-contrast: #000000;
+    --ion-color-secondary-contrast-rgb: 0,0,0;
+    --ion-color-secondary-shade: #e0bd00;
+    --ion-color-secondary-tint: #ffdb1a;
+
+    --ion-color-tertiary: #90DED7;
+    --ion-color-tertiary-rgb: 144,222,215;
+    --ion-color-tertiary-contrast: #000000;
+    --ion-color-tertiary-contrast-rgb: 0,0,0;
+    --ion-color-tertiary-shade: #7fc3bd;
+    --ion-color-tertiary-tint: #9be1db;
+
+    --ion-color-success: #2dd36f;
+    --ion-color-success-rgb: 45,211,111;
+    --ion-color-success-contrast: #ffffff;
+    --ion-color-success-contrast-rgb: 255,255,255;
+    --ion-color-success-shade: #28ba62;
+    --ion-color-success-tint: #42d77d;
+
+    --ion-color-warning: #ffc409;
+    --ion-color-warning-rgb: 255,196,9;
+    --ion-color-warning-contrast: #000000;
+    --ion-color-warning-contrast-rgb: 0,0,0;
+    --ion-color-warning-shade: #e0ac08;
+    --ion-color-warning-tint: #ffca22;
+
+    --ion-color-danger: #ff1100;
+  --ion-color-danger-rgb: 255,17,0;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255,255,255;
+  --ion-color-danger-shade: #e00f00;
+  --ion-color-danger-tint: #ff291a;
+
+    --ion-color-dark: #222428;
+    --ion-color-dark-rgb: 34,36,40;
+    --ion-color-dark-contrast: #ffffff;
+    --ion-color-dark-contrast-rgb: 255,255,255;
+    --ion-color-dark-shade: #1e2023;
+    --ion-color-dark-tint: #383a3e;
+
+    --ion-color-medium: #977C0C;
+    --ion-color-medium-rgb: 151,124,12;
+    --ion-color-medium-contrast: #ffffff;
+    --ion-color-medium-contrast-rgb: 255,255,255;
+    --ion-color-medium-shade: #856d0b;
+    --ion-color-medium-tint: #a18924;
+
+    --ion-color-light: #f4f5f8;
+    --ion-color-light-rgb: 244,245,248;
+    --ion-color-light-contrast: #000000;
+    --ion-color-light-contrast-rgb: 0,0,0;
+    --ion-color-light-shade: #d7d8da;
+    --ion-color-light-tint: #f5f6f9;
+
+      --ion-color-white: #ffffff;
+  --ion-color-white-rgb: 255,255,255;
+  --ion-color-white-contrast: #000000;
+  --ion-color-white-contrast-rgb: 0,0,0;
+  --ion-color-white-shade: #e0e0e0;
+  --ion-color-white-tint: #ffffff;
+
+  }
+
+  .center{
+    text-align: center;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+
+     }
+     
+.flat {
+box-shadow:  11px 11px 22px #d6d6d6,
+             -11px -11px 22px #ffffff;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*::-webkit-scrollbar{
+  display:none
+}

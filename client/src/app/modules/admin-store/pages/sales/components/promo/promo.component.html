@@ -1,0 +1,203 @@
+<div *ngIf="no_promo" class="center">
+  <ion-grid>
+    <ion-row style="height: 70vh" class="center">
+      <ion-col size="12">
+        <ion-label> No records of Promotion or Sale </ion-label>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button (click)="addPromo()" shape="round"
+          >Add Promotion <ion-icon name="add-circle-outline"></ion-icon
+        ></ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+<div *ngIf="!no_promo">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="property_badge" size="6">
+          <ion-grid class="ion-no-padding">
+            <ion-row class="ion-no-padding">
+              <ion-col class="ion-no-padding" size="12">
+                <ion-label style="display: block"> Title </ion-label>
+              </ion-col>
+              <ion-col class="ion-no-padding" size="12">
+                <ion-label>
+                  <sub> (voucher Number ) </sub>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col class="center property_badge" size="2">
+          <ion-label> Target Qouta </ion-label>
+        </ion-col>
+        <ion-col class="center property_badge" size="2">
+          <ion-label> Qouta Spent </ion-label>
+        </ion-col>
+        <ion-col class="center property_badge" size="2">
+          <ion-label> Exp Date </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+  <mat-accordion>
+    <mat-expansion-panel
+      hideToggle
+      *ngFor="let voucher of all_vouchers; let i = index"
+    >
+      <ion-fab style="position: relative; top: -55px; left: 250px" edge>
+        <ion-button
+          shape="round"
+          fill="solid"
+          (click)="updatePromo(voucher)"
+          size="small"
+          color="primary"
+        >
+          <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button
+          shape="round"
+          (click)="onDeletePromo(voucher._id)"
+          size="small"
+          color="danger"
+        >
+          <ion-icon
+            fill="solid"
+            size="small"
+            slot="icon-only"
+            name="trash"
+          ></ion-icon>
+        </ion-button>
+      </ion-fab>
+
+      <mat-expansion-panel-header>
+        <ion-grid>
+          <ion-row>
+            <ion-col no-padding size="1">
+              <ion-chip>
+                <ion-label>
+                  {{ i + 1 }}
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col class="center" size="5">
+              <ion-label>
+                {{ voucher.title }}
+
+                <!-- <sub> {{voucher.voucher_number}}</sub>-->
+              </ion-label>
+            </ion-col>
+
+            <ion-col class="center" size="2">
+              <ion-label [ngSwitch]="voucher.type">
+                <ion-badge *ngSwitchCase="'buy1get1free'">Get1Free</ion-badge>
+                <ion-badge *ngSwitchCase="'combo'">Combo</ion-badge>
+                <ion-badge *ngSwitchCase="'volume'">Volume </ion-badge>
+                <ion-badge *ngSwitchCase="'itemDiscount'">Discount </ion-badge>
+              </ion-label>
+            </ion-col>
+            <ion-col class="center" size="2">
+              <ion-label>
+                {{ voucher.total_quota }}
+              </ion-label>
+            </ion-col>
+            <ion-col class="center" size="2">
+              <ion-label>
+                {{ voucher.date | date: "dd MMM" }}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </mat-expansion-panel-header>
+
+      <ng-template matExpansionPanelContent>
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="1"> </ion-col>
+              <ion-col class="center" size="5">
+                <ion-label>
+                  <sub> Product Name </sub>
+                </ion-label>
+              </ion-col>
+              <ion-col class="center" size="2">
+                <ion-label>
+                  <sub>Quota</sub>
+                </ion-label>
+              </ion-col>
+              <ion-col class="center" size="2">
+                <ion-label>
+                  <sub>Product Price </sub>
+                </ion-label>
+              </ion-col>
+              <ion-col class="center" size="2">
+                <ion-label>
+                  <sub>Discount </sub>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div *ngFor="let product of voucher.products; let i = index">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="1">
+                <ion-avatar>
+                  <img
+                    src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                  />
+                </ion-avatar>
+              </ion-col>
+              <ion-col class="center" size="5">
+                <ion-label>
+                  {{ product.prod.productName }}
+                </ion-label>
+              </ion-col>
+              <ion-col class="center" size="2">
+                <ion-label>
+                  {{ product.p_quota }}
+                </ion-label>
+              </ion-col>
+              <ion-col class="center" size="2">
+                <ion-label>
+                  {{ product.prod.productPrice }}
+                </ion-label>
+              </ion-col>
+              <ion-col class="center" size="2">
+                <ion-label>
+                  {{ product.discount }}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</div>
+
+<!--
+    date: "2020-05-02T14:59:20.147Z"
+platform: (2) ["twitter", "insta"]
+products: [{…}]
+run_sale: true
+store_id: "5e4ab5a2e1cb938add570192"
+title: "Happy Monday"
+total_quota: 15
+type: "combo"
+voucher_number: "QSonQqgiBi"
+__v: 0
+_id: "5ead8ac881d04c4e14177457"
+-->

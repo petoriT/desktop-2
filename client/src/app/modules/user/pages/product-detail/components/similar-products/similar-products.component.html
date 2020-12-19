@@ -1,0 +1,16 @@
+<h6>Similar Products</h6>
+<ion-card
+  class="productsCard"
+  color="primary"
+  *ngFor="let product of similarProducts$"
+  item-left
+>
+  <div
+    (click)="viewDetailPage(product)"
+    style="background-image: url({{
+      image.url
+    }});background-position: center;background-size: cover; height: 100%;width: 100%;"
+    *ngFor="let image of product.productImage"
+    class="productInnerDisplay"
+  ></div>
+</ion-card>

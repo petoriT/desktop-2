@@ -1,0 +1,15 @@
+.clear_navbar{
+    --background: transparent;
+    --ion-color-base: transparent !important;
+    position: absolute;
+    --border-width: 0 !important;
+}
+.logo{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    max-width: 35%;
+    margin: auto;
+}

@@ -1,0 +1,214 @@
+<ion-content >
+  <ion-fab vertical="top" horizontal="start">
+   <ion-fab-button size="small">
+    <ion-back-button  defaultHref="user/landing/home" ></ion-back-button>
+   </ion-fab-button>
+   
+  </ion-fab>
+
+  <ion-slides style="height: 100vh;" #UpdateinfoSlides pager="true">
+    <ion-slide >
+      <form [formGroup]="profileFormSlide1">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <img style="height:30vh" src="../assets/userAuthUserUpdateInfo2.svg" />
+            </ion-col>
+            <ion-col size="12" style="padding-bottom: 48px;">
+              <ion-title>
+                <h1 style="text-align: center">Basic User Info</h1>
+              </ion-title>
+              <ion-text style="text-align: center">
+                <sub>
+                  Key in your basic information for tracking and reference purposes 
+                </sub>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">
+                  First Name
+                </ion-label>
+                <ion-input    
+                type="text"
+                 formControlName="first_name"
+                 
+               ></ion-input>
+              </ion-item>
+        
+            </ion-col>
+            <ion-col size="6">
+              <ion-item >
+                <ion-label position="floating">
+                  Last Name
+                </ion-label>
+              <ion-input
+                type="text"
+                formControlName="last_name"
+              ></ion-input>
+              </ion-item>
+            </ion-col>
+         
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-slide>
+   
+  
+    <ion-slide >
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div formGroupName="address">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="12" style="padding-bottom: 48px;">
+                      <ion-title>
+                        <h1 style="text-align: center">User Address</h1>
+                      </ion-title>
+                      <ion-text style="text-align: center">
+                        <sub>
+                          key in address for deliveries and for references 
+                        </sub>
+                      </ion-text>
+                    </ion-col>
+
+                  
+                    <ion-col size="5">
+                      <ion-item >
+                        <ion-label position="floating">
+                          House No
+                        </ion-label>
+                      <ion-input
+                        type="text"
+                        formControlName="unit"
+                      ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="7">
+                      <ion-item >
+                        <ion-label position="floating">
+                          Street Name
+                        </ion-label>
+                      <ion-input
+                 
+                        type="text"
+                        formControlName="street_name"
+                      
+                      ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-item >
+                        <ion-label position="floating">
+                          Complex(optional)
+                        </ion-label>
+                      <ion-input
+                        type="text"
+                        formControlName="complex"
+                      ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-item >
+                        <ion-label position="floating">
+                          Suburb
+                        </ion-label>
+                      <ion-input
+                 
+                        type="text"
+                        formControlName="suburb"
+                      ></ion-input>
+                      </ion-item>
+                    </ion-col>
+
+                    <ion-col soze="6">
+                      <ion-item >
+                        <ion-label position="floating">
+                         City
+                        </ion-label>
+                      <ion-input
+                    
+                        type="text"
+                        formControlName="city"
+                      ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="8">
+                      <ion-item >
+                        <ion-label position="floating">
+                          Province
+                        </ion-label>
+                      <ion-input
+                        type="text"
+                        formControlName="province"
+                      ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="4">
+                      <ion-item >
+                        <ion-label position="floating">
+                        Code
+                        </ion-label>
+                      <ion-input
+                
+                        type="text"
+                        formControlName="zip"
+                      ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-button shape="round" type="submit" [disabled]="!profileForm.valid">
+                        Submit
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+
+      <!--<p>
+      Form Status: {{ profileForm.status }} Form Value: {{ profileForm.value |
+      json }}
+    </p>-->
+    </ion-slide>
+  </ion-slides>
+  <ion-fab *ngIf="showNext " vertical="bottom" horizontal="end">
+    <ion-button
+      shape="round"
+      class="ion-padding-end"
+      style="color: #000000"
+      size="small"
+      color="white"
+      (click)="next()"
+    >
+      next
+    </ion-button>
+  </ion-fab>
+  <ion-fab *ngIf="showBack " horizontal="start" vertical="bottom">
+    <ion-button
+      shape="round"
+      class="ion-padding-start"
+      style="color: #000000"
+      size="small"
+      color="white"
+      (click)=" slidesBack()"
+    >
+      back
+    </ion-button>
+  </ion-fab>
+</ion-content>

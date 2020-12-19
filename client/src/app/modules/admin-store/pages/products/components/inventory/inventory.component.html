@@ -1,0 +1,502 @@
+<div *ngIf="no_product">
+  <ion-grid>
+    <ion-row style="height: 70vh" class="center">
+      <ion-col size="12">
+        <ion-label> No Products </ion-label>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button (click)="sendToParent()" shape="round"
+          >Add A product <ion-icon name="add-circle-outline"></ion-icon
+        ></ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+<div *ngIf="!no_product">
+  <mat-accordion *ngIf="device_screen =='Handset'">
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="center" size="8"> </ion-col>
+          <ion-col class="center" size="2">
+            <ion-label
+              ><sub style="vertical-align: top">IN STOCK</sub></ion-label
+            >
+          </ion-col>
+          <ion-col class="center" size="2">
+            <ion-label><sub>SOLD</sub></ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+
+    <mat-expansion-panel
+      [disabled]="clickButton"
+      (click)="clickButton = false"
+      (click)="expanded(product)"
+      hideToggle
+      *ngFor="let product of products$ | async; let i = index"
+    >
+      <mat-expansion-panel-header
+        [collapsedHeight]="'12vh'"
+        style="padding: 0px"
+      >
+        <ion-item-sliding>
+          <ion-item lines="none" style="--inner-padding-end: 0px">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="center" size="2">
+                  <ion-avatar style="height: 13vw; width: auto">
+                    <img src="{{ product.productImage[0].url }}" />
+                  </ion-avatar>
+                </ion-col>
+                <ion-col class="center" size="6">
+                  <ion-label
+                    style="text-align: center"
+                    value="product.productName"
+                  >
+                    <sub>{{ product.productName }}</sub>
+                  </ion-label>
+                </ion-col>
+                <ion-col class="center" size="2">
+                  <ion-label
+                    ><sub>{{ product.in_stock }}</sub></ion-label
+                  >
+                </ion-col>
+                <ion-col class="center" size="2">
+                  <ion-label
+                    ><sub>{{ product.sold }}</sub></ion-label
+                  >
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+
+          <ion-item-options>
+            <ion-item-option color="light">
+              <ion-col size="12">
+                <ion-button
+                  *ngIf="!edit"
+                  shape="round"
+                  fill="solid"
+                  (click)="editProduct()"
+                  size="small"
+                  color="primary"
+                >
+                  <ion-icon
+                    size="small"
+                    slot="icon-only"
+                    name="create"
+                  ></ion-icon>
+                </ion-button>
+                <ion-button
+                  *ngIf="edit"
+                  [disabled]="updateProduct.invalid"
+                  shape="round"
+                  type="submit"
+                  fill="solid"
+                  (click)="update()"
+                  size="small"
+                  color="primary"
+                >
+                  <ion-icon
+                    size="small"
+                    slot="icon-only"
+                    name="save-outline"
+                  ></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </mat-expansion-panel-header>
+
+      <ng-template matExpansionPanelContent>
+        <form [formGroup]="updateProduct">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-label><sub>Production Status</sub></ion-label>
+                <ion-select
+                  [attr.disabled]="!edit"
+                  formControlName="production_status"
+                  value="{{ product.production_status }}"
+                >
+                  <ion-select-option value="onHold"
+                    ><sub>On hold</sub></ion-select-option
+                  >
+                  <ion-select-option value="Active"
+                    ><sub>Active</sub></ion-select-option
+                  >
+                  <ion-select-option value="OutOfStock"
+                    ><sub>Out of Stock</sub></ion-select-option
+                  >
+                  <ion-select-option value="Discontinued"
+                    ><sub>Discontinued</sub></ion-select-option
+                  >
+                </ion-select>
+              </ion-col>
+              <ion-col *ngIf="product.production_status == 'Active'" size="12">
+                <ion-label><sub>In Stock</sub></ion-label>
+                <ion-input
+                  formControlName="in_stock"
+                  [attr.disabled]="!edit"
+                  clearInput
+                  value="{{ product.in_stock }}"
+                ></ion-input>
+              </ion-col>
+              <ion-col
+                *ngIf="
+                  product.production_status == 'OutOfStock' ||
+                  product.production_status == 'onHold'
+                "
+                size="12"
+              >
+                <ion-item>
+                  <ion-label position="stacked"
+                    ><sub>next Available Date</sub></ion-label
+                  >
+                  <ion-datetime
+                    formControlName="next_available_date"
+                    [attr.disabled]="!edit"
+                    displayFormat="DDDD MMM D, YYYY"
+                    min="2020"
+                    max="2030"
+                    value="2020-04-19"
+                  ></ion-datetime>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div *ngIf="device_screen =='Web'">
+    <ion-grid>
+      <ion-row>
+        <ion-col size=8>
+            <ion-item style="    --background: #f6f6f6;" >
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="center" size="8"> </ion-col>
+                  <ion-col class="center" size="2">
+                    <ion-label><sub >IN STOCK</sub></ion-label>
+                  </ion-col>
+                  <ion-col class="center" size="2">
+                    <ion-label><sub>SOLD</sub></ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+           
+            </ion-item>
+            <ion-content class="content_area" style="overflow: scroll;height: 75vh;"  scroll="true">
+                
+              <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+                <ion-refresher-content></ion-refresher-content>
+              </ion-refresher>
+
+              <ion-list style="padding-bottom: 120px;" >
+                <ion-item-sliding  *ngFor="let product of products$ | async; let i = index"  #slidingItem>
+                  
+                  <ion-item [ngClass]="{'active_product': detail_view_product == product }"   href="javascript:void(0)" #item  (click)="setDesktopProductView(product) " lines="full" style="--inner-padding-end: 0px">
+                  
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col class="center" size="1">
+                          <ion-chip class="center" style="height: 24px;
+                          width: 24px;">
+                            <sub> {{i+1}} </sub>
+                          </ion-chip>
+                        </ion-col>
+                    
+                        <ion-col class="center" size="2">
+                          <ion-avatar style=" height: 64px; width: 64px;">
+                            <img src="{{ product.productImage[0].url }}" />
+                          </ion-avatar>
+                        </ion-col>
+                        <ion-col class="center" size="5">
+                          <ion-label
+                            style="text-align: center"
+                            value="product.productName"
+                          >
+                            <sub>{{ product.productName }}</sub>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col class="center" size="2">
+                          <ion-label
+                            ><sub>{{ product.in_stock }}</sub></ion-label
+                          >
+                        </ion-col>
+                        <ion-col class="center" size="2">
+                          <ion-label
+                            ><sub>{{ product.sold }}</sub></ion-label
+                          >
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                    
+                  </ion-item>
+      
+                  <ion-item-options>
+                    <ion-item-option color="light">
+                      <ion-button
+                        *ngIf="!edit"
+                        shape="round"
+                        fill="solid"
+                        (click)="editProduct()"
+                        size="small"
+                        color="primary"
+                      >
+                        <ion-icon
+                          size="small"
+                          slot="icon-only"
+                          name="create"
+                        ></ion-icon>
+                      </ion-button>
+                      <ion-button
+                        *ngIf="edit"
+                        [disabled]="updateProduct.invalid"
+                        shape="round"
+                        type="submit"
+                        fill="solid"
+                        (click)="update()"
+                        size="small"
+                        color="primary"
+                      >
+                        <ion-icon
+                          size="small"
+                          slot="icon-only"
+                          name="save-outline"
+                        ></ion-icon>
+                      </ion-button>
+                    </ion-item-option>
+                    <ion-item-option color="light">
+                      <ion-button
+                        shape="round"
+                        (click)="onDeleteProduct(product)"
+                        size="small"
+                        color="danger"
+                      >
+                        <ion-icon
+                          fill="solid"
+                          size="small"
+                          slot="icon-only"
+                          name="trash"
+                        ></ion-icon>
+                      </ion-button>
+                    </ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+               </ion-list>
+               
+
+
+            
+              </ion-content>
+        </ion-col>
+        <ion-col   size=4>
+        <ion-content style="    --background: #f6f6f6;height: 80vh;" >
+          <ion-card color="primary" *ngIf="detail_view_product" style="box-shadow: none;margin-bottom: 100px" >
+            <form [formGroup]="updateProduct">
+              <ion-grid>
+                <ion-row>
+                  <ion-col style="height: fit-content;" size=12>
+                    <ion-slides style="height: 55%;">
+                      <ion-slide *ngFor="let image of detail_view_product.productImage">
+                          <ion-img
+                            style="width: 100%;"
+                            (click)="viewImageOptions(image, product)"
+                            picture_uploaded
+                            src="{{ image.url }}"
+                          >
+                          </ion-img>
+                      <ion-fab slot="start" style="bottom: 0px;left:0px">
+                        <ion-fab-button
+                        *ngIf="!edit"
+                        shape="round"
+                        fill="solid"
+                        (click)="editProduct()"
+                     
+                      >
+                        <ion-icon
+                       
+                          name="create"
+                        ></ion-icon>
+                      </ion-fab-button>
+                      <ion-fab-button
+                        *ngIf="edit"
+                        [disabled]="updateProduct.invalid"
+                        shape="round"
+                        type="submit"
+                        fill="solid"
+                        (click)="update()"
+                        
+                   
+                      >
+                        <ion-icon
+                         
+                          name="save"
+                        ></ion-icon>
+                      </ion-fab-button>
+                      </ion-fab>
+                         
+
+                         
+                        </ion-slide>
+                    </ion-slides>
+               
+
+                   
+                    <ion-item color="primary" >
+                      <ion-label position="floating">Product Name:</ion-label>
+                      <ion-input
+                        formControlName="productName"
+                        [attr.disabled]="!edit"
+                        value="{{detail_view_product.productName }}"
+                        position="floating"
+                      >
+                      </ion-input>
+                      <div
+                        *ngIf="
+                          updateProduct.get('productName').invalid &&
+                          updateProduct.get('productName').touched
+                        "
+                      >
+                        <ion-text
+                          *ngIf="
+                            updateProduct.get('productName').errors?.required
+                          "
+                          color="danger"
+                          ><sub>Product name is required</sub></ion-text
+                        >
+                        <ion-text
+                          *ngIf="
+                            updateProduct.get('productName').errors?.minlength
+                          "
+                          color="danger"
+                          ><sub
+                            >Product name must be at least 2 Characters</sub
+                          ></ion-text
+                        >
+                      </div>
+                    </ion-item>
+           
+                    <ion-item color="primary">
+                      <ion-label position="floating">Price</ion-label>
+                      <ion-input
+                        formControlName="productPrice"
+                        [attr.disabled]="!edit"
+                        value="{{ detail_view_product.productPrice }}"
+                      ></ion-input>
+                    </ion-item>
+                        <ion-item >
+                          <ion-label><sub>Production Status</sub></ion-label>
+                          <ion-select
+                            [attr.disabled]="!edit"
+                            formControlName="production_status"
+                            value="{{ detail_view_product.production_status }}"
+                          >
+                            <ion-select-option value="onHold"
+                              ><sub>On hold</sub></ion-select-option
+                            >
+                            <ion-select-option value="Active"
+                              ><sub>Active</sub></ion-select-option
+                            >
+                            <ion-select-option value="OutOfStock"
+                              ><sub>Out of Stock</sub></ion-select-option
+                            >
+                            <ion-select-option value="Discontinued"
+                              ><sub>Discontinued</sub></ion-select-option
+                            >
+                          </ion-select>
+                        </ion-item>
+                      
+                          <ion-item *ngIf="detail_view_product.production_status == 'Active'">
+                            <ion-label><sub>In Stock</sub></ion-label>
+                            <ion-input
+                              formControlName="in_stock"
+                              [attr.disabled]="!edit"
+                              clearInput
+                              value="{{detail_view_product.in_stock }}"
+                            ></ion-input>
+                          </ion-item>
+                        
+                  
+                     
+                          <ion-item *ngIf="
+                          detail_view_product.production_status == 'OutOfStock' ||
+                          detail_view_product.production_status == 'onHold'
+                        ">
+                            <ion-label position="stacked"
+                              ><sub>next Available Date</sub></ion-label
+                            >
+                            <ion-datetime
+                              formControlName="next_available_date"
+                              [attr.disabled]="!edit"
+                              displayFormat="DDDD MMM D, YYYY"
+                              min="2020"
+                              max="2030"
+                              value="2020-04-19"
+                            ></ion-datetime>
+                          </ion-item>
+                       
+                     
+                  </ion-col>
+                  
+              
+                </ion-row>
+            
+              
+                    <!--<ion-grid>
+                      <ion-row>
+                        <ion-col size="12">
+                       
+  
+                          <ion-item >
+                          <div *ngFor="let image of product.productImage">
+                            <ion-avatar  style="height: 13vw; width: auto;">
+                              <img src="{{ image.url }}" >
+                            </ion-avatar>
+                          </div>
+                          </ion-item>
+  
+  
+                        </ion-col>
+                        <ion-col size="12">
+                          <ion-button
+                            size="small"
+                            shape="round"
+                            (click)="uploadImage()"
+                            ><sub>Upload Image</sub>
+                            <ion-input
+                            style="z-index: 10;
+                            position: absolute;
+                            width: 101px;
+                            opacity: 0;"
+                            [attr.disabled]="!edit"
+                            type="file"
+                            multiple
+                            (change)="handleFileInput($event)"
+                          ></ion-input>
+  
+                            </ion-button
+                          >
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>-->
+              
+               
+              </ion-grid>
+            </form>
+
+
+          </ion-card>
+        </ion-content> 
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </div>
+</div>

@@ -1,0 +1,40 @@
+.adress{
+    float: left;
+}
+ion-slide{
+    height: 90vh;
+}
+div .item-inner{
+    padding-right:0px
+}
+.one{
+    background: #018786;
+    height: 40vh;
+    width: 40vh;
+    position: absolute;
+    top: 10vh;
+    border-radius: 40vh;
+    left: -20vh;
+}
+.two{
+    background: #FFD700;
+    height: 40vh;
+    width: 40vh;
+    position: absolute;
+    top: 10vh;
+    border-radius: 40vh;
+    left: 20vh;
+}
+.three{
+    background: #90DED7;
+    height: 30vw;
+    width: 30vw;
+    top: 0;
+    border-radius: 30vh;
+    left: 6vw;
+    position: absolute;
+}
+.grey{
+    
+    --background: var(--ion-item-background, var(--ion-background-color,#e9ecef));
+}

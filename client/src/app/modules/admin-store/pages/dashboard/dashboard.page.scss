@@ -1,0 +1,91 @@
+
+.top{
+
+  width: 100vw;
+}
+.bottom{
+  width: 100vw;;
+      position: fixed;
+  bottom: 12vh;
+}
+.option{
+  height: 28vw;
+    width: 28vw;
+    border-radius: 28vw;
+    margin-right: 8px;
+    margin-left: 8px;
+margin-bottom:12px;
+margin-top:12px
+    
+}
+.reports:active {
+	backgroud-color:#018786
+}
+
+.dash{
+	height: 52vh;
+	border-radius: 5vw 5vw 0vw 5vw;
+	margin-bottom: 0px !important ;
+	overflow: scroll
+}
+.reports{
+	height: 72vh;
+	border-radius: 5vw 5vw 0vw 5vw;
+	margin-bottom: 0px !important ;
+	overflow: scroll;
+
+}
+.ion_item_side{
+  --background:#018786
+}
+
+.left_card{
+
+height: 112px;
+
+box-sizing: border-box;
+border-radius: 50px 5px;
+}
+.right_card{
+
+height:112px;
+
+
+box-sizing: border-box;
+border-radius: 5px 50px;
+}
+.inner_icon{
+ 
+
+height: 40px;
+background-color: white;
+border-radius: 15px 5px;
+}
+.inner_card_value{
+
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 32px;
+line-height: 48px;
+text-overflow: ellipsis;
+white-space: nowrap;
+
+
+color: rgba(0, 0, 0, 0.68);
+
+}
+.inner-card_value_container{
+  
+}
+.active_tab{
+  border-radius: 50px;
+  width: 115%;
+  --background:white
+}
+.dash_menu{
+  color:#018786 !important 
+}
+.normal_das_menu{
+color:#90DED7
+} 

@@ -1,0 +1,152 @@
+
+
+<ion-header>
+  <ion-button (click)=dismiss()>dismiss</ion-button>
+</ion-header>
+<ion-content scroll-y="true">
+  <ion-card fill="outline">
+    <ion-card-header>
+      <ion-title>Add Promo</ion-title>
+    </ion-card-header>
+
+    <ion-card-content >
+        <form [formGroup]="addPromo" (ngSubmit)="onSubmit()">
+          <ion-grid>
+
+            <ion-row>
+
+              <ion-col size=3>
+                <ion-button shape="round"  (click)="addProduct()" color="primary" size="small" >Add</ion-button>
+              </ion-col>
+              <ion-col size=9>
+                <div  formArrayName="products">
+                  <div  *ngFor="let product of productFormGroup.controls; let i = index;">
+                      <div [formGroupName]="i" >
+                        <div>
+                              <ion-row>
+                              <ion-col size=8>
+                              <ion-select value="selectValue" okText="Okay" cancelText="Dismiss">
+                                <ion-label position="floating" >Product</ion-label>
+                                <ion-select-option value="selectValue">Select Prooduct</ion-select-option>
+                                <ion-item no-padding  *ngFor="let product of products" >
+                                  <ion-select-option  formControlName="product_Id" value="{{ product._id }}">{{product.productName}}</ion-select-option>
+                                </ion-item>
+                              </ion-select>
+                              </ion-col>
+
+                              <ion-col size=4>
+                                <ion-item>
+                                  <ion-label position="floating">Quota</ion-label>
+                                  <ion-input formControlName="quota" type="Number" name="quota"></ion-input>
+                                </ion-item>
+                              </ion-col>
+                              </ion-row>
+
+                        </div>
+                        <div>
+                            <ion-button color="success" type="button" (click)="removeProduct(i)"> Remove </ion-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </ion-col>
+            </ion-row>
+
+
+            <ion-row no-padding>
+              <ion-toolbar>
+                <ion-segment formControlName="runSale" value="runSale">
+                  <ion-segment-button value="runSale">
+                    <ion-label>RunSale</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="voucher">
+                    <ion-label>Create Voucher</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+              </ion-toolbar>
+            </ion-row>
+            <ion-row no-padding>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size=12>
+                    <ion-item>
+                      <ion-label position="floating">Choose Promo Type</ion-label>
+                      <ion-select formControlName="type" placeholder="Select One">
+                        <ion-select-option value="buy1get1free">Buy 1 Get 1 Free</ion-select-option>
+                        <ion-select-option value="volumeDiscount">Volume Discount</ion-select-option>
+                        <ion-select-option value="itemDisscount">Item Discount</ion-select-option>
+                        <ion-select-option value="comboDeal">Combo deals</ion-select-option>
+
+                      </ion-select>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row no-padding>
+                  <ion-col size=12>
+                    <ion-item>
+                      <ion-label position="floating">Title</ion-label>
+                      <ion-input formControlName="title" type="text" name="Title"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row no-padding>
+                  <ion-col size=6>
+                    <ion-item>
+                      <ion-label position="floating">Discount</ion-label>
+                      <ion-input formControlName="discount" type="number" name="Discount"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size=6>
+                    <ion-item>
+                      <ion-label position="floating">Exp Date</ion-label>
+                      <ion-input formControlName="date" type="date" name="ExpDate"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size=6>
+                    <ion-item>
+                        <ion-label position="floating" >Active Platform</ion-label>
+                          <ion-select formControlName="platform" multiple="true"value="Facebook" okText="Okay" cancelText="Dismiss">
+                          <ion-select-option value="Facebook">Facebook</ion-select-option>
+                          <ion-select-option value="GoogleADS">GoogleADS</ion-select-option>
+                          <ion-select-option value="Twitter">Twiter</ion-select-option>
+                          <ion-select-option value="Instagram">Instagram</ion-select-option>
+                          <ion-select-option value="Youtube">Youtube</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                  </ion-col >
+                  <ion-col size=6>
+                    <ion-item>
+                      <ion-label position="floating">Items Exceeding</ion-label>
+                      <ion-input formControlName="items_exceeding" type="Number" name="items_exceeding"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-card>
+                  <ion-card-content>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size=6>
+                          <ion-label>
+                            Products
+                          </ion-label>
+                        </ion-col>
+                        <ion-col size=6>
+                          <ion-item>
+                            <ion-label position="floating">Total Quota</ion-label>
+                            <ion-input disabled formControlName="total_quota" type="Number" name="total_quota"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-card-content>
+                </ion-card>
+              </ion-grid>
+            </ion-row>
+          </ion-grid>
+        </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

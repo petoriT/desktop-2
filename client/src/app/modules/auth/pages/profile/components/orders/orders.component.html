@@ -1,0 +1,484 @@
+<ion-card style="border-radius: 5vw; height:78vh">
+
+  <ion-card-content style="min-height:100%; padding: 13px 5px 13px 5px; --background: #f5fafa;overflow:scroll">
+    <ion-toolbar style="padding-bottom: 16px;">
+      <ion-segment value="active" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="active"> Active </ion-segment-button>
+        <ion-segment-button value="older"> Fullfilled </ion-segment-button>
+       <!---<ion-segment-button value="Returns"> Returns </ion-segment-button>--> 
+      </ion-segment>
+    </ion-toolbar>
+
+    <div [ngSwitch]="purchases_segment">
+
+      <div *ngSwitchCase="'active'">
+        <div *ngFor="let order of orderList$ | async; let i = index">
+          <ion-card     (click)="activeOrder(order.order_number)"  *ngIf="!order.fullfilled" >
+            <ion-grid class="ion-no-margin">
+              <ion-row style="padding-top: 16px;">
+                <ion-col class="center" size="6">
+                  <ion-label style="padding-left: 5px; text-align: start;width: 100%;" >ORDER <b style="color: #018786;">#{{ order.order_number }}</b></ion-label>
+                </ion-col>
+                <ion-col class="center" size="6">
+                   <ion-label style="padding-right: 5px; text-align: end;width: 100%;" > 
+                        Date: {{ order.date | date: "MMM d" }}
+                   </ion-label>
+                </ion-col>
+
+              </ion-row>
+              <ion-row>
+                <ion-col size=7>
+
+                  <ion-label style="padding-right: 5px;width: 100%;" *ngIf="order.delivery_date">
+                    Delivery Date: {{order.delivery_date | date: "MMM d ,yy" }}
+                   </ion-label>
+                </ion-col>
+                <ion-col size=5 style="text-align: end;">
+                 
+                    <ion-label style="padding-right: 5px; text-align: end;width: 100%;"  *ngIf="countDown(order.commit_date) >0 && order.commit_date ">
+                     Ready in {{countDown(order.commit_date)}} days
+                    </ion-label>
+
+                    <ion-label style="padding-right: 5px;width: 100%;"  *ngIf="order.commit_date == null">
+                    
+                       <sub> Queued 4 Pocessing </sub> 
+                   
+                     </ion-label>
+                     
+                   
+                      <ion-button (click)="presentPopover($event)" style="z-index: 5;" expand="block"  shape="round" size="small" *ngIf="countDown(order.commit_date) < 0 && order.commit_date && !order.delivery_ready ">
+                        Query Order
+                      </ion-button>
+                
+                  
+              
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="active_order !== order.order_number && !panelOpenState ">
+                <ion-item   class="ion-no-padding ion-no-margin " style="    --inner-padding-end: 0px;width: 100%;">
+                  <div
+               
+                  *ngFor="let item of order.items; let z = index"
+                >
+                  <div  style="float: left; margin: 5px" *ngFor="let image of item.productImage; let g = index">
+                    <ion-avatar *ngIf="g == 0">
+                      <img src="{{ image.url }}" />
+                    </ion-avatar>
+                  </div>
+                </div>
+                </ion-item>
+              </ion-row>
+              <ion-row *ngIf="active_order !== order.order_number && !panelOpenState ">
+                <ion-col style="padding-bottom:48px;padding-top: 16px;" size=12>
+                  <div class="progress" style="margin-right: 5px;
+                  margin-left: 5px;">
+                    <div style="width: 90vw;" [style.width]="orderProgress(order)" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    
+                     
+              
+                  <ion-card [class]="isOrderProcessed(order)" class="center progress-card one ion-no-margin">
+                    <ion-icon  style="color: white;font-size: 5vw;" name="reader"></ion-icon>
+              
+                  </ion-card>
+                  <ion-label class="one" style="padding-top: 64px  !important ;z-index: 2;padding-top: 16px;color:grey">
+                    Processed
+                </ion-label>
+                 
+                
+              
+                  <ion-card [class]="isOrderOnTheWay(order)" class="progress-card center three ion-no-margin">
+               
+                      <img style="max-width: 75%; display: block;" src="./assets/Accountsshipped.svg" alt="">
+                    
+                  </ion-card>
+                  <ion-label class="three" style=" padding-top: 64px !important;z-index: 2;padding-top: 16px;color:grey">
+                    En Rout
+                  </ion-label>
+              
+              
+                  <ion-card [class]="isOrderDelivered(order)" class=" center progress-card four  ion-no-margin">
+              
+                      
+                      <ion-icon style="font-size: 5vw;color: white;" name="home"></ion-icon>
+                 
+                
+                  </ion-card>
+                  <ion-label class="four " style="padding-top: 64px !important;z-index: 2;padding-top: 16px;color:grey">
+                    Delivered
+                  </ion-label>
+               
+              
+                   
+               
+                    
+                   
+                    </div>
+                 
+                 
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size=12>
+                  <div *ngIf="active_order == order.order_number ">
+             
+                    <div *ngFor="let item of order.items; let i = index" size=12>
+                   
+                        <ion-item class="ion-no-padding ion-no-margin" style="    --inner-padding-end: 0px;">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col class="center" size="2">
+                               
+                               
+                                <div   *ngFor="let image of item.productImage; let w = index">
+                                  <ion-avatar *ngIf="w == 0">
+                                    <img src="{{ image.url }}" />
+                                  </ion-avatar>
+                                </div>
+                            
+                               
+                              </ion-col>
+                              <ion-col class="center" size="4">
+                                <ion-label>
+                                  <sub>
+                                    {{ item.productName }}
+                                  </sub>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col class="center" size="3">
+                                <ion-label>
+                                  <sub> {{item.amount}} </sub>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col class="center" size="3">
+                                <ion-badge>
+                                  <sub>
+                                    {{ item.order_status }}
+                                  </sub>
+                                </ion-badge>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </ion-item>
+                    
+                      </div>
+                 
+    
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <!--       <ion-row>
+                <ion-col *ngIf="order.delivery_ready" class="center" size="6">
+                  <ion-label>Delivery on the way</ion-label>
+                </ion-col>
+              </ion-row>-->
+            </ion-grid>
+       
+          </ion-card>
+        </div>
+      </div>
+
+      
+     
+
+      <!------------------------------------Older orders--------------------------------->
+
+        
+      <div *ngSwitchCase="'older'">
+        <div *ngFor="let order of orderList$ | async; let i = index">
+          <ion-card     (click)="activeOrder(order.order_number)"  *ngIf="order.fullfilled "  >
+            <ion-grid class="ion-no-margin">
+              <ion-row style="padding-top: 16px;">
+                <ion-col class="center" size="6">
+                  <ion-label style="padding-left: 5px; text-align: start;width: 100%;" >ORDER <b style="color: #018786;">#{{ order.order_number }}</b></ion-label>
+                </ion-col>
+                <ion-col class="center" size="6">
+                  
+                      <ion-label style="padding-right: 5px; text-align: end;width: 100%;" > 
+                        Date: {{ order.date | date: "MMM d" }}
+                      </ion-label>
+                  
+                </ion-col>
+
+              </ion-row>
+              <ion-row>
+                <ion-col size=7>
+
+                  <ion-label style="padding-right: 5px; text-align: end;width: 100%;" *ngIf="order.delivery_date">
+                    Delivered: {{order.delivery_date | date: "MMM d ,yy" }}
+                   </ion-label>
+                </ion-col>
+                <ion-col  style="text-align: end;" size=5>
+                 
+                    <ion-label color="danger" style="padding-right: 5px; text-align: end;width: 100%;"  *ngIf="order.return">
+                      Has Return
+                    </ion-label>
+
+                   
+                
+                  
+              
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="active_order !== order.order_number && !panelOpenState ">
+                <ion-item   class="ion-no-padding ion-no-margin " style="    --inner-padding-end: 0px;width: 100%;">
+                  <div
+               
+                  *ngFor="let item of order.items; let z = index"
+                >
+                  <div  style="float: left; margin: 5px" *ngFor="let image of item.productImage; let g = index">
+                    <ion-avatar *ngIf="g == 0 && !item.return">
+                      <img src="{{ image.url }}" />
+                    </ion-avatar>
+                  </div>
+                </div>
+                </ion-item>
+              </ion-row>
+              <ion-row *ngIf="active_order !== order.order_number && !panelOpenState ">
+                <ion-col style="padding-bottom:48px;padding-top: 16px;" size=12>
+                  <div class="progress" style="margin-right: 5px;
+                  margin-left: 5px;">
+                    <div style="width: 90vw;" style="width: 100%;" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    
+                     
+              
+                  <ion-card class="center active progress-card one ion-no-margin">
+                    <ion-icon  style="color: white;font-size: 5vw;" name="reader"></ion-icon>
+              
+                  </ion-card>
+                  <ion-label class="one" style="padding-top: 64px  !important ;z-index: 2;padding-top: 16px;color:grey">
+                    Processed
+                </ion-label>
+                 
+                
+              
+                  <ion-card  class="active progress-card center three ion-no-margin">
+               
+                      <img style="max-width: 75%; display: block;" src="./assets/Accountsshipped.svg" alt="">
+                    
+                  </ion-card>
+                  <ion-label class="three" style=" padding-top: 64px !important;z-index: 2;padding-top: 16px;color:grey">
+                    En Rout
+                  </ion-label>
+              
+              
+                  <ion-card  class="active heartbeat center progress-card four  ion-no-margin">
+              
+                      
+                      <ion-icon style="font-size: 5vw;color: white;" name="home"></ion-icon>
+                 
+                
+                  </ion-card>
+                  <ion-label class="four " style="padding-top: 64px !important;z-index: 2;padding-top: 16px;color:grey">
+                    Delivered
+                  </ion-label>
+               
+              
+                   
+               
+                    
+                   
+                    </div>
+                 
+                 
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size=12>
+                  <div *ngIf="active_order == order.order_number ">
+             
+                    <div *ngFor="let item of order.items; let i = index" size=12>
+                      <ion-item-sliding>
+                        <ion-item-options side="end">
+                          <ion-item-option style="z-index: 2;" color="danger" (click)="return(item, order)"
+                            >Return</ion-item-option
+                          >
+                        </ion-item-options>
+
+                        <ion-item class="ion-no-padding ion-no-margin" style="    --inner-padding-end: 0px;">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col class="center" size="2">
+                               
+                               
+                                <div   *ngFor="let image of item.productImage; let w = index">
+                                  <ion-avatar *ngIf="w == 0">
+                                    <img src="{{ image.url }}" />
+                                  </ion-avatar>
+                                </div>
+                            
+                               
+                              </ion-col>
+                              <ion-col class="center" size="4">
+                                <ion-label>
+                                  <sub>
+                                    {{ item.productName }}
+                                  </sub>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col class="center" size="3">
+                                <ion-label>
+                                  <sub> {{item.amount}} </sub>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col class="center" size="3">
+                                <ion-badge color="danger" *ngIf="item.return">
+                                  <sub>
+                                  Returned
+                                  </sub>
+                                </ion-badge>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </ion-item>
+
+                    </ion-item-sliding>
+                      </div>
+                 
+    
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+              <!--       <ion-row>
+                <ion-col *ngIf="order.delivery_ready" class="center" size="6">
+                  <ion-label>Delivery on the way</ion-label>
+                </ion-col>
+              </ion-row>-->
+            </ion-grid>
+       
+          </ion-card>
+        </div>
+      </div>
+
+     
+      <!------------------------------------returned orders ---------------------
+
+      <div *ngSwitchCase="'Returns'">
+        <div *ngFor="let order of orderList$ | async; let i = index">
+          <ion-card     (click)="activeOrder(order.order_number)"  *ngIf="order.fullfilled && order.return" >
+            <ion-grid class="ion-no-margin">
+              <ion-row style="padding-top: 16px;">
+                <ion-col class="center" size="6">
+                  <ion-label style="padding-left: 5px; text-align: start;width: 100%;" >ORDER <b style="color: #018786;">#{{ order.order_number }}</b></ion-label>
+                </ion-col>
+                <ion-col class="center" size="6">
+                  
+                      <ion-label style="padding-right: 5px; text-align: end;width: 100%;" > 
+                        Date: {{ order.date | date: "MMM d" }}
+                      </ion-label>
+                  
+                </ion-col>
+
+              </ion-row>
+              <ion-row>
+                <ion-col size=7>
+
+                  <ion-label style="padding-right: 5px; text-align: end;width: 100%;" *ngIf="order.delivery_date">
+                    Delivery Date: {{order.delivery_date | date: "MMM d ,yy" }}
+                   </ion-label>
+                </ion-col>
+                <ion-col size=5>
+                 
+                   
+
+                    <ion-label style="padding-right: 5px; text-align: end;width: 100%;"  *ngIf="order.commit_date == null">
+                    
+                       <sub> Queued 4 Pocessing </sub> 
+                   
+                     </ion-label>
+                     <ion-chip class="center" style="padding-right: 5px; width: 100%;" outline *ngIf="order.return">
+                        Returned
+                     </ion-chip>
+                   
+                    
+                  
+              
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="active_order !== order.order_number && !panelOpenState ">
+                <ion-item   class="ion-no-padding ion-no-margin " style="    --inner-padding-end: 0px;width: 100%;">
+                  <div
+               
+                  *ngFor="let item of order.items; let z = index"
+                >
+                  <div  style="float: left; margin: 5px" *ngFor="let image of item.productImage; let g = index">
+                    <ion-avatar *ngIf="g == 0">
+                      <img src="{{ image.url }}" />
+                    </ion-avatar>
+                  </div>
+                </div>
+                </ion-item>
+              </ion-row>
+             
+              <ion-row>
+                <ion-col size=12>
+                  <div *ngIf="active_order == order.order_number ">
+             
+                    <div *ngFor="let item of order.items; let i = index" size=12>
+                   
+                        <ion-item *ngIf="return" class="ion-no-padding ion-no-margin" style="    --inner-padding-end: 0px;">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col class="center" size="2">
+                               
+                               
+                                <div   *ngFor="let image of item.productImage; let w = index">
+                                  <ion-avatar *ngIf="w == 0">
+                                    <img src="{{ image.url }}" />
+                                  </ion-avatar>
+                                </div>
+                            
+                               
+                              </ion-col>
+                              <ion-col class="center" size="4">
+                                <ion-label>
+                                  <sub>
+                                    {{ item.productName }}
+                                  </sub>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col class="center" size="3">
+                                <ion-label>
+                                  <sub> {{item.amount}} </sub>
+                                </ion-label>
+                              </ion-col>
+                              <ion-col class="center" size="3">
+                                <ion-badge color="danger">
+                                  <sub>
+                                   RETURN
+                                  </sub>
+                                </ion-badge>
+                              </ion-col>
+                            </ion-row>
+                         
+                          </ion-grid>
+                        </ion-item>
+                    
+                      </div>
+                 
+    
+                  </div>
+                </ion-col>
+              </ion-row>
+              
+                   <ion-row>
+                <ion-col *ngIf="order.delivery_ready" class="center" size="6">
+                  <ion-label>Delivery on the way</ion-label>
+                </ion-col>
+              </ion-row>-
+            </ion-grid>
+       
+          </ion-card>
+        </div>
+      </div>
+      ------------>
+     </div>
+    
+
+
+    
+  </ion-card-content>
+</ion-card>

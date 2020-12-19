@@ -1,0 +1,161 @@
+
+
+
+
+<ion-card style="border-radius: 5vw; height:78vh">
+ 
+
+  <ion-card-content style="min-height:100%; padding: 13px 5px 13px 5px; --background: #f5fafa; overflow: scroll">
+
+    
+
+    <div *ngFor="let notification of notifications$ | async; let i = index">
+      <ion-card
+    
+    *ngIf="notification.type == 'Order_review'"
+    class="ion-margin-top inner_notification"
+    style="display: block;"
+    color="light"
+
+  >
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <h6>
+          <sub>{{ notification.title }} : </sub>
+        </h6>
+      </ion-col>
+      <ion-col size="8" style="text-align: right;">
+        <sub>{{ notification.date | date: "MMM d, y" }}</sub>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-text
+          ><sub>{{ notification.msg }}</sub></ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size=12>
+  
+          <ion-chip outline class="center">
+            <ion-avatar (click)="  reviewProduct(item)" *ngFor="let item of notification.order.items">
+         
+                <ion-img src="{{item.productImage[0].url}}"></ion-img>
+          
+              </ion-avatar>
+          </ion-chip>
+
+    
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </ion-card>
+
+    <ion-card
+      class="ion-margin-top inner_notification "
+      *ngIf="notification.type == 'Order_progress'"
+      style="display: block;"
+      color="light"
+    >
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <h6>
+              <sub>{{ notification.title }} : </sub>
+            </h6>
+          </ion-col>
+          <ion-col size="8" style="text-align: right;">
+            <sub>{{ notification.date | date: "MMM d, y" }}</sub></ion-col
+          >
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text
+              ><sub>{{ notification.msg }}</sub></ion-text
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+    <ion-card
+      (click)="reviewProduct(notification.to_review_product_id)"
+      class="ion-margin-top inner_notification"
+      *ngIf="notification.type == 'Reviews'"
+      style="display: block;"
+      color="tertiary"
+    >
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <h6>
+              <sub>{{ notification.title }} : </sub>
+            </h6>
+          </ion-col>
+          <ion-col size="8" style="text-align: right;">
+            <sub>{{ notification.date | date: "MMM d, y" }}</sub></ion-col
+          >
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text
+              ><sub>{{ notification.msg }}</sub></ion-text
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+    <ion-card
+      class="ion-margin-top inner_notification"
+      *ngIf="notification.type == 'msg'"
+      style="display: block;"
+      color="dark"
+      height="100%"
+    >
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <h6>
+              <sub>{{ notification.title }} : </sub>
+            </h6>
+          </ion-col>
+          <ion-col size="8" style="text-align: right;">
+            <sub>{{ notification.date | date: "MMM d, y" }}</sub></ion-col
+          >
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-textarea
+              ><sub>{{ notification.msg }}</sub></ion-textarea
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+      <!--<ion-card class="ion-margin-top inner_notification" style="display: block;" color="dark">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <h6>
+                <sub>{{ notification.title }} : </sub>
+              </h6>
+            </ion-col>
+            <ion-col size="8" style="text-align: right;">
+              <sub>{{ notification.date | date: "MMM d, y" }}</sub></ion-col
+            >
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-text
+                ><sub>{{ notification.msg }}</sub></ion-text
+              >
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>-->
+
+    
+    </div>
+  </ion-card-content>
+</ion-card>

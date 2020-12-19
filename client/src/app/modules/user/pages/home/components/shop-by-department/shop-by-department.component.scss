@@ -1,0 +1,37 @@
+.departmentCard{
+min-width: 100px;
+height: 100px;
+display:inline-block;
+ background-position: center;
+ background-size: cover;
+}
+.depTitle{
+        position: fixed;
+    background-color: #018786;
+    width: 80%;
+    height: 20%;
+    bottom: 0%;
+    left: 10%;
+    border-radius: 5px 5px 0px 0px;
+}
+.dep{
+    display:flex;
+    overflow-x:auto
+}
+
+.depart{
+    min-width: 15vh;
+    height: 15vh;
+    border-radius: 20vh;
+    margin-bottom: 0px;
+}
+
+.secondary {
+    background-color:#90DED7;
+}
+.tertiary {
+    background-color:#ffc409;
+}
+.norm {
+    background-color:#018786;
+}

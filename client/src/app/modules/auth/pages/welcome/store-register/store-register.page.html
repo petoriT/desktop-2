@@ -1,0 +1,443 @@
+<ion-content>
+  <ion-fab *ngIf="back && !backTouser" vertical="top" horizontal="start">
+    <ion-fab-button size="small" (click)="onClickBack()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab *ngIf="backTouser && !back" vertical="top" horizontal="start">
+    <ion-fab-button size="small" (click)="backToUser()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-slides
+    (ionSlideDidChange)="slideChange($event)"
+    #registerStore
+    pager="true"
+  >
+    <ion-slide class="slide1">
+      <ion-grid>
+        <form [formGroup]="companyRegistrationForm">
+          <ion-row>
+            <ion-col size="12">
+              <ion-title>
+                <h1>Store Registration</h1>
+              </ion-title>
+              <ion-text><sub> Create a store profile </sub></ion-text>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-img
+                src="../assets/userFirsttimeStoreRegisterSlide1.svg"
+              ></ion-img>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating "> Store name: </ion-label>
+                <ion-input formControlName="name" type="text"></ion-input>
+              </ion-item>
+
+              <div
+                *ngIf="companyRegistrationForm.get('name').invalid && companyRegistrationForm.get('name').touched"
+              >
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('name').errors?.required"
+                  color="danger"
+                  ><sub>Store name is required</sub></ion-text
+                >
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('name').errors?.minlength"
+                  color="danger"
+                  ><sub>Store name must be at least 3 Characters</sub></ion-text
+                >
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating"> Store Email </ion-label>
+                <ion-input formControlName="email" type="email"></ion-input>
+              </ion-item>
+
+              <div
+                *ngIf="companyRegistrationForm.get('email').invalid && companyRegistrationForm.get('email').touched"
+              >
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('email').errors?.required"
+                  color="danger"
+                >
+                  <sub>email is required</sub>
+                </ion-text>
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('email').errors?.maxlength"
+                  color="danger"
+                >
+                  <sub>email must be at most 20 Characters</sub>
+                </ion-text>
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('email').errors?.pattern"
+                  color="danger"
+                >
+                  <sub>email e.g info@company.com</sub>
+                </ion-text>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating"> Tag Line </ion-label>
+                <ion-input
+                  formControlName="tag_line"
+                  type="text"
+                  value="example:LG life is Good"
+                  placeholder="example:LG life is Good"
+                ></ion-input>
+              </ion-item>
+
+              <div
+                *ngIf="companyRegistrationForm.get('tag_line').invalid && companyRegistrationForm.get('tag_line').touched"
+              >
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('tag_line').errors?.required"
+                  color="danger"
+                  ><sub>Store tag_line is required</sub></ion-text
+                >
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('tag_line').errors?.minlength"
+                  color="danger"
+                  ><sub
+                    >Store tag_line must be at least 60 Characters</sub
+                  ></ion-text
+                >
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">
+                  Store Contact Number
+                </ion-label>
+                <ion-input formControlName="phone" type="tel"></ion-input>
+              </ion-item>
+
+              <div
+                *ngIf="companyRegistrationForm.get('phone').invalid && companyRegistrationForm.get('phone').touched"
+              >
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('phone').errors?.required"
+                  color="danger"
+                >
+                  <sub>phone is required</sub>
+                </ion-text>
+                <ion-text
+                  *ngIf="companyRegistrationForm.get('phone').errors?.minlength"
+                  color="danger"
+                >
+                  <sub>phone must be 10 digits</sub>
+                </ion-text>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="center" size="8">
+                    <ion-label
+                      ><sub
+                        >Is your Business registered with the CIPC?</sub
+                      ></ion-label
+                    >
+                  </ion-col>
+                  <ion-col class="center" size="4">
+                    <ion-toggle
+                      (ionChange)="sendToggleVlaue($event)"
+                    ></ion-toggle>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide class="slideImg">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <img src="../assets/userAuthStoreRegisterSlideImg.svg" />
+          </ion-col>
+          <ion-col size="12">
+            <h6 *ngIf="!picture_uploaded">
+              upload your brand image/logo or an image that discribes your store
+              best
+            </h6>
+          </ion-col>
+          <ion-col size="12">
+            <div class="center" style="height: 30vh">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-img
+                      *ngIf="picture_uploaded"
+                      src="{{picture_uploaded[0].url}}"
+                      style="height: 30vh"
+                    ></ion-img>
+                    <img
+                      *ngIf="!picture_uploaded"
+                      src="../assets/carbon_user-filled.svg"
+                    />
+                  </ion-col>
+                  <ion-col *ngIf="!picture_uploaded" size="12">
+                    <ion-button>
+                      <ion-label> add Image </ion-label>
+                      <ion-icon name="add-circle-outline"></ion-icon>
+                    </ion-button>
+                    <ion-input
+                      class="upload"
+                      type="file"
+                      multiple
+                      (change)="handleFileInput($event)"
+                      placeholder="+"
+                      style="
+                        height: 10vh;
+                        top: 0vh;
+                        position: absolute;
+                        opacity: 0;
+                      "
+                    ></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide class="slide2">
+      <form [formGroup]="productsInfo">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <img src="../assets/userFirsttimeStoreRegisterSlide2.svg" />
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-item>
+              <ion-col *ngIf="business_registered" size="12">
+                <ion-label><sub>Company Registration number </sub></ion-label>
+                <ion-input
+                  formControlName="comp_reg_num"
+                  placeholder="enter Registration Number"
+                ></ion-input>
+              </ion-col>
+            </ion-item>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">
+                  <sub>How do You deliver</sub></ion-label
+                >
+                <ion-select
+                  formControlName="delivery"
+                  placeholder="choose a delivery method"
+                  multiple="true"
+                  value="source"
+                  interface="action-sheet"
+                >
+                  <ion-select-option value="selfMake"
+                    >Self Deliver
+                  </ion-select-option>
+                  <ion-select-option value="imported"
+                    >third Party couriers
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12"> </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <!--<ion-col size="12" >
+            <img style="max-width: 85%" src="../assets/authReturns.svg" />
+          </ion-col>-->
+          <ion-col size="12">
+            <ion-title>
+              <h1>Delivery</h1>
+            </ion-title>
+            <ion-text>
+              <sub> Slide and select your free delivery regions </sub>
+            </ion-text>
+          </ion-col>
+          
+          <ion-col size="12" *ngIf="areas">
+            <ion-item style="--inner-padding-end:0px;max-width: 100vw; overflow-x: auto;display: flex;">
+              <div *ngFor="let area of areas; let i = index">
+                <ion-chip *ngIf="areas" color="primary" class="ion-float-left">
+                  {{ area }}
+                  <ion-icon
+                    (click)="clearAreas(area)"
+                    name="close-circle-outline"
+                  ></ion-icon>
+                </ion-chip>
+              </div>
+            </ion-item>
+             
+           
+            
+          </ion-col>
+          <ion-col size="12">
+            <ion-label> Choose Province </ion-label>
+            <ion-item style="--inner-padding-end:0px;max-width: 100vw; overflow-x: auto;display: flex;">
+              <div *ngFor="let province of south_africa">
+                <ion-chip
+                  class="ion-float-left"
+                  (click)="setProvince(province.province_name)"
+                >
+                  {{province.province_name}}
+                </ion-chip>
+              </div>
+            </ion-item>
+          
+          </ion-col>
+          <ion-col *ngIf="cities" size="12">
+            <ion-label> Choose City </ion-label>
+            <ion-item style="--inner-padding-end:0px;max-width: 100vw; overflow-x: auto;display: flex;">
+             
+              <div *ngFor="let city of cities">
+                <ion-chip class="ion-float-left" (click)="setArea(city)">
+                  {{city}}
+                </ion-chip>
+              </div>
+            </ion-item>
+           
+          </ion-col>
+          <!--<ion-col size="12">  GOOGLE ADDRESS  API 
+            <form [formGroup]="addressFormGroup">
+              <ion-searchbar
+                formControlName="address"
+ DO NOT DELETE             placeholder=" Search a city.."
+              >
+              </ion-searchbar>
+              <mat-google-maps-autocomplete formControlName="address">
+              </mat-google-maps-autocomplete>
+            </form>
+          </ion-col>-->
+        </ion-row>
+        <ion-row>
+          <ion-col size="8">
+            <ion-label>
+              <sub> Do you also deliver outside this regions? </sub>
+            </ion-label>
+          </ion-col>
+          <ion-col class="center" size="4">
+            <ion-toggle (ionChange)="outOfBound($event)"></ion-toggle>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="out_of_bound " size="12">
+            <ion-item>
+              <ion-label position="floating">
+                Out of range delivery fee
+              </ion-label>
+              <form [formGroup]="out_bound">
+                <ion-input
+                  formControlName="out_bound_fee"
+                  type="number"
+                ></ion-input>
+              </form>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button
+              size="small"
+              expand="full"
+              shape="round"
+              type="submit"
+              color="primary"
+              (click)="submit()"
+              >submit</ion-button
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <!--<ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>-->
+  </ion-slides>
+  <ion-fab *ngIf="showNext" vertical="bottom" horizontal="end">
+    <ion-button
+      shape="round"
+      class="ion-padding-end"
+      style="color: #000000"
+      size="small"
+      color="white"
+      (click)="next()"
+    >
+      next
+    </ion-button>
+  </ion-fab>
+
+  <ion-fab *ngIf="showBack" horizontal="start" vertical="bottom">
+    <ion-button
+      shape="round"
+      class="ion-padding-start"
+      style="color: #000000"
+      size="small"
+      color="white"
+      (click)=" slidesBack()"
+    >
+      back
+    </ion-button>
+  </ion-fab>
+</ion-content>
+
+<!--<ion-header>
+  <ion-toolbar>
+    <ion-title>store-register 1/2</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="companyRegistrationForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input formControlName="name" type="text" placeholder="Store Name"></ion-input>
+      <div *ngIf="companyRegistrationForm.get('name').invalid && companyRegistrationForm.get('name').touched">
+        <ion-text *ngIf="companyRegistrationForm.get('name').errors?.required" color="danger"><sub>Store name is required</sub></ion-text>
+        <ion-text *ngIf="companyRegistrationForm.get('name').errors?.minlength" color="danger"><sub>Store name must be at least 3 Characters</sub></ion-text>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-input  formControlName="email" type="email" placeholder="Store Email"></ion-input>
+      <div *ngIf="companyRegistrationForm.get('email').invalid && companyRegistrationForm.get('email').touched">
+        <ion-text *ngIf="companyRegistrationForm.get('email').errors?.required" color="danger">
+          <sub>email is required</sub>
+        </ion-text>
+        <ion-text *ngIf="companyRegistrationForm.get('email').errors?.maxlength" color="danger">
+          <sub>email must be at most 20 Characters</sub>
+        </ion-text>
+        <ion-text *ngIf="companyRegistrationForm.get('email').errors?.pattern" color="danger">
+          <sub>email e.g info@company.com</sub>
+        </ion-text>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="phone" type="number" placeholder="Store Phone Number"></ion-input>
+      <div *ngIf="companyRegistrationForm.get('phone').invalid && companyRegistrationForm.get('phone').touched">
+        <ion-text *ngIf="companyRegistrationForm.get('phone').errors?.required" color="danger">
+          <sub>phone is required</sub>
+        </ion-text>
+        <ion-text *ngIf="companyRegistrationForm.get('phone').errors?.minlength" color="danger">
+          <sub>phone must be 10 digits</sub>
+        </ion-text>
+      </div>
+    </ion-item>
+
+    <ion-button [disabled]="!companyRegistrationForm.valid"  type="submit" color="primary" >Next</ion-button>
+  </form>
+  {{companyRegistrationForm.value | json}}
+</ion-content>-->

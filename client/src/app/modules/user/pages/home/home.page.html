@@ -1,0 +1,151 @@
+<app-user-header></app-user-header>
+<ion-content overflow-scroll="true">
+  <app-promo-slides class="headline"></app-promo-slides>
+  <ion-toolbar>
+    <ion-text>
+      <h6 style="color: #018786; padding-left: 4px">DEPARTMENTS</h6>
+    </ion-text>
+    <ion-buttons slot="end">
+      <ion-button
+        size="small"
+        shape="round"
+        color="primary"
+        fill="outline"
+        (click)="department.loadAllProducts()"
+        class="pageSectionalToogle"
+      >
+        Show all
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+<ion-item style="--inner-padding-end:5px" class="ion-no-padding">
+
+  <app-shop-by-department
+    #department
+    style="overflow-x: auto; display: flex;"
+    class="bottom-padding"
+  ></app-shop-by-department>
+  
+</ion-item>
+<ion-toolbar *ngIf="show_liked">
+  <ion-text>
+    <h6 style="color: #018786; padding-left: 4px">YOUR LIKED</h6>
+  </ion-text>
+  <ion-buttons slot="end">
+    <ion-button
+      size="small"
+      shape="round"
+      color="primary"
+      fill="outline"
+      (click)="ad_space.loadRecommendedProducts()"
+      class="pageSectionalToogle"
+    >
+      Show all
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-item  *ngIf="show_liked" class="ion-no-padding end-padding">
+  <app-user-liked  style="overflow-x: auto; display: flex;"  class="bottom-padding" #userLikedProducts> 
+
+  </app-user-liked>
+</ion-item>
+  <ion-toolbar *ngIf="show_top_picks">
+    <ion-text>
+      <h6 style="color: #018786; padding-left: 4px">TOP PICKS</h6>
+    </ion-text>
+    <ion-buttons slot="end">
+      <ion-button
+        size="small"
+        shape="round"
+        color="primary"
+        fill="outline"
+        (click)="ad_space.loadRecommendedProducts()"
+        class="pageSectionalToogle"
+      >
+        Show all
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-item  *ngIf="show_top_picks" class="ion-no-padding end-padding">
+    <app-ad-space #ad_space    class="bottom-padding" ></app-ad-space>
+  </ion-item>
+
+
+  <ion-toolbar>
+    <ion-text>
+      <h6 style="color: #018786; padding-left: 4px">PROMOTIONS</h6>
+    </ion-text>
+ 
+  </ion-toolbar>
+  <ion-item class="ion-no-padding  end-padding">
+  <app-promotions class="bottom-padding" > </app-promotions>
+  </ion-item>
+  <ion-toolbar>
+    <ion-text>
+      <h6 style="color: #018786; padding-left: 4px">TOP SALES</h6>
+    </ion-text>
+    <ion-buttons slot="end">
+      <ion-button
+        size="small"
+        shape="round"
+        color="primary"
+        fill="outline"
+        (click)="top_sales.loadTopSalesProducts()"
+        class="pageSectionalToogle"
+      >
+        Show all
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-item class="ion-no-padding  end-padding">
+    <app-top-sales     style="overflow-x: auto; display: flex;"  #top_sales  class="bottom-padding" ></app-top-sales>
+  </ion-item>
+
+  <ion-toolbar>
+    <ion-text>
+      <h6 style="color: #018786; padding-left: 4px">PRODUCTS ON SALE</h6>
+    </ion-text>
+    <ion-buttons slot="end">
+      <ion-button
+        size="small"
+        shape="round"
+        color="primary"
+        fill="outline"
+        (click)="sales.loadSalesProducts()"
+        class="pageSectionalToogle"
+      >
+        Show all
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-item  class="ion-no-padding  end-padding ">
+    <app-sales #sales  class="bottom-padding" ></app-sales>
+  </ion-item>
+
+  <ion-toolbar>
+    <ion-text>
+      <h6 style="color: #018786; padding-left: 4px">MOST LIKED</h6>
+    </ion-text>
+    <ion-buttons slot="end">
+      <ion-button
+        size="small"
+        shape="round"
+        color="primary"
+        fill="outline"
+        (click)="most_liked.loadLikedProducts()"
+        class="pageSectionalToogle"
+      >
+        Show all
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-item class="ion-no-padding  end-padding">
+  <app-most-liked  style="overflow-x: auto; display: flex;"   class="bottom-padding" #most_liked></app-most-liked>
+  </ion-item>
+
+  <!--modified vouchers products-->
+  <!--app-home-one></app-home-one>
+normal products without vouchers
+<app-home-two></app-home-two>
+<app-home-three></app-home-three>-->
+</ion-content>

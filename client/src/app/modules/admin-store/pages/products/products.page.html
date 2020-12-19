@@ -1,0 +1,237 @@
+<ion-header *ngIf="device_screen =='Handset' && segment !== 'add_product' " style="padding-top: 5px" >
+  <ion-toolbar>
+    <ion-buttons slot="start">
+    <ion-back-button
+        size="small"
+        defaultHref="/admin-store/store/dashboard"
+        slot="icon-only"
+        name="arrow-back"
+      >
+      </ion-back-button>
+
+    </ion-buttons>
+    <ion-searchbar
+      (ionInput)="searchItems($event)"
+      [debounce]="1000"
+      placeholder="search {{searchPlaceholder}}..."
+    ></ion-searchbar>
+    <ion-button
+      size="small"
+      slot="end"
+      shape="round"
+      (click)="addProductSlides('add_product')"
+      *ngIf="products || category"
+    >
+      <ion-icon  slot="icon-only" name="add"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-item *ngIf="device_screen =='Handset'">
+  <ion-segment
+    *ngIf="segment !== 'add_product' "
+    value="inventory"
+    fill="solid"
+    [(ngModel)]="segment"
+    mode="md " 
+   >
+    <ion-segment-button value="inventory">
+      <ion-label>Inventory</ion-label>
+    </ion-segment-button>
+    <ion-segment-button size="small" value="products">
+      <ion-label>Products</ion-label>
+    </ion-segment-button>
+    <!--
+  <ion-segment-button value="category">
+      <ion-label>Category</ion-label>
+    </ion-segment-button>
+  -->
+  </ion-segment>
+</ion-item>
+
+
+<ion-content *ngIf="device_screen =='Handset'" scroll="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div [ngSwitch]="segment">
+    <app-category-comp
+      *ngSwitchCase="'category'"
+      (shareCategory)="acceptCategory($event)"
+    ></app-category-comp>
+    <app-products-comp
+      [p_products]="products$"
+      *ngSwitchCase="'products'"
+      (segment)="addProductSlides($event)"
+    ></app-products-comp>
+    <app-add-product
+      (segment)="fromAddProduct($event)"
+      *ngSwitchCase="'add_product'"
+    ></app-add-product>
+    <app-inventory
+      [inventory_products]="products$"
+      (segment)="addProductSlides($event)"
+      #inventory
+      *ngSwitchCase="'inventory'"
+    ></app-inventory>
+  </div>
+</ion-content>
+<ion-footer *ngIf="segment!=='add_product'&& device_screen =='Handset'" >
+  <ion-toolbar>
+    <ion-row>
+      <ion-col class="center" size="4">
+        <ion-button
+          size="small"
+          shape="round"
+          fill="clear"
+          [routerLink]="['/admin-store/store/sales']"
+        >
+          <img
+            style="max-width: 30%; display: block"
+            src="./assets/grey divIcons made by a href=httpswww.flaticon.comauthorssrip title=sripsripa from a href=httpswww.flaticon.com title=Flaticonwww.flaticon.comadiv  1.svg"
+            alt=""
+          />
+
+          <sub style="color: grey; left: 5px">SALES</sub>
+        </ion-button>
+      </ion-col>
+      <ion-col class="center" size="4">
+        <ion-fab>
+          <ion-fab-button
+            [routerLink]="['/admin-store/store/dashboard']"
+            size="small"
+            color="white"
+          >
+            <ion-icon color="primary" name="home"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </ion-col>
+      <ion-col class="center" size="4">
+        <ion-button
+          size="small"
+          fill="clear"
+          shape="round"
+          [routerLink]="['/admin-store/store/users']"
+        >
+          <img
+            style="max-width: 30%; display: block"
+            src="./assets/grey users divIcons made by a href=httpswww.flaticon.comauthorssrip title=sripsripa from a href=httpswww.flaticon.com title=Flaticonwww.flaticon.comadiv 1 (1).svg"
+          />
+          <sub style="color: grey; left: 5px">Users</sub>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+
+<div *ngIf="device_screen == 'Web'" style="width: 80vw;height: 100vh; background:#9e9e9e17">
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+   
+      <ion-col class="center ion-no-padding" style="height: 100%;" size=12>
+        <div class="container" style="    
+        padding-top: 0px;
+        padding-left: 0px;
+        height: 100vh;
+        min-width: 100%;
+        padding-right: 0; ">
+          <ion-item *ngIf="segment !== 'add_product'" style="width: 100%;">
+            <ion-toolbar class="ion-no-margin" style="margin-top: 0px;"  class="ion-margin-top">
+              <ion-label style="    padding: 16px;font-size:x-large;" slot="start"> 
+                <h1> Welcome, <b>admin</b> </h1>
+              </ion-label>
+              <ion-searchbar
+            (ionInput)="searchItems($event)"
+            [debounce]="1000"
+            placeholder="search {{searchPlaceholder}}..."
+       style="--border-radius: 50px;    padding-left: 16px; padding-right: 16px; --border-radius: 50px; "
+          ></ion-searchbar>
+            <ion-button
+            size="small"
+            slot="end"
+            shape="round"
+            (click)="addProductSlides('add_product')"
+            *ngIf="products || category"
+          >
+            <ion-icon  slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+            </ion-toolbar>
+          </ion-item>  
+          <ion-item *ngIf="segment !== 'add_product'" style="width: 100%;">
+            <ion-chip>
+              Add a new product 
+            </ion-chip>
+            <ion-chip>
+              order products by most sold
+            </ion-chip>
+            <ion-chip>
+              filter products by depleted stock level
+            </ion-chip>
+          </ion-item>
+         
+          
+              
+            <ion-item style="--background:#9e9e9e00;" *ngIf="segment !== 'add_product' && device_screen == 'Web'">
+                <ion-grid style="    padding-bottom: 0px;">
+                  <ion-row>
+                    <ion-col size=8 style="    padding-bottom: 0px;">
+                      <ion-segment
+               
+                      value="inventory"
+                      fill="solid"
+                      [(ngModel)]="segment"
+                    >
+                      <ion-segment-button value="inventory">
+                        <ion-label>Inventory</ion-label>
+                      </ion-segment-button>
+                      <ion-segment-button size="small" value="products">
+                        <ion-label>Products</ion-label>
+                      </ion-segment-button>
+                      <!--
+                    <ion-segment-button value="category">
+                        <ion-label>Category</ion-label>
+                      </ion-segment-button>
+                    -->
+                    </ion-segment>
+                    </ion-col>
+                    <ion-col size=4>
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+             
+            </ion-item>
+           
+                <div [ngSwitch]="segment">
+                  <app-category-comp
+                    *ngSwitchCase="'category'"
+                    (shareCategory)="acceptCategory($event)"
+                  ></app-category-comp>
+                  <app-products-comp
+                    [p_products]="products$"
+                    *ngSwitchCase="'products'"
+                    (segment)="addProductSlides($event)"
+                  ></app-products-comp>
+                  <app-add-product
+                    (segment)="fromAddProduct($event)"
+                    *ngSwitchCase="'add_product'"
+                  ></app-add-product>
+                  <app-inventory
+                    [inventory_products]="products$"
+                    (segment)="addProductSlides($event)"
+                    #inventory
+                    *ngSwitchCase="'inventory'"
+                  ></app-inventory>
+                </div>
+           
+          
+            
+        </div>
+      </ion-col>
+     
+   
+        
+
+  
+    </ion-row>
+  </ion-grid>
+</div>

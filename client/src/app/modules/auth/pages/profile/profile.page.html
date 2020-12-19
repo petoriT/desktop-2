@@ -1,0 +1,352 @@
+<ion-header>
+  <ion-toolbar class="clear_navbar ion-text-center">
+    <ion-buttons (click)="goBack()" slot="start">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+
+    <ion-label color="primary">
+      {{title}}
+    </ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-img style="    position: absolute;" src="../assets/diego-ph-fIq0tET6llw-unsplash.jpg">
+
+</ion-img>
+
+
+  <ion-card  *ngIf="bottom_component == 'default'" style="border-radius: 5vw; margin: 20vh 10px 10px 10px !important;height: 70vh;overflow: visible;">
+
+
+<div style="    padding-top: 20px;">
+  <ion-grid >
+    <ion-row>
+      <ion-col size=4>
+
+      </ion-col>
+      <ion-col class="center" size=4>
+        <ion-fab style="top:-11vh" *ngFor="let image of profile$.profileImage">
+          <ion-avatar *ngIf="!image" class="profile_pic">
+            <ion-img src="../assets/carbon_user-filled.svg"></ion-img>
+          </ion-avatar>
+          <ion-avatar *ngIf="image" class="profile_pic">
+            <ion-img src="{{image.url}}"></ion-img>
+          </ion-avatar>
+        </ion-fab>
+      </ion-col>
+      <ion-col size=4>
+        
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size=12>
+        <ion-title class="center">
+          <h1 >
+            {{profile$.first_name}} {{profile$.last_name}}
+          </h1>
+        </ion-title>
+      </ion-col>
+      <ion-col class="ion-no-padding"  size=12>
+        <ion-text class="center">
+          <sub>
+            {{profile$.address.city  }},{{profile$.address.province }}
+          </sub>
+        </ion-text>
+      </ion-col>
+  
+    </ion-row>
+    <ion-row>
+      <ion-col size=12>
+        <ion-item  style="--inner-padding-end: 0px" class="ion-no-padding">
+          <ion-grid>
+            <ion-row>
+              <ion-col size=4>
+                <ion-label class="center grey">
+                  <sub>
+                    NOTIFICATIONS
+                  </sub>
+                </ion-label>
+                <h1 class="center ">
+                  1
+                </h1>
+              </ion-col>
+              <ion-col size=4>
+                <ion-label class="center grey">
+                  <sub>
+                    ACTIVE ORDERS
+                  </sub>
+                </ion-label>
+                <h1 class="center">
+                  {{order_list }}
+                </h1>
+              </ion-col>
+              <ion-col size=4>
+                <ion-label  class="center grey">
+                  <sub >
+                    REVIEWS
+                  </sub>
+                </ion-label>
+                <h1 class="center">
+                  {{reviews }}
+                </h1>
+              </ion-col>
+            </ion-row>
+           
+          </ion-grid>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  
+  </ion-grid>
+ 
+</div>
+
+<div>
+ <ion-grid>
+   <ion-row>
+     <ion-col class="center" size=6>
+       <a  (click)="goTo('Purchases')">
+        <ion-card color="tertiary" class="option">
+          <img style="max-width: 100%; display: block;" src="./assets/accountsOrders.svg" alt="">
+         
+        </ion-card>
+        <ion-label class="center">
+          <sub>
+            MANAGE PURCHASES
+          </sub>
+      </ion-label>
+       </a>
+    
+     </ion-col>
+     <ion-col class="center" size=6>
+       <a      (click)="goTo('Reviews')">
+        <ion-card color="secondary" class="option">
+          <img style="max-width: 100%; display: block;" src="./assets/accountsReview.svg" alt="">
+        </ion-card>
+        <ion-label class="center">
+          <sub>
+           PRODUCT REVIEWS
+          </sub>
+      </ion-label>
+       </a>
+    </ion-col>
+   </ion-row>
+  <!--
+<ion-row>
+    <ion-col size=12>
+      <ion-button color="primary" fill="outline" expand="block" shape="round">
+        Edit account
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  --> 
+  
+ </ion-grid>
+</div>
+
+
+
+ 
+</ion-card>
+
+<div [ngSwitch]="bottom_component">
+
+  <app-orders class="component" *ngSwitchCase="'Purchases'"></app-orders>
+  <app-notifications
+    class="component"
+    *ngSwitchCase="'notifications'"
+    (childSegment)="received($event)"
+  ></app-notifications>
+  <app-settings class="component" *ngSwitchCase="'Settings'"></app-settings>
+  <app-product-review
+    class="component"
+    *ngSwitchCase="'Reviews'"
+  ></app-product-review>
+  <app-add-review
+    class="component"
+    *ngSwitchCase="'add-Reviews'"
+    (childSegment)="received($event)"
+  ></app-add-review>
+</div>
+
+<!--
+  <ion-grid class="top_grid">
+    <ion-row *ngFor="let image of profile$.profileImage">
+      <ion-col class="center" size="6">
+        <ion-avatar *ngIf="!image" class="profile_pic">
+          <ion-img src="../assets/carbon_user-filled.svg"></ion-img>
+        </ion-avatar>
+        <ion-avatar *ngIf="image" class="profile_pic">
+          <ion-img src="{{image.url}}"></ion-img>
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="6">
+        <ion-grid class="ion-no-padding">
+          <ion-row class="ion-no-padding">
+            <ion-col class="ion-no-padding" size="12">
+              <h5 style="color: #018786;">
+                {{profile$.first_name}} {{profile$.last_name}}
+              </h5>
+            </ion-col>
+            <ion-col class="ion-no-padding" size="12">
+              <ion-label>
+                <sub style="color: #018786;">
+                  {{profile$.email}}
+                </sub>
+              </ion-label>
+            </ion-col>
+            <ion-col class="ion-no-padding location" size="12">
+              <ion-label>
+                <sub style="color: #018786;">
+                 {{profile$.address.city}},{{profile$.address.province}}
+                </sub>
+              </ion-label>
+            </ion-col>
+            <ion-col size="12">
+              <ion-toolbar style="left:-15vw;--background: transparent;">
+                <ion-buttons slot="start">
+                  <ion-button (click)="goTo('notifications')">
+                    <ion-icon class="ion-padding"     name="Notifications-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+                <ion-buttons slot="end">
+                  <ion-button>
+                    <ion-icon class="ion-padding" name="create-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+      
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="main_panel" *ngIf="bottom_component == 'default'">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button
+            (click)="goTo('Purchases')"
+            class="ion-no-padding"
+            fill="clear"
+            size="default"
+          >
+            <ion-icon
+              class="ion-padding-end"
+              name="pricetags-outline"
+            ></ion-icon>
+            purchases
+          </ion-button>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button
+            (click)="goTo('Reviews')"
+            class="ion-no-padding"
+            fill="clear"
+            size="default"
+          >
+            <ion-icon
+              class="ion-padding-end"
+              name="heart-half-outline"
+            ></ion-icon>
+            Product Reviews
+          </ion-button>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button
+            (click)="goTo('Settings')"
+            class="ion-no-padding"
+            fill="clear"
+            size="default"
+          >
+            <ion-icon
+              class="ion-padding-end"
+              name="settings-outline"
+            ></ion-icon>
+            Settings
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div [ngSwitch]="bottom_component">
+
+    <app-orders class="component" *ngSwitchCase="'Purchases'"></app-orders>
+    <app-notifications
+      class="component"
+      *ngSwitchCase="'notifications'"
+      (childSegment)="received($event)"
+    ></app-notifications>
+    <app-settings class="component" *ngSwitchCase="'Settings'"></app-settings>
+    <app-product-review
+      class="component"
+      *ngSwitchCase="'Reviews'"
+    ></app-product-review>
+    <app-add-review
+      class="component"
+      *ngSwitchCase="'add-Reviews'"
+      (childSegment)="received($event)"
+    ></app-add-review>
+  </div>
+-->
+</ion-content>
+
+<ion-footer >
+  <ion-toolbar
+
+  
+  >
+    <ion-grid>
+      <ion-row >
+        <ion-col size="4">
+          <ion-button
+          size="small"
+          fill="clear"
+          shape="round"
+          (click)="goTo('notifications')"
+      
+        >
+          <ion-icon style="color: grey" name="notifications-outline"></ion-icon>
+          <sub style="color: grey; left: 5px">  NOTIFICATIONS</sub>
+        </ion-button>
+
+
+        </ion-col>
+        <ion-col class="center" size="4">
+          <ion-fab>
+            <ion-fab-button color="white" (click)="goBack()" size="small">
+              <ion-icon
+                *ngIf="bottom_component !=='default'"
+                name="home"
+                color="primary"
+              ></ion-icon>
+            
+              <ion-icon *ngIf="bottom_component =='default'"      color="primary" name="basket"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+          <!--<ion-button expand="block" fill="clear"size="small">
+            <ion-icon  size="large" slot="icon-only" name="document"></ion-icon>
+          </ion-button>-->
+        </ion-col>
+        <ion-col size="4">
+
+          <ion-button
+          size="small"
+          fill="clear"
+          shape="round"
+          (click)="goTo('Settings')"
+      
+        >
+          <ion-icon style="color: grey" name="settings-outline"></ion-icon>
+          <sub style="color: grey; left: 5px">   SETTINGS </sub>
+        </ion-button>
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

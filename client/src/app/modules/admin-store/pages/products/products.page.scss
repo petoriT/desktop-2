@@ -1,0 +1,21 @@
+ion-card{
+   display: flex;
+   flex-direction: column;
+   width: 100% !important;
+   margin: 0 !important;
+   height: 100%
+}
+
+ion-scroll {
+  height: 100%;
+}
+
+ion-item {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+ion-segment-button{
+  --padding-end:1px;
+  --padding-start:1px
+}

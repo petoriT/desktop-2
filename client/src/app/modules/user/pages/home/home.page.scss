@@ -1,0 +1,25 @@
+.fullprice {
+  text-decoration: line-through;
+}
+.headline{
+height: 323px;
+background-color: green($color: #000000);
+}
+.whiteBackgroudOne{
+  position:relative;
+  background: white;
+  overflow: visible;
+}
+.pageSectionalTitle{
+  font-size: 16px;
+  font-weight: 400;
+}
+.pageSectionalToogle{
+   font-size: 12px;
+}
+.bottom-padding{
+  padding-bottom: 16px;
+}
+.end-padding{
+--inner-padding-end: 0px;
+}

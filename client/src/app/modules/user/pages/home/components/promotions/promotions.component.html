@@ -1,0 +1,158 @@
+<div *ngIf="!promo_type">
+<ion-card (click)="showPicker() " class="promotion center" color="secondary">
+  <ion-img src="../assets/197470-OYF57A-37-freepick.png">
+  </ion-img>
+  <h1 style="position: absolute; color: white;padding-left: 10px;
+  width: 100%;text-align: left;">
+    PROMOTIONS <br>
+    & <b style="color: #018786;"> SALES </b>
+  </h1>
+ 
+</ion-card>
+</div>
+
+<div *ngIf="promo_type">
+  <ion-toolbar>
+    <ion-item
+      (click)="onback()"
+    
+    >
+    <ion-text>
+      <h6 style="text-align: center;color: #018786;">
+        {{ promo_type }}
+      </h6>
+  
+    </ion-text>
+   
+
+      <ion-icon slot="end" name="close-circle-outline"></ion-icon>
+    </ion-item>
+  </ion-toolbar>
+  <div class="container"  *ngFor="let product of products$ | async; let i = index">
+
+    <div *ngIf="i < 4 && product.promo_kind == promo_type  " class="product" >
+      <ion-grid style="padding-left: 0px;
+      padding-right: 0px;" >
+        <ion-row class="ion-no-padding">
+          <ion-col class="ion-no-padding" size=12>
+  
+            <ion-card  class="product">
+              <ion-fab style="    top: 1vw;
+              left: 1vw;" *ngIf="product.productPrice !==product.original_price" >
+                <ion-badge *ngIf="product.thresh == 1" class="center" color="secondary">
+              
+                    {{calculatePerc(product.productPrice,product.original_price)}}%<br />
+                    OFF
+               
+                </ion-badge>
+                <ion-badge *ngIf="product.thresh !== 1" class="center" color="secondary">
+              
+                  BUY {{product.thresh}} 
+                    <br/>
+                    GET 
+                    {{calculatePerc(product.productPrice,product.original_price)}}%<br />
+                    OFF
+              
+                  
+                </ion-badge>
+              
+              </ion-fab>
+              <ion-fab style="    top: 1vw;
+              left: 1vw;" *ngIf="product.productPrice ==product.original_price" >
+                <ion-badge  class="center" color="secondary">
+              SALE
+               
+                </ion-badge>
+              
+              
+              </ion-fab>
+    
+              
+              <div  *ngFor="let image of product.productImage">
+    
+              </div>
+              <ion-img style="    width: 100%;
+              height: 100%;"  src="{{product.productImage[0].url}}">
+    
+              </ion-img>
+    
+                <ion-chip  color="primary" style="    position: absolute;
+                left: 0;
+                text-align: center;
+                right: 0;
+                margin-left: auto;
+                margin-right: auto;
+                width: 80%;
+                background-color:#018786;
+                opacity: 1;
+                height: 8%;
+                bottom: 2px;" *ngIf="product.productPrice ==product.original_price">
+               <sub style="width: 100%;color:white">
+                {{product.promo_kind}}
+               </sub>
+                </ion-chip>
+     
+            </ion-card>
+          </ion-col>
+         <ion-col size=12>
+           <ion-toolbar>
+             <ion-grid class="ion-no-padding" style="padding-left: 2px;">
+               <ion-row class="ion-no-padding ion-justify-content-evenly">
+                 <ion-col class="ion-no-padding" size=12>
+                  <h6 style="
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        margin-top: 0px;
+                        margin-bottom: 0px;
+                        max-width: 45vw; 
+                  ">
+                    {{product.productName}}
+                  </h6>
+                 </ion-col>
+         
+               </ion-row>
+               <ion-row class="ion-no-padding ion-justify-content-evenly">
+                 
+                <ion-col class="ion-no-padding center" size=8>
+                  <ion-label style="    text-align: justify;width: 100%;
+                  ">
+                    {{ product.productPrice | currency: "R" }}
+                  </ion-label>
+               
+                 </ion-col>
+                 <ion-col class="ion-no-padding ion-justify-content-evenly center" size=4>
+                  <ion-button
+                  fill="solid"
+            shape="round"
+                  size="small"
+                  (click)="addToCart(product)"
+                  class="add_cart"
+                  style="width:-webkit-fill-available"
+                >
+                  <ion-icon style="position:absolute;" name="cart-outline"></ion-icon>
+                </ion-button>
+                 </ion-col>
+               </ion-row>
+             </ion-grid>
+             
+            
+           </ion-toolbar>
+          
+         </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+  <ion-toolbar>
+    <ion-button
+      expand="full"
+      size="small"
+      shape="round"
+      fill="solid"
+      color="light"
+    >
+      Show More
+    </ion-button>
+  </ion-toolbar>
+</div>

@@ -1,0 +1,40 @@
+.upper_part{
+    height: 52%;
+    right: 0;
+    top: 0;
+
+
+}
+.lower_part{
+    min-height:44%;
+    border-radius: 75px 5px 150px 5px;
+    margin: 5px;
+
+    position: fixed;
+    bottom:0px
+}
+ion-item{
+    background-color: none;
+}
+
+.topPadding{
+    padding-top: 10px;
+}
+.circle_top{
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 35%;
+    height: 20%;
+    border-radius: 50%;
+    background: #90DED7;
+
+}
+.bottom_link{
+    position: absolute;
+    left: 86%;
+    top: 94%;
+}
+ion-item{
+    --ion-background-color:transparent
+}

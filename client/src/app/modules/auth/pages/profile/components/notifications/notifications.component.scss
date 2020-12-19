@@ -1,0 +1,15 @@
+ion-card {
+  display: flex;
+  flex-direction: column;
+}
+::ng-deep .mat-expansion-panel-header {
+  padding: 0px;
+}
+.inner_notification{
+  box-shadow: none;
+  display: block;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom:0px
+
+}

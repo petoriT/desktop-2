@@ -1,0 +1,62 @@
+gm-feed-card,
+gm-feed-card::before,
+gm-feed-card img:first-of-type {
+  border-radius: 8px;
+}
+gm-feed-card {
+  padding: 16px 16px 0 16px;
+  position: relative;
+  width: 100%;
+  display: block;
+  &::before {
+    content: '';
+    position : absolute;
+    top: 16px;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    background: transparentize(#000, 0.65);
+    z-index: 1;
+  }
+  img:first-of-type {
+    width: 100%;
+    display: block;
+  }
+
+  .content {
+    position: absolute;
+
+    width: 80%;
+    text-align: center;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h1,h2 {
+      line-height: 1.4em;
+    }
+
+    h1,h2, h6,h4, p {
+      color : white;
+    }
+
+    h6 {
+      display: inline-block;
+      margin: 0;
+      background: black;
+      padding: 12px 19px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      font-size: 100%;
+      // font-size: 75%;
+    }
+    @include breakpoint(min-width $md){
+      font-size: 70%;
+    }
+    @include breakpoint(max-width $sm){
+      font-size: 80%;
+    }
+  }
+
+}

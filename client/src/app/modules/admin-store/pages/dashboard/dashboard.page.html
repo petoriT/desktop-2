@@ -1,0 +1,391 @@
+
+
+
+<!-- Handset View-->
+<app-header *ngIf="device_screen == 'Handset' || device_screen == 'Tablet' " ></app-header>
+<ion-grid   *ngIf="device_screen == 'Handset' || device_screen == 'Tablet' " class="ion-no-padding" >
+<ion-row class="ion-no-padding">
+  <ion-col class="ion-no-padding" style="height: 55%" size=12>
+    <div class="top">
+      <ion-card [class]="dashStatus" class="dash">
+          <h6  *ngIf="!viewReports "  style="text-align: center; margin-bottom: 5px;" >Dashboard</h6> 
+             <h6  *ngIf="viewReports "  style="text-align: center; margin-bottom: 5px;" >Reports</h6> 
+        <ion-fab  *ngIf="!viewReports "  horizontal="end" style="top: 6%;">
+            <ion-fab-button color="white" style="width: 24px;height: 24px" size="small">
+              <ion-icon size="small"  color="primary" name="expand"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+          <hr style="    width: 80%;
+    border-bottom: 1px groove ;margin-top: 0px;margin 0px !important ; ">
+
+
+        <app-progress-bar  *ngIf="!viewReports "  ></app-progress-bar>
+        <app-report-selector *ngIf="viewReports " ></app-report-selector>
+
+          
+      </ion-card >
+      <ion-card  class="center" style=" margin-top: 1px !important; width: 40vw;height: 5vh;float:right ; border-radius: 0vw 0vw 30vw 30vw; ">
+        <ion-button *ngIf="!viewReports" (click)="reportSelection(true)" size="small" shape="round"  fill="clear"> <ion-icon color="tertiary" name="trending-up"></ion-icon> <sub style=" ; left:1vw" >Reports</sub></ion-button>
+        <ion-button   *ngIf="viewReports"  (click)="reportSelection(false)" size="small" shape="round"  fill="clear"><ion-icon  color="tertiary"  name="chevron-up"></ion-icon> <sub style=" ; left:1vw" >Minimise</sub></ion-button>
+           <ion-ripple-effect></ion-ripple-effect>
+    </ion-card>
+       <!--<app-bar-chart></app-bar-chart>-->
+    </div>
+  </ion-col>
+  <ion-col class="ion-no-padding" style="top: 20vh;" size=12>
+    <div  *ngIf="!viewReports " class="bottom">
+  <ion-grid>
+    <ion-row>
+      <ion-col size=4>
+        <a [routerLink]="['/admin-store/store/sales']"> 
+         <ion-card color="secondary" class="option center"  >
+             <img style="max-width: 50%; display: block;" src="./assets/icon/sign · ecommerce · shopping · tag · sale.svg" alt="">
+         </ion-card>
+         <ion-label class="center">
+            <sub>
+              SALES
+            </sub>
+        </ion-label>
+
+        </a>
+      
+      </ion-col>
+
+      <ion-col size=4>
+       <a (click)="goProduct()" >
+        <ion-card color="tertiary" class="option center" >
+          <img style="max-width: 50%; display: block;" src="./assets/icon/Vector.svg" alt="">
+         </ion-card>
+         <ion-label class="center">
+             <sub style="color:">
+              PRODUCTS
+              </sub>
+        </ion-label>
+       </a>
+      </ion-col>
+
+      <ion-col size=4>
+       <a [routerLink]="['/admin-store/store/users']">
+        <ion-card color="primary" class="option center">
+            <img  style="max-width: 50%; display: block;" src="./assets/icon/users divIcons made by a href=httpswww.flaticon.comauthorssrip title=sripsripa from a href=httpswww.flaticon.com title=Flaticonwww.flaticon.comadiv 1.svg">
+          
+    
+         </ion-card>
+         <ion-label class="center">
+           <sub>
+            USERS
+            </sub>
+        </ion-label>
+      </a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+  </ion-col>
+</ion-row>
+</ion-grid>
+
+<app-footer  *ngIf="device_screen == 'Handset'" ></app-footer>
+
+<!--Desktop View-->
+
+<div *ngIf="device_screen == 'Web'" >
+<ion-grid class="ion-no-padding" >
+  <ion-row>
+ 
+    <ion-col class="center ion-no-padding"  size=12>
+    <ion-item style="width: 100%;">
+      <ion-toolbar >
+        <ion-label style=" font-size:large;" slot="start"> 
+          <h1> Welcome, <b>admin</b> </h1>
+        </ion-label>
+        <ion-searchbar style="--border-radius: 50px;    padding-left: 16px; padding-right: 16px; --border-radius: 50px;" class="ion-padding-horizontal" showCancelButton="focus"></ion-searchbar>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon  name="notifications"></ion-icon>
+          </ion-button>
+       
+            <ion-fab-button (click)=" presentPopover($event)" size="small">
+             
+                <div *ngFor="let item of store.logo">
+                  <img src="{{item.url}}" >
+                </div>
+            
+            </ion-fab-button>
+      
+           
+    
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-item>
+         
+
+    </ion-col>
+    <ion-col class="center ion-no-padding"  size=12>
+      <div class="container" style="overflow: scroll;background:#9e9e9e17;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size=9>
+              <ion-row>
+                <ion-col size=6>
+                  <ion-card color="secondary" class="left_card center">
+                   <ion-grid>
+                     <ion-row     style="padding-top: 16px;">
+                     <!-- <ion-col style="    padding-left: 16px;"  size=2>
+                         <div class="inner_icon center">
+                          <ion-icon style="font-size: 48px;" color="secondary" name="cash"></ion-icon>
+                         </div>
+                       </ion-col>--> 
+                       <ion-col class="center" size=8>
+                   
+                          <ion-label class="inner_card_value center">
+                         
+                            {{sales_value | currency : 'R'}}
+                          
+                        </ion-label>
+  
+                     
+                  
+                       </ion-col>
+                       <ion-col style="    padding-right: 16px;" size=4>
+                        <ion-row>
+                          <ion-col size=12>
+                            <div style="background: rgba(0, 0, 0, 0.68);" class="inner_icon center">
+                           
+                              <ion-text style="color:white; font-size: 16px;">
+                             +435
+                              
+                            </ion-text>
+                            </div>
+                          </ion-col>
+                          <ion-col size=12>
+                            <ion-label style="font-size:12px">
+                             <b> PROFIT  </b> 
+                            </ion-label>
+                          </ion-col>
+                        </ion-row>
+                       </ion-col>
+                     </ion-row>
+                    
+                   </ion-grid>
+                  </ion-card>
+                </ion-col>
+               
+                <ion-col size=6>
+                  <ion-card color="tertiary" class="right_card center">
+                   <ion-grid>
+                     <ion-row     style="padding-top: 16px;">
+                     <!-- <ion-col style="    padding-left: 16px;"  size=2>
+                         <div class="inner_icon center">
+                          <ion-icon style="font-size: 48px;" color="secondary" name="cash"></ion-icon>
+                         </div>
+                       </ion-col>--> 
+                       <ion-col class="center" size=8>
+                   
+                          <ion-label class="inner_card_value center">
+                         
+                            {{sales_value }}
+                          
+                        </ion-label>
+  
+                     
+                  
+                       </ion-col>
+                       <ion-col style="    padding-right: 16px;" size=4>
+                        <ion-row>
+                          <ion-col size=12>
+                            <div style="background: rgba(0, 0, 0, 0.68);" class="inner_icon center">
+                           
+                              <ion-text style="color:white; font-size: 16px;">
+                             +43
+                              
+                            </ion-text>
+                            </div>
+                          </ion-col>
+                          <ion-col size=12>
+                            <ion-label style="font-size:12px">
+                             <b> ACTIVE ORDERS  </b> 
+                            </ion-label>
+                          </ion-col>
+                        </ion-row>
+                       </ion-col>
+                     </ion-row>
+                    
+                   </ion-grid>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size=12>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col style="height:100vh" size=3>
+              <ion-toolbar style="--background:#9e9e9e00;" >
+                <ion-text >
+                  <h6 style="color: #018786; padding-left: 4px;    text-align: start;"> <sub> TOP SELLING PRODUCTS </sub></h6>
+                </ion-text>
+                <ion-buttons slot="end">
+                  <ion-button
+                    size="small"
+                    shape="round"
+                    color="primary"
+                    fill="outline"
+                    style="height: 24px
+                    ;"
+                    (click)="ad_space.loadRecommendedProducts()"
+                    class="pageSectionalToogle"
+                  >
+                   <sub>  Show all </sub>
+                  </ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+              <div style="height: 30%;overflow: scroll;">
+                <div *ngFor="let product of  products$| async; let i = index" >
+                  <ion-grid >
+                    <ion-row>
+                      <ion-col class="center" size=2>
+                        <ion-chip style="position:absolute;z-index:3 !important;--background:rgb(224 224 224)">
+                         
+                      {{i+1}}
+                      
+                        </ion-chip>
+                       <div style="   background-color:rgb(0 0 0 / 12%);
+                      color:rgb(0 0 0 / 12%);
+                      -webkit-transform:rotate(90deg);
+                      position:absolute;
+                      width:100px;
+                      height:2px;
+                  
+                      border:2px;
+                      z-index: 1px !important;
+                      "></div>
+                      </ion-col>
+                      <ion-col size=10>
+                       
+                        <ion-grid>
+                          <ion-row>
+                            <ion-col class="center" size="2">
+                              <ion-avatar style="height: 40px;width: 40px;" >
+                                <img src="{{ product.productImage[0].url }}" />
+                              </ion-avatar>
+                            </ion-col>
+                            <ion-col class="center" size="7">
+                              <ion-label
+                                #name
+                                style="text-align: center"
+                                value="product.productName"
+                                ><sub>{{ product.productName }}</sub></ion-label
+                              >
+                            </ion-col>
+                            <ion-col class="center" size="3">
+                              <ion-label #price
+                                ><sub
+                                  >{{ product.productPrice | currency: "R" }}
+                                </sub></ion-label
+                              >
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+                       
+                        
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+                
+              </div>
+              <ion-toolbar style="--background:#9e9e9e00;" >
+                <ion-text>
+                  <h6 style="color: #018786; padding-left: 4px;    text-align: start;"> <sub>NEW ORDERS </sub> </h6>
+                </ion-text>
+                <ion-buttons slot="end">
+                  <ion-button
+                    size="small"
+                    shape="round"
+                    style="height: 24px"
+                    color="primary"
+                    fill="outline"
+                    (click)="ad_space.loadRecommendedProducts()"
+                    class="pageSectionalToogle"
+                  >
+                   <sub> Show all </sub> 
+                  </ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+              <div style="height: 30%;overflow: scroll;">
+                <div *ngFor="let order of orders$| async; let i = index" >
+                  <ion-grid >
+                    <ion-row>
+                      <ion-col class="center" size=2>
+                        <ion-chip style="position:absolute;z-index:3 !important;--background:rgb(224 224 224)">
+                         
+                      {{i+1}}
+                      
+                        </ion-chip>
+                       <div style="   background-color:rgb(0 0 0 / 12%);
+                      color:rgb(0 0 0 / 12%);
+                      -webkit-transform:rotate(90deg);
+                      position:absolute;
+                      width:100px;
+                      height:2px;
+                    
+                      border:2px;
+                      z-index: 1px !important;
+                      "></div>
+                      </ion-col>
+                      <ion-col size=10>
+                        <ion-chip style="    height:80px; border-radius: 16px;width: 100%; ">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col size=12>
+                                <ion-text style="float: left;">
+                                  <a style="color: #018786">#</a> {{order.order_number | uppercase}}
+                                </ion-text>
+                                <ion-text style="float: right;">
+                                  {{orderValue(order) | currency:'R'}}
+                                </ion-text>
+                              </ion-col>
+                     
+                                
+                                <ion-col class="center" size="12">
+                                  <div
+                                    style="float: left; margin: 5px"
+                                    *ngFor="let item of order.items; let i = index"
+                                  >
+                                    <div *ngFor="let image of item.productImage; let i = index">
+                                      <ion-avatar style="    height: 32px; width: 32px;" *ngIf="i == 0">
+                                        <img src="{{ image.url }}" />
+                                      </ion-avatar>
+                                    </div>
+                                  </div>
+                                </ion-col>
+  
+  
+  
+                         
+                            </ion-row>
+                          </ion-grid>
+                       
+                        </ion-chip>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+                
+              </div>
+           
+              <div style="height: 10%;">
+                <ion-card style="height: 100%; border-radius: 50px;" color="primary">
+                  sfd
+                </ion-card>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</div>

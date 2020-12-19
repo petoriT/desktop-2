@@ -1,0 +1,14 @@
+{
+  "name": "client",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://cartalist.herokuapp.com"
+    }
+  ]
+}
