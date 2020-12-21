@@ -12,6 +12,8 @@ import {ToastService} from "src/app/core-modules/services/toast/toast.service";
 import { UserFacadeService } from 'src/app/core-modules/services/profile/profile-facade/profile-facade.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+
 
 @Component({
   selector: "app-pricing",
@@ -50,8 +52,34 @@ export class PricingPage implements OnInit {
     private authState: AuthStateService,
     private pickerCtrl: PickerController,
     public alertController: AlertController,
-    private router: Router
-  ) {}
+    private router: Router,
+    breakpointObserver: BreakpointObserver,
+ 
+  ) {
+    
+    breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Handset"
+      }
+    });
+    breakpointObserver.observe([
+      Breakpoints.Tablet
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Tablet"
+      }
+    });
+
+    breakpointObserver.observe([
+      Breakpoints.Web
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Web"
+      }
+    });
+  }
 
   ionViewDidEnter() {
     this.slides.lockSwipes(true);

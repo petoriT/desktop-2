@@ -11,6 +11,7 @@ import { IonInfiniteScroll } from "@ionic/angular";
 import { distinctUntilChanged } from "rxjs/operators";
 import { UserFacadeService } from "src/app/core-modules/services/profile/profile-facade/profile-facade.service";
 import { VoucherFacadeService } from "src/app/core-modules/services/vouchers/voucher-facade/voucher-facade.service";
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: "app-promo",
@@ -25,9 +26,12 @@ export class PromoComponent implements OnInit, OnChanges {
   no_promo;
   user_id;
   item_tresh;
-
+  device_screen;
   scrHeight: any;
   scrWidth: any;
+  desktopViewvoucher ;
+  expand_detail;
+  detail_view_product
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
@@ -45,8 +49,32 @@ export class PromoComponent implements OnInit, OnChanges {
 
   constructor(
     private userFacade: UserFacadeService,
-    private voucherFacade: VoucherFacadeService
-  ) {
+    private voucherFacade: VoucherFacadeService,
+    breakpointObserver: BreakpointObserver
+    ) {
+      
+    breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Handset"
+      }
+    });
+    breakpointObserver.observe([
+      Breakpoints.Tablet
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Tablet"
+      }
+    });
+
+    breakpointObserver.observe([
+      Breakpoints.Web
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Web"
+      }
+    });
     this.getScreenSize();
     ////loading
     this.updating$ = this.voucherFacade.isUpdating$();
@@ -121,4 +149,24 @@ export class PromoComponent implements OnInit, OnChanges {
   updatePromo(data) {}
 
   onDeletePromo(data) {}
+
+  setDesktopVoucherView( voucher){
+    this.desktopViewvoucher = voucher
+    console.log(voucher)
+  }
+  expand(event){
+    if(this.expand_detail){
+      this.expand_detail = false
+    }else{
+      this.expand_detail = true
+     
+    }
+    this.detail_view_product =false
+  }
+  
+  viewProduct(item){
+    this.detail_view_product = item
+
+    console.log(item)
+  }
 }

@@ -173,6 +173,7 @@ export class OrdersComponent implements OnInit, OnChanges {
       this.active_expansion = order_number;
     }
   }
+  
   checkProductReady(order_id) {
     this.orderList$.subscribe(
       (res) => {
