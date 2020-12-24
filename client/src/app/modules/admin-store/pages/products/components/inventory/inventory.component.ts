@@ -22,7 +22,6 @@ import {
 import { UserFacadeService } from "src/app/core-modules/services/profile/profile-facade/profile-facade.service";
 import { browserRefresh } from "src/app/app.component";
 import { distinctUntilChanged } from "rxjs/operators";
-
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({

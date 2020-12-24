@@ -297,203 +297,218 @@
               </ion-content>
         </ion-col>
         <ion-col   size=4>
-        <ion-content style="    --background: #f6f6f6;height: 80vh;" >
-          <ion-card color="primary" *ngIf="detail_view_product" style="box-shadow: none;margin-bottom: 100px" >
-            <form [formGroup]="updateProduct">
-              <ion-grid>
-                <ion-row>
-                  <ion-col style="height: fit-content;" size=12>
-                    <ion-slides style="height: 55%;">
-                      <ion-slide *ngFor="let image of detail_view_product.productImage">
-                          <ion-img
+    
+          <ion-content style="--background: #f6f6f6;height: 80vh;">
+            <ion-card color="light" *ngIf="detail_view_product" style="box-shadow: none;margin-bottom: 100px" >
+              <form [formGroup]="updateProduct">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col style="height: fit-content;" size=12>
+                      <ion-slides style="height: 45vh;">
+                        <ion-slide style="width:100% !important" *ngFor="let image of detail_view_product.productImage">
+                            <ion-img
                             style="width: 100%;"
-                            (click)="viewImageOptions(image, product)"
-                            picture_uploaded
-                            src="{{ image.url }}"
-                          >
-                          </ion-img>
-                      <ion-fab slot="start" style="bottom: 0px;left:0px">
-                        <ion-fab-button
-                        *ngIf="!edit"
-                        shape="round"
-                        fill="solid"
-                        (click)="editProduct()"
-                     
-                      >
-                        <ion-icon
-                       
-                          name="create"
-                        ></ion-icon>
-                      </ion-fab-button>
-                      <ion-fab-button
-                        *ngIf="edit"
-                        [disabled]="updateProduct.invalid"
-                        shape="round"
-                        type="submit"
-                        fill="solid"
-                        (click)="update()"
+                              (click)="viewImageOptions(image, product)"
+                              picture_uploaded
+                              src="{{ image.url }}"
+                            >
+                            </ion-img>
                         
-                   
-                      >
-                        <ion-icon
-                         
-                          name="save"
-                        ></ion-icon>
-                      </ion-fab-button>
-                      </ion-fab>
-                         
-
-                         
-                        </ion-slide>
-                    </ion-slides>
-               
-
-                   
-                    <ion-item color="primary" >
-                      <ion-label position="floating">Product Name:</ion-label>
-                      <ion-input
-                        formControlName="productName"
-                        [attr.disabled]="!edit"
-                        value="{{detail_view_product.productName }}"
-                        position="floating"
-                      >
-                      </ion-input>
-                      <div
-                        *ngIf="
-                          updateProduct.get('productName').invalid &&
-                          updateProduct.get('productName').touched
-                        "
-                      >
-                        <ion-text
-                          *ngIf="
-                            updateProduct.get('productName').errors?.required
-                          "
-                          color="danger"
-                          ><sub>Product name is required</sub></ion-text
-                        >
-                        <ion-text
-                          *ngIf="
-                            updateProduct.get('productName').errors?.minlength
-                          "
-                          color="danger"
-                          ><sub
-                            >Product name must be at least 2 Characters</sub
-                          ></ion-text
-                        >
-                      </div>
-                    </ion-item>
-           
-                    <ion-item color="primary">
-                      <ion-label position="floating">Price</ion-label>
-                      <ion-input
-                        formControlName="productPrice"
-                        [attr.disabled]="!edit"
-                        value="{{ detail_view_product.productPrice }}"
-                      ></ion-input>
-                    </ion-item>
-                        <ion-item >
-                          <ion-label><sub>Production Status</sub></ion-label>
-                          <ion-select
-                            [attr.disabled]="!edit"
-                            formControlName="production_status"
-                            value="{{ detail_view_product.production_status }}"
-                          >
-                            <ion-select-option value="onHold"
-                              ><sub>On hold</sub></ion-select-option
-                            >
-                            <ion-select-option value="Active"
-                              ><sub>Active</sub></ion-select-option
-                            >
-                            <ion-select-option value="OutOfStock"
-                              ><sub>Out of Stock</sub></ion-select-option
-                            >
-                            <ion-select-option value="Discontinued"
-                              ><sub>Discontinued</sub></ion-select-option
-                            >
-                          </ion-select>
-                        </ion-item>
+                              <ion-fab style="left:0;bottom: 0;" >
+                                <ion-fab-button
+                                *ngIf="!edit"
+                                shape="round"
+                                fill="solid"
+                                (click)="editProduct()"
+                                size="small"
+                          
+                              >
+                                <ion-icon
+                                  size="small"
+                             
+                                  name="create"
+                                ></ion-icon>
+                              </ion-fab-button>
+                              <ion-fab-button
+                                *ngIf="edit"
+                                [disabled]="updateProduct.invalid"
+                                shape="round"
+                                type="submit"
+                                fill="solid"
+                                (click)="update()"
+                                size="small"
                       
-                          <ion-item *ngIf="detail_view_product.production_status == 'Active'">
-                            <ion-label><sub>In Stock</sub></ion-label>
-                            <ion-input
-                              formControlName="in_stock"
-                              [attr.disabled]="!edit"
-                              clearInput
-                              value="{{detail_view_product.in_stock }}"
-                            ></ion-input>
-                          </ion-item>
-                        
-                  
-                     
-                          <ion-item *ngIf="
-                          detail_view_product.production_status == 'OutOfStock' ||
-                          detail_view_product.production_status == 'onHold'
-                        ">
-                            <ion-label position="stacked"
-                              ><sub>next Available Date</sub></ion-label
-                            >
-                            <ion-datetime
-                              formControlName="next_available_date"
-                              [attr.disabled]="!edit"
-                              displayFormat="DDDD MMM D, YYYY"
-                              min="2020"
-                              max="2030"
-                              value="2020-04-19"
-                            ></ion-datetime>
-                          </ion-item>
-                       
-                     
-                  </ion-col>
-                  
-              
-                </ion-row>
-            
-              
-                    <!--<ion-grid>
-                      <ion-row>
-                        <ion-col size="12">
-                       
+                              >
+                                <ion-icon
+                                  name="save"
+                                ></ion-icon>
+                              </ion-fab-button>
+                              </ion-fab>
+                              <ion-fab style="bottom: 0;right:0">
+                                <ion-fab-button
+                                shape="round"
+                                (click)="onDeleteProduct(product)"
+                                size="small"
+                                color="danger"
+                              >
+                                <ion-icon
+                                  fill="solid"
+                               
+                                  name="trash"
+                                 
+                                ></ion-icon>
+                              </ion-fab-button>
+                              </ion-fab>
+                           
+                          </ion-slide>
+                      </ion-slides>
+                 
   
-                          <ion-item >
-                          <div *ngFor="let image of product.productImage">
-                            <ion-avatar  style="height: 13vw; width: auto;">
-                              <img src="{{ image.url }}" >
-                            </ion-avatar>
-                          </div>
-                          </ion-item>
-  
-  
-                        </ion-col>
-                        <ion-col size="12">
-                          <ion-button
-                            size="small"
-                            shape="round"
-                            (click)="uploadImage()"
-                            ><sub>Upload Image</sub>
-                            <ion-input
-                            style="z-index: 10;
-                            position: absolute;
-                            width: 101px;
-                            opacity: 0;"
-                            [attr.disabled]="!edit"
-                            type="file"
-                            multiple
-                            (change)="handleFileInput($event)"
-                          ></ion-input>
-  
-                            </ion-button
+                      <ion-item color="light" class="desktop_item" >
+                        <div *ngFor="let metaTag of detail_view_product.metaTags">
+                          <ion-chip>
+                            <ion-label>{{ metaTag.metaTagname }}</ion-label>
+                            <ion-icon name="close-circle"></ion-icon>
+                          </ion-chip>
+                        </div>
+                        <ion-chip>
+                          <ion-icon (click)="addMetaTag()" name="add-circle-outline">
+                            <!--TODO: Add metatag-->
+                          </ion-icon>
+                        </ion-chip>
+                      </ion-item>
+                      <ion-item color="light" >
+                        <ion-label position="floating">Product Name:</ion-label>
+                        <ion-input
+                          formControlName="productName"
+                          [attr.disabled]="!edit"
+                          value="{{detail_view_product.productName }}"
+                          position="floating"
+                        >
+                        </ion-input>
+                        <div
+                          *ngIf="
+                            updateProduct.get('productName').invalid &&
+                            updateProduct.get('productName').touched
+                          "
+                        >
+                          <ion-text
+                            *ngIf="
+                              updateProduct.get('productName').errors?.required
+                            "
+                            color="danger"
+                            ><sub>Product name is required</sub></ion-text
                           >
-                        </ion-col>
-                      </ion-row>
-                    </ion-grid>-->
+                          <ion-text
+                            *ngIf="
+                              updateProduct.get('productName').errors?.minlength
+                            "
+                            color="danger"
+                            ><sub
+                              >Product name must be at least 2 Characters</sub
+                            ></ion-text
+                          >
+                        </div>
+                      </ion-item>
+             
+                      <ion-item color="light">
+                        <ion-label position="floating">Price</ion-label>
+                        <ion-input
+                          formControlName="productPrice"
+                          [attr.disabled]="!edit"
+                          value="{{ detail_view_product.productPrice }}"
+                        ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size=12>
+                    
+                        <ion-label position="floating">Description</ion-label>
+                        <!--todo: enable edit inputs-->
+                        <ion-textarea
+                          autosize [(ngModel)]="text"
+                          style="font-size: 12px;padding-bottom: 120px"
+                          formControlName="productDescription"
+                          value="{{ detail_view_product.productDescription }}"
+                          [attr.disabled]="!edit"
+                          type="text"
+                        ></ion-textarea>
+                        <div
+                          *ngIf="
+                            updateProduct.get('productDescription').invalid &&
+                            updateProduct.get('productDescription').touched
+                          "
+                        >
+                          <ion-text
+                            *ngIf="
+                              updateProduct.get('productDescription').errors
+                                ?.required
+                            "
+                            color="danger"
+                            ><sub>Description is required</sub></ion-text
+                          >
+                          <ion-text
+                            *ngIf="
+                              updateProduct.get('productDescription').errors
+                                ?.minlength
+                            "
+                            color="danger"
+                            ><sub
+                              >Description must be at least 5 Characters</sub
+                            ></ion-text
+                          >
+                        </div>
+                     
+                    </ion-col>
+                
+                  </ion-row>
               
-               
-              </ion-grid>
-            </form>
-
-
-          </ion-card>
-        </ion-content> 
+                
+                      <!--<ion-grid>
+                        <ion-row>
+                          <ion-col size="12">
+                         
+    
+                            <ion-item >
+                            <div *ngFor="let image of product.productImage">
+                              <ion-avatar  style="height: 13vw; width: auto;">
+                                <img src="{{ image.url }}" >
+                              </ion-avatar>
+                            </div>
+                            </ion-item>
+    
+    
+                          </ion-col>
+                          <ion-col size="12">
+                            <ion-button
+                              size="small"
+                              shape="round"
+                              (click)="uploadImage()"
+                              ><sub>Upload Image</sub>
+                              <ion-input
+                              style="z-index: 10;
+                              position: absolute;
+                              width: 101px;
+                              opacity: 0;"
+                              [attr.disabled]="!edit"
+                              type="file"
+                              multiple
+                              (change)="handleFileInput($event)"
+                            ></ion-input>
+    
+                              </ion-button
+                            >
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>-->
+                
+                 
+                </ion-grid>
+              </form>
+  
+  
+            </ion-card>
+          </ion-content>
+          
         </ion-col>
       </ion-row>
     </ion-grid>

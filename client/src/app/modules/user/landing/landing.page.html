@@ -1,7 +1,34 @@
 
 
-<ion-content (scroll)="onScroll($event)">
+<ion-content *ngIf=" device_screen == 'Handset'" (scroll)="onScroll($event)">
   <ion-router-outlet></ion-router-outlet>
 </ion-content>
 
 <!--<app-user-footer  *ngIf="  has_footer"></app-user-footer>-->
+<ion-content *ngIf=" device_screen == 'Web'" >
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" style="padding-bottom: 48px;">
+        <ion-title style="padding-top: 49px">
+          <h1 style="text-align: center">Use Mobile Device</h1>
+        </ion-title>
+        <ion-text style="text-align: center;display: block;">
+          <sub>
+            Use mobile device to shop the market place
+          </sub>
+        </ion-text>
+      </ion-col>
+
+      <ion-col size=12>
+        <ion-img
+        style="
+            height: 50vh;"
+        src="./assets/undraw_Mobile_application_mr4r.svg"
+      ></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+
+
+</ion-content>

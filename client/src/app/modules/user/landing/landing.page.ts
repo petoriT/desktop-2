@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { VoucherFacadeService } from "src/app/core-modules/services/vouchers/voucher-facade/voucher-facade.service";
 import { ProductFacadeService } from "src/app/core-modules/services/products/product-facade/product-facade.service";
 import { CategoryFacadeService } from "src/app/core-modules/services/categories/category-facade/category-facade.service";
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: "app-landing",
@@ -21,6 +22,7 @@ export class LandingPage implements OnInit {
   //observables
   profile$;
   isUpdating$;
+  device_screen;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,10 +31,38 @@ export class LandingPage implements OnInit {
     private userFacade: UserFacadeService,
     private voucherFacade: VoucherFacadeService,
     private _productFacade: ProductFacadeService,
-    private categoryFacade: CategoryFacadeService
+    private categoryFacade: CategoryFacadeService,
+    breakpointObserver: BreakpointObserver,
   ) {
     ////loading
     this.isUpdating$ = this.userFacade.isUpdating$();
+    
+    
+    breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Handset"
+      }
+    });
+    breakpointObserver.observe([
+      Breakpoints.Tablet
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Tablet"
+      }
+    });
+
+    breakpointObserver.observe([
+      Breakpoints.Web
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Web"
+        setTimeout(() => {
+          this.router.navigate(["/admin-store/store/dashboard"]);
+        }, 5000);
+      }
+    });
   }
 
   ngOnInit() {
