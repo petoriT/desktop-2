@@ -14,7 +14,7 @@
   #userSlides
   pager="true"
 >
-<ion-slide>
+<ion-slide class="ion-slide">
   <ion-grid>
     <ion-row>
       <ion-col size=12>
@@ -53,7 +53,7 @@
     </ion-row>
   </ion-grid>
 </ion-slide>
-<ion-slide style="width:100vw;">
+<ion-slide class="ion-slide" style="width:100vw;">
 <ion-grid>
   <ion-row>
     <ion-col size=12>
@@ -196,7 +196,7 @@
 
 
 </ion-slide>
-<ion-slide> 
+<ion-slide class="ion-slide"> 
   
   <ion-grid>
     <ion-row>
@@ -254,7 +254,7 @@
 </ion-fab>
 </ion-content>
 
-<ion-grid *ngIf="device_screen =='Web'">
+<ion-grid class="ion-no-margin" *ngIf="device_screen =='Web'">
   <ion-row>
     <ion-col size=12>
       <ion-title style="    margin-top: 32px;
@@ -263,24 +263,262 @@
       </ion-title>
       <ion-text style="text-align: center;display: block;">
      
-       
+          add product details to 
      
       </ion-text>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size=6>
-      <ion-img src="assets/AdminSalesdeliverSlideOne.svg"></ion-img>
-    </ion-col>
+  
     <ion-col size=6>
       <ion-card style=" height: 73vh;margin-top: 32px">
+
+
+
+        <ion-slides
+        (ionSlideDidChange)="slideChange($event)"
+        #userSlides
+        pager="true"
+        style=" height: 73vh;"
+      >
+      <ion-slide>
+        <ion-grid>
+          <ion-row>
+           
+            <ion-col size=12>
+              <ion-title>
+                <h1>Usage Licenses</h1>
+              </ion-title>
+              <ion-chip>
+                Access features
+              </ion-chip>
+              <ion-chip>
+                Sized for you
+              </ion-chip>
+            </ion-col>
+          
+            <ion-col size=12>
+              <ion-text>
+                <sub>
+                  Licenses are priced based on the number of products you have and the number of store admins you have.
+                 <br>
+                 <br>
+                   <b style="color:#018786">By choosing the numberof products and admin users you get a license suited for you store</b>
+                 </sub>
+              </ion-text>
+            </ion-col>
+            <ion-col size=12>
+              <ion-button shape="round" color="secondary" (click)="showBasicPicker(userSlides)">
+                Add license
+              </ion-button>
+              
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-slide>
+      <ion-slide >
+      <ion-grid>
+        <ion-row>
+       
+
+          <ion-col *ngIf="show_licenses" size=12>
+            <div style="    overflow: scroll;height: 73vh
+        ">
+        
+              <div  class="center" *ngFor="let reco of recommended_license_index;let i  = index">
+                <ion-card color="primary"  class="desktop_license" >
+                    <ion-item  color="primary"  style="width: 95%;--inner-padding-end:0px;  border-radius: 5vw;">
+                      <ion-title style="text-align:center">
+                        <sub>{{reco.license_name}} </sub>
+                      </ion-title>
+                    </ion-item>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size=12>
+                          <ion-icon color="secondary" style="font-size:5vw;" name="ribbon"></ion-icon>
+                        </ion-col>
+                        <ion-col size=12>
+                          <ion-chip  >
+                            Recommended <ion-icon  color="success" name="checkmark-circle"></ion-icon>
+                          </ion-chip>
+                        </ion-col>
+                        <ion-col  *ngIf="license_focus==reco.license_name " size=12>
+                          <h1 style="margin-top: 0px; text-decoration: line-through;font-size: 21px;color: #90DED7">
+                            {{reco.monthly_price*12 | currency: 'R'}} /year <!-- <ion-badge color="tertiary"><sub> SAVE</sub></ion-badge> --> 
+                          </h1>
+                        </ion-col>
+                        <ion-col  *ngIf="license_focus==reco.license_name " size=12>
+                        
+                            <h1 class="center" style="margin-top: 0px;">
+                              {{reco.annual_advance_payment | currency: 'R'}} /<a (click)="showAnnual('none','mon')" >year <ion-icon size="small"name="caret-down-outline"></ion-icon></a>
+                            </h1> 
+                      
+                        
+                        </ion-col>
+                        <ion-col  *ngIf="license_focus !==reco.license_name " size=12>
+                          <h1 class="center" style="margin-top: 0px;">
+                            {{reco.monthly_price | currency: 'R'}} /<a (click)="showAnnual(reco.license_name,'yearly')" fill="clear">mon<ion-icon size="small" name="caret-down-outline"></ion-icon></a>
+                          </h1>
+                        </ion-col>
+                        <ion-col size=12>
+                          <ion-item color="primary" >
+                            <ion-icon slot="start" name="gift"></ion-icon>
+                            <ion-label>{{reco.number_of_products}} Products</ion-label>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size=12>
+                          <ion-item color="primary" >
+                            <ion-icon slot="start" name="people"></ion-icon>
+                            <ion-label>{{reco.number_of_users}} Users</ion-label>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="12">
+                          <ion-button (click)="postLicense(reco)" color="secondary" shape="round">
+                            Select
+                          </ion-button>
+                        </ion-col>
+                        
+                      </ion-row>
+                    </ion-grid>
+                 
+                </ion-card>
+              </div>
+              <div class="center" *ngFor="let li of other_licenses">
+                <ion-card   class="desktop_license" >
+                    <ion-item  style="width: 95%;--inner-padding-end:0px;">
+                      <ion-title style="text-align:center">
+                        <sub>{{li.license_name}} </sub>
+                      </ion-title>
+                    </ion-item>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size=12>
+                          <ion-icon color="primary" style="font-size:5vw;" name="document-text"></ion-icon>
+        
+                   
+                        </ion-col>
+                        <ion-col  *ngIf="license_focus==li.license_name " size=12>
+                          <h1 style="margin-top: 0px; text-decoration: line-through;font-size: 21px">
+                            {{li.monthly_price*12 | currency: 'R'}} /year <!-- <ion-badge color="tertiary"><sub> SAVE</sub></ion-badge> --> 
+                          </h1>
+                        </ion-col>
+                        <ion-col  *ngIf="license_focus==li.license_name " size=12>
+                        
+                            <h1 class="center" style="margin-top: 0px;">
+                              {{li.annual_advance_payment | currency: 'R'}} /<a (click)="showAnnual('none','mon')" >year <ion-icon size="small"name="caret-down-outline"></ion-icon></a>
+                            </h1> 
+                      
+                        
+                        </ion-col>
+                        <ion-col  *ngIf="license_focus !==li.license_name " size=12>
+                          <h1 class="center" style="margin-top: 0px;">
+                            {{li.monthly_price | currency: 'R'}} /<a (click)="showAnnual(li.license_name,'yearly')" fill="clear">mon<ion-icon size="small" name="caret-down-outline"></ion-icon></a>
+                          </h1>
+                        </ion-col>
       
+                       
+                        <ion-col size=12>
+                          <ion-item >
+                            <ion-icon slot="start" name="gift"></ion-icon>
+                            <ion-label>{{li.number_of_products}} Products</ion-label>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size=12>
+                          <ion-item >
+                            <ion-icon slot="start" name="people"></ion-icon>
+                            <ion-label>{{li.number_of_users}} Users</ion-label>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="12">
+                          <ion-button (click)="postLicense(li)" color="secondary" shape="round">
+                            Select
+                          </ion-button>
+                        </ion-col>
+                        
+                      </ion-row>
+                    </ion-grid>
+                 
+                </ion-card>
+              </div>
+          
+            </div>
+          </ion-col>
+          <ion-col size=12>
+      
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+      
+      </ion-slide>
+      <ion-slide> 
         
-   
+        <ion-grid>
+          <ion-row>
+            <ion-col size=12>
+              <ion-title >
+                <ion-title>
+                  <h1 style="text-align: center"> Confirm License  </h1>
+                </ion-title>
+                <ion-text style="text-align: center">
+                  <sub> Scroll to see all the features the license has </sub>
+                </ion-text>
+              </ion-title>
+            </ion-col>
+            <ion-col *ngIf="selected_license"size=12>
+              <ion-list style="    height: 23vh;
+              overflow: scroll;">
+                <ion-chip color="primary" *ngFor="let feature of selected_license.features">
+                  <ion-label><sub> {{feature}}  </sub></ion-label>
+                </ion-chip>
+               
+              </ion-list>
+      
+            </ion-col>
+            <ion-col size=12>
+              <ion-text>
+                <sub>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                </sub>
+              </ion-text>
+            </ion-col>
+            <ion-col size=12>
+             <ion-button (click)="payfastNav()">payNow</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+       
+      
+      </ion-slide>
+      
+      <ion-slide >
         
+      </ion-slide>
+      </ion-slides>
+
+
+
+
         
+        <ion-fab *ngIf="showBack " horizontal="start" vertical="bottom">
+          <ion-button
+            shape="round"
+            class="ion-padding-start"
+            style="color: #000000"
+            size="small"
+            color="white"
+            (click)="  back()"
+          >
+            back
+          </ion-button>
+        </ion-fab>
+
       </ion-card>
     </ion-col>
-    
+    <ion-col size=6>
+      <ion-img
+      src="../assets/licences.svg"
+    ></ion-img>
+    </ion-col>
   </ion-row>
 </ion-grid>

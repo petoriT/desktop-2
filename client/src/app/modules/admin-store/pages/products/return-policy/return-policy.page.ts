@@ -5,6 +5,7 @@ import { ToastController } from "@ionic/angular";
 import { Location } from "@angular/common";
 import { UserFacadeService } from "src/app/core-modules/services/profile/profile-facade/profile-facade.service";
 import { Router } from "@angular/router";
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: "app-return-policy",
@@ -16,13 +17,39 @@ export class ReturnPolicyPage implements OnInit {
   public current_question = "";
   public added_question: any = [];
   store_id;
+  device_screen
   constructor(
     private headerState: HeaderStateService,
     public toastController: ToastController,
     private _location: Location,
     private router: Router,
-    private userFacade: UserFacadeService
-  ) { }
+    private userFacade: UserFacadeService,
+    breakpointObserver: BreakpointObserver,
+  ) {
+    
+    breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Handset"
+      }
+    });
+    breakpointObserver.observe([
+      Breakpoints.Tablet
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Tablet"
+      }
+    });
+
+    breakpointObserver.observe([
+      Breakpoints.Web
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Web"
+      }
+    });
+   }
   public return_reason = [
     "Damaged Goods",
     "Wrong Order Delivered",

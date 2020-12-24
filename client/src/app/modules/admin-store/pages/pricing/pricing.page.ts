@@ -21,7 +21,8 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
   styleUrls: ["./pricing.page.scss"],
 })
 export class PricingPage implements OnInit {
-  @ViewChild("userSlides", { static: true }) slides: IonSlides;
+
+  @ViewChild("userSlides") slides: IonSlides;
   //Vars
   payfastForm = {};
   md5 = new Md5();
@@ -33,6 +34,7 @@ export class PricingPage implements OnInit {
   slides_number;
   licenses;
   other_licenses;
+  device_screen
   current_store;
   paynow = false
   show_licenses;
@@ -95,7 +97,7 @@ export class PricingPage implements OnInit {
         console.log(err);
       }
     );
-    this.slides.lockSwipes(true);
+  
     this.show_licenses = false; 
   }
   
@@ -187,6 +189,7 @@ export class PricingPage implements OnInit {
   }
 
   async showBasicPicker(slides) {
+   // this.slides = slides
     let opts: PickerOptions = {
       buttons: [
         {

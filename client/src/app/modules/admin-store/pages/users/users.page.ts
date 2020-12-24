@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { UserFacadeService } from 'src/app/core-modules/services/profile/profile-facade/profile-facade.service';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-users',
@@ -10,10 +11,36 @@ import { UserFacadeService } from 'src/app/core-modules/services/profile/profile
 export class UsersPage implements OnInit {
   public segmentChanged = "users"
   public users;
+  device_screen;
   constructor(
     private userFacade: UserFacadeService,
-    public toastController: ToastController
-  ) { }
+    public toastController: ToastController,
+    breakpointObserver: BreakpointObserver,
+  ) {
+    
+    breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Handset"
+      }
+    });
+    breakpointObserver.observe([
+      Breakpoints.Tablet
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Tablet"
+      }
+    });
+
+    breakpointObserver.observe([
+      Breakpoints.Web
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Web"
+      }
+    });
+   }
 
   ngOnInit() {
     this.getUsers()

@@ -6,6 +6,7 @@ import {
 } from "@angular/forms";
 import { distinctUntilChanged } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: "app-admin-users",
@@ -22,18 +23,47 @@ export class AdminUsersComponent implements OnInit, OnChanges {
   modules;
   email;
   edit;
+  device_screen;
+  desktopViewUser
+  expand_detail
+
   constructor(
     private userFacade: UserFacadeService,
     private formBuilder: FormBuilder,
-
+    breakpointObserver: BreakpointObserver,
     public toastController: ToastController
-  ) { }
+  ) { 
+    
+    breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Handset"
+      }
+    });
+    breakpointObserver.observe([
+      Breakpoints.Tablet
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Tablet"
+      }
+    });
+
+    breakpointObserver.observe([
+      Breakpoints.Web
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Web"
+      }
+    });
+  }
 
   ngOnChanges() {
     this.users = this.users$
   }
 
   ngOnInit() {
+    this.users = this.users$
     this.no_user = false;
     // this.users = this.userFacade.getCurrentStore().users;
 
@@ -131,4 +161,19 @@ export class AdminUsersComponent implements OnInit, OnChanges {
     });
     toast.present();
   }
+
+  setDesktopUserView(user){
+    this.desktopViewUser  = user
+    console.log(user)
+    this.edit = true;
+  }
+  expand(event){
+    if(this.expand_detail){
+      this.expand_detail = false
+    }else{
+      this.expand_detail = true
+    }
+
+  }
+
 }

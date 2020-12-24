@@ -11,7 +11,7 @@ import { PasswordValidator } from "src/app/modules/auth/shared/password.validato
 import { IonSlides } from "@ionic/angular";
 import { ToastController } from "@ionic/angular";
 import { UserFacadeService } from "src/app/core-modules/services/profile/profile-facade/profile-facade.service";
-
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 @Component({
   selector: "app-ad-user",
   templateUrl: "./ad-user.component.html",
@@ -25,15 +25,43 @@ export class AdUserComponent implements OnInit {
   //initialize new empty form-group of type FormGroup
   private slideOne: FormGroup;
   public modules;
+  device_screen;
+  showNext = true;
+  showBack = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private _authService: AuthApiService,
     private router: Router,
     public toastController: ToastController,
-
+    breakpointObserver: BreakpointObserver,
     private userFacade: UserFacadeService
-  ) { }
+  ) { 
+    
+    
+    breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Handset"
+      }
+    });
+    breakpointObserver.observe([
+      Breakpoints.Tablet
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Tablet"
+      }
+    });
+
+    breakpointObserver.observe([
+      Breakpoints.Web
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.device_screen = "Web"
+      }
+    });
+  }
 
   ngOnInit() {
     //create new form-group instance
@@ -52,6 +80,7 @@ export class AdUserComponent implements OnInit {
       user_type: [""],
       role: [""],
     });
+
   }
 
   onChange(event) {
@@ -95,6 +124,20 @@ export class AdUserComponent implements OnInit {
   }
   next() {
     this.slides.slideNext();
+  }
+  desktopNext( ){
+    this.slides.lockSwipes(false);
+    this.slides.slideNext();
+    this.showNext =false
+    this.showBack = true
+    this.slides.lockSwipes(true);
+  }
+  slidesBack(){
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev();
+    this.showNext =true
+    this.showBack = false
+    this.slides.lockSwipes(true);
   }
   async presentToast(data) {
     const toast = await this.toastController.create({
